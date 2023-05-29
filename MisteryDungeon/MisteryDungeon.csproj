@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C76865E0-D8FD-481D-A4A2-630C3FB8DCB7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MisteryDungeon</RootNamespace>
+    <AssemblyName>MisteryDungeon</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="aiv-audio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aiv.Audio.0.2.2\lib\net40\aiv-audio.dll</HintPath>
+    </Reference>
+    <Reference Include="aiv-fast2d, Version=1.0.7820.23607, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aiv.Fast2D.1.0.4\lib\net48\aiv-fast2d.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NVorbis.0.9.1\lib\net45\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=3.2.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.3.2\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\AI\FSM.cs" />
+    <Compile Include="Engine\AI\State.cs" />
+    <Compile Include="Engine\AudioMgr.cs" />
+    <Compile Include="Engine\AudioSourceComponent.cs" />
+    <Compile Include="Engine\BoxCollider.cs" />
+    <Compile Include="Engine\CameraMgr.cs" />
+    <Compile Include="Engine\CircleCollider.cs" />
+    <Compile Include="Engine\Collider.cs" />
+    <Compile Include="Engine\ColliderFactory.cs" />
+    <Compile Include="Engine\Collision.cs" />
+    <Compile Include="Engine\Component.cs" />
+    <Compile Include="Engine\DrawMgr.cs" />
+    <Compile Include="Engine\Game.cs" />
+    <Compile Include="Engine\GameObject.cs" />
+    <Compile Include="Engine\GfxMgr.cs" />
+    <Compile Include="Engine\ICollidable.cs" />
+    <Compile Include="Engine\IDrawable.cs" />
+    <Compile Include="Engine\IFixedUpdatable.cs" />
+    <Compile Include="Engine\Input.cs" />
+    <Compile Include="Engine\IStartable.cs" />
+    <Compile Include="Engine\IUpdatable.cs" />
+    <Compile Include="Engine\PhysicsMgr.cs" />
+    <Compile Include="Engine\RandomGenerator.cs" />
+    <Compile Include="Engine\RandomTimer.cs" />
+    <Compile Include="Engine\Rigidbody.cs" />
+    <Compile Include="Engine\Scene.cs" />
+    <Compile Include="Engine\Sheet.cs" />
+    <Compile Include="Engine\SheetAnimator.cs" />
+    <Compile Include="Engine\SheetClip.cs" />
+    <Compile Include="Engine\SpriteRenderer.cs" />
+    <Compile Include="Engine\Transform.cs" />
+    <Compile Include="Engine\UI\Font.cs" />
+    <Compile Include="Engine\UI\FontMgr.cs" />
+    <Compile Include="Engine\UI\TextBox.cs" />
+    <Compile Include="Engine\UserComponent.cs" />
+    <Compile Include="EventSystem\EventArgsFactory.cs" />
+    <Compile Include="EventSystem\EventManager.cs" />
+    <Compile Include="MysteryDungeon\Room_1.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\textSheet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
