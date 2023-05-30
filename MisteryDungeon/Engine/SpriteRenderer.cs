@@ -4,7 +4,6 @@ using System;
 namespace Aiv.Fast2D.Component {
     public class SpriteRenderer : Component, IDrawable {
 
-
         public Camera Camera {
             get { return mySprite.Camera; }
             set { mySprite.Camera = value; }
@@ -73,9 +72,35 @@ namespace Aiv.Fast2D.Component {
             DrawMgr.AddItem(this);
         }
 
+        public SpriteRenderer(GameObject owner, Texture texture, Vector2 pivot,
+            DrawLayer layer) : base(owner) {
+            myTexture = texture;
+            width = Game.PixelsToUnit(myTexture.Width);
+            height = Game.PixelsToUnit(myTexture.Height);
+            mySprite = new Sprite(width * transform.Scale.X,
+                height * transform.Scale.Y);
+            textureOffset = Vector2.Zero;
+            Pivot = pivot;
+            this.layer = layer;
+            DrawMgr.AddItem(this);
+        }
+
         public SpriteRenderer (GameObject owner, string textureName, Vector2 pivot,
             DrawLayer layer, float width, float height) : base (owner) {
             myTexture = GfxMgr.GetTexture(textureName);
+            this.width = Game.PixelsToUnit(width);
+            this.height = Game.PixelsToUnit(height);
+            mySprite = new Sprite(this.width * transform.Scale.X,
+                this.height * transform.Scale.Y);
+            textureOffset = Vector2.Zero;
+            Pivot = pivot;
+            this.layer = layer;
+            DrawMgr.AddItem(this);
+        }
+
+        public SpriteRenderer(GameObject owner, Texture texture, Vector2 pivot,
+            DrawLayer layer, float width, float height) : base(owner) {
+            myTexture = texture;
             this.width = Game.PixelsToUnit(width);
             this.height = Game.PixelsToUnit(height);
             mySprite = new Sprite(this.width * transform.Scale.X,
@@ -117,9 +142,19 @@ namespace Aiv.Fast2D.Component {
             return new SpriteRenderer(owner, textureName, pivot, drawLayer);
         }
 
+        public static SpriteRenderer Factory(GameObject owner, Texture texture, Vector2 pivot,
+            DrawLayer drawLayer) {
+            return new SpriteRenderer(owner, texture, pivot, drawLayer);
+        }
+
         public static SpriteRenderer Factory (GameObject owner, string textureName, Vector2 pivot,
             DrawLayer drawLayer, float width, float height) {
             return new SpriteRenderer(owner, textureName, pivot, drawLayer, width, height);
+        }
+
+        public static SpriteRenderer Factory(GameObject owner, Texture texture, Vector2 pivot,
+           DrawLayer drawLayer, float width, float height) {
+            return new SpriteRenderer(owner, texture, pivot, drawLayer, width, height);
         }
 
     }
