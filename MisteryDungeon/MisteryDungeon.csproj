@@ -122,6 +122,7 @@
     <Compile Include="MysteryDungeon\Door.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
     <Compile Include="MysteryDungeon\LampGate.cs" />
+    <Compile Include="MysteryDungeon\PlayerController.cs" />
     <Compile Include="MysteryDungeon\Room_0.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -143,6 +144,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\lamp_gate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Spritesheets\player.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\red_button.png">

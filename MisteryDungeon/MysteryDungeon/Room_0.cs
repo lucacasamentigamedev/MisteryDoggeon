@@ -13,17 +13,22 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("crate", "Assets/crate.png");
             GfxMgr.AddTexture("lamp_gate", "Assets/lamp_gate.png");
             GfxMgr.AddTexture("default_bullet", "Assets/default_bullet.png");
+            GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
         }
 
         public override void InitializeScene() {
             base.InitializeScene();
-            CreateMap();
-        }
 
-        private void CreateMap() {
             Map map = new Map("Assets/Tiled/Room0.tmx");
             float tileUnitWidth = (float)Game.Win.OrthoWidth / map.Width;
             float tileUnitHeight = (float)Game.Win.OrthoHeight / map.Height;
+
+            CreateMap(tileUnitWidth, tileUnitHeight, map);
+            CreatePlayer(tileUnitWidth, tileUnitHeight);
+        }
+
+        private void CreateMap(float tileUnitWidth, float tileUnitHeight, Map map) {
+            
             //Layers
             foreach (Layer layer in map.Layers) {
                 if (layer.Name == "Background") {
@@ -121,6 +126,59 @@ namespace MisteryDungeon {
             }
             go.AddComponent<Door>(ID);
             Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+        }
+
+        public void CreatePlayer(float tileUnitWidth, float tileUnitHeight) {
+            Vector2 pos = new Vector2(8 * tileUnitWidth, 3 * tileUnitHeight);
+            GameObject go = new GameObject("Player", pos);
+            Sheet sheet = new Sheet(GfxMgr.GetTexture("player"), 6, 4);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "player", Vector2.Zero,
+                DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
+            go.AddComponent(sr);
+            go.transform.Scale = new Vector2(tileUnitWidth / sr.Width, tileUnitHeight / sr.Height);
+            CreateAnimations(go, sheet);
+            go.AddComponent<PlayerController>();
+            Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+        }
+
+        private void CreateAnimations(GameObject go, Sheet sheet) {
+            SheetClip idleDown = new SheetClip(
+                sheet, "idleDown", new int[] { 0 }, false, 1
+            );
+            SheetClip idleRight = new SheetClip(
+                sheet, "idleRight", new int[] { 1 }, false, 1
+            );
+            SheetClip idleLeft = new SheetClip(
+                sheet, "idleLeft", new int[] { 2 }, false, 1
+            );
+            SheetClip idleUp = new SheetClip(
+                sheet, "idleUp", new int[] { 3 }, false, 1
+            );
+            SheetClip death = new SheetClip(
+                sheet, "death", new int[] { 4, 5 }, false, 1
+            );
+            SheetClip walkingDown = new SheetClip(
+                sheet, "walkingDown", new int[] { 6, 7, 8, 9 }, true, 10
+            );
+            SheetClip walkingRight = new SheetClip(
+                sheet, "walkingRight", new int[] { 10, 11, 12, 13 }, true, 10
+            );
+            SheetClip walkingLeft = new SheetClip(
+                sheet, "walkingLeft", new int[] { 14, 15, 16, 17 }, true, 10
+            );
+            SheetClip walkingUp = new SheetClip(
+                sheet, "walkingUp", new int[] { 18, 19, 20, 21 }, true, 10
+            );
+            SheetAnimator animator = go.AddComponent<SheetAnimator>(go.GetComponent<SpriteRenderer>());
+            animator.AddClip(idleDown);
+            animator.AddClip(idleUp);
+            animator.AddClip(idleRight);
+            animator.AddClip(idleLeft);
+            animator.AddClip(death);
+            animator.AddClip(walkingUp);
+            animator.AddClip(walkingRight);
+            animator.AddClip(walkingLeft);
+            animator.AddClip(walkingDown);
         }
     }
 }
