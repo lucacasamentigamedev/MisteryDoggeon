@@ -58,6 +58,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AivAlgo\Pathfinding\Algo.cs" />
+    <Compile Include="AivAlgo\Pathfinding\PriorityQueue.cs" />
+    <Compile Include="AivAlgo\Pathfinding\SearchTree.cs" />
+    <Compile Include="AivAlgo\Tiled\Base64Loader.cs" />
+    <Compile Include="AivAlgo\Tiled\Color.cs" />
+    <Compile Include="AivAlgo\Tiled\EDrawOrder.cs" />
+    <Compile Include="AivAlgo\Tiled\EOrientation.cs" />
+    <Compile Include="AivAlgo\Tiled\ERenderOrder.cs" />
+    <Compile Include="AivAlgo\Tiled\EStaggerAxis.cs" />
+    <Compile Include="AivAlgo\Tiled\EStaggerIndex.cs" />
+    <Compile Include="AivAlgo\Tiled\EType.cs" />
+    <Compile Include="AivAlgo\Tiled\Layer.cs" />
+    <Compile Include="AivAlgo\Tiled\LayerMesh.cs" />
+    <Compile Include="AivAlgo\Tiled\Map.cs" />
+    <Compile Include="AivAlgo\Tiled\MapMesh.cs" />
+    <Compile Include="AivAlgo\Tiled\Object.cs" />
+    <Compile Include="AivAlgo\Tiled\ObjectGroup.cs" />
+    <Compile Include="AivAlgo\Tiled\Property.cs" />
+    <Compile Include="AivAlgo\Tiled\Tile.cs" />
+    <Compile Include="AivAlgo\Tiled\Tileset.cs" />
+    <Compile Include="AivAlgo\Tiled\TileSprite.cs" />
     <Compile Include="Engine\AI\FSM.cs" />
     <Compile Include="Engine\AI\State.cs" />
     <Compile Include="Engine\AudioMgr.cs" />
@@ -95,20 +116,58 @@
     <Compile Include="Engine\UserComponent.cs" />
     <Compile Include="EventSystem\EventArgsFactory.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
-    <Compile Include="MysteryDungeon\Room_1.cs" />
+    <Compile Include="MysteryDungeon\Bullet.cs" />
+    <Compile Include="MysteryDungeon\BulletMgr.cs" />
+    <Compile Include="MysteryDungeon\PlatformButton.cs" />
+    <Compile Include="MysteryDungeon\Door.cs" />
+    <Compile Include="MysteryDungeon\FaceVelocity.cs" />
+    <Compile Include="MysteryDungeon\LampGate.cs" />
+    <Compile Include="MysteryDungeon\Room_0.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Assets\Tiled\Room0.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Tiled\Room1.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\textSheet.png">
+    <Content Include="Assets\crate.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\lamp_gate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\red_button.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\default_bullet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\text_sheet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiled\ObjectsTileset.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiled\MapTileset.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Assets\Tiled\MapTileset.tsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Assets\Tiled\ObjectsTileset.tsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </TypeScriptCompile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
