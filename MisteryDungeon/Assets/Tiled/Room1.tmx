@@ -34,7 +34,11 @@
   <object id="31" name="obstacle" gid="388" x="64" y="208" width="16" height="16"/>
   <object id="32" name="obstacle" gid="388" x="32" y="192" width="16" height="16"/>
   <object id="33" name="obstacle" gid="388" x="144" y="176" width="16" height="16"/>
-  <object id="34" name="player" gid="326" x="16.2093" y="127.907" width="16" height="16"/>
+  <object id="34" name="player" gid="326" x="16.2093" y="127.907" width="16" height="16">
+   <properties>
+    <property name="startPosition" type="bool" value="false"/>
+   </properties>
+  </object>
   <object id="35" name="door" gid="2" x="0" y="128" width="16" height="16">
    <properties>
     <property name="doorId" type="int" value="0"/>

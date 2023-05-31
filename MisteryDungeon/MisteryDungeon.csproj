@@ -119,6 +119,7 @@
     <Compile Include="EventSystem\EventManager.cs" />
     <Compile Include="MysteryDungeon\Bullet.cs" />
     <Compile Include="MysteryDungeon\BulletMgr.cs" />
+    <Compile Include="MysteryDungeon\GameConfig.cs" />
     <Compile Include="MysteryDungeon\PlatformButton.cs" />
     <Compile Include="MysteryDungeon\Door.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />

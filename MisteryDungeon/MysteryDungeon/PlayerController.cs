@@ -113,6 +113,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void OnCollide(Collision collisionInfo) {
             if (collisionInfo.Collider.gameObject.Tag == (int)GameObjectTag.Door) {
+                if(!GameConfig.FirstDoorPassed) GameConfig.FirstDoorPassed = true;
                 int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().ID;
                 Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
                 Game.SetLoadingScene();

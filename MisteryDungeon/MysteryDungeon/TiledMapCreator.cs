@@ -48,7 +48,14 @@ namespace MisteryDungeon.MysteryDungeon {
                             CreateDoor(objectGroup.Objects[i], i);
                             break;
                         case "player":
-                            CreatePlayer(objectGroup.Objects[i]);
+                            bool defaultPos = bool.Parse(getPropertyValueByName("startPosition", objectGroup.Objects[i].Properties));
+                            if(defaultPos && !GameConfig.FirstDoorPassed) {
+                                //disegno in posizione di default
+                                CreatePlayer(objectGroup.Objects[i]);
+                            } else if (!defaultPos && GameConfig.FirstDoorPassed) {
+                                //disegno affianco alla porta
+                                CreatePlayer(objectGroup.Objects[i]);
+                            }
                             break;
                     }
                 }
