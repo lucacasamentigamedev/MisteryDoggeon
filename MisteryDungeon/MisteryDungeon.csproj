@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AivAlgo\Pathfinding\Algo.cs" />
+    <Compile Include="AivAlgo\Pathfinding\MovementGrid.cs" />
     <Compile Include="AivAlgo\Pathfinding\PriorityQueue.cs" />
     <Compile Include="AivAlgo\Pathfinding\SearchTree.cs" />
     <Compile Include="AivAlgo\Tiled\Base64Loader.cs" />

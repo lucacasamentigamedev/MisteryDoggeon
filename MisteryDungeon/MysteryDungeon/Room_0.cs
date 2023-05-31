@@ -1,12 +1,15 @@
 ﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
-using Aiv.Tiled;
+using MisteryDungeon.AivAlgo.Pathfinding;
 using MisteryDungeon.MysteryDungeon;
+using Aiv.Tiled;
 using OpenTK;
 using System;
 
 namespace MisteryDungeon {
-    internal class Room_0: Scene {
+    internal class Room_0 : Scene {
+
+        private MovementGrid grid;
         protected override void LoadAssets() {
             FontMgr.AddFont("std_font", "Assets/text_sheet.png", 15, 32, 20, 20);
             GfxMgr.AddTexture("red_button", "Assets/red_button.png");
@@ -18,27 +21,25 @@ namespace MisteryDungeon {
 
         public override void InitializeScene() {
             base.InitializeScene();
-
+            //tiled map creation
             Map map = new Map("Assets/Tiled/Room0.tmx");
             float tileUnitWidth = (float)Game.Win.OrthoWidth / map.Width;
             float tileUnitHeight = (float)Game.Win.OrthoHeight / map.Height;
-
             CreateMap(tileUnitWidth, tileUnitHeight, map);
-            CreatePlayer(tileUnitWidth, tileUnitHeight);
         }
 
         private void CreateMap(float tileUnitWidth, float tileUnitHeight, Map map) {
-            
-            //Layers
+            //Background & Collisions layers
             foreach (Layer layer in map.Layers) {
                 if (layer.Name == "Background") {
                     CreateBackground(layer, map, map.TileWidth,
                         tileUnitWidth, map.TileHeight, tileUnitHeight);
-                } else if (layer.Name == "Collision") {
-                    //TODO: pathfinding per le collisioni
+                } else if (layer.Name == "Collisions") {
+                    grid = new MovementGrid(map.Width, map.Height, layer);
+                    PrintMovementGrid(grid);
                 }
             }
-            //Objects
+            //Objects layers
             foreach (ObjectGroup objectGroup in map.ObjectGroups) {
                 for (int i = 0; i < objectGroup.Objects.Count; i++) {
                     switch (objectGroup.Objects[i].Name) {
@@ -54,12 +55,15 @@ namespace MisteryDungeon {
                         case "door":
                             CreateDoor(objectGroup.Objects[i], i, map.TileWidth, tileUnitWidth, tileUnitHeight);
                             break;
+                        case "player":
+                            CreatePlayer(objectGroup.Objects[i], tileUnitWidth, tileUnitHeight, map, grid);
+                            break;
                     }
                 }
             }
         }
 
-        public void CreateBackground(Layer layer, Map map, float tileWidth,
+        private void CreateBackground(Layer layer, Map map, float tileWidth,
             float tileUnitWidth, float tileHeight, float tileUnitHeight) {
             for (int i = 0; i < layer.Tiles.GetLength(0); i++) {
                 for (int j = 0; j < layer.Tiles.GetLength(1); j++) {
@@ -69,30 +73,39 @@ namespace MisteryDungeon {
             }
         }
 
-        public void CreateTile(TileSprite tileSprite, int xIndex, int yIndex,
+        private void CreateTile(TileSprite tileSprite, int xIndex, int yIndex,
             float tileWidth, float tileUnitWidth, float tileHeight, float tileUnitHeight) {
-            Vector2 pos = new Vector2(tileUnitWidth * xIndex, tileUnitHeight * yIndex);
+            Vector2 pos = new Vector2(
+                tileUnitWidth * xIndex + (tileUnitWidth / 2),
+                tileUnitHeight * yIndex + (tileUnitHeight / 2)
+            );
             GameObject go = new GameObject("Background_Tile_" + xIndex + "_" + yIndex, pos);
-            go.AddComponent(SpriteRenderer.Factory(go, tileSprite.Texture, Vector2.Zero, DrawLayer.Background, tileWidth, tileHeight));
+            go.AddComponent(SpriteRenderer.Factory(go, tileSprite.Texture, Vector2.One * 0.5f, DrawLayer.Background, tileWidth, tileHeight));
             SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
             sr.TextureOffset = new Vector2(tileSprite.OffsetX, tileSprite.OffsetY);
             go.transform.Scale = new Vector2(tileUnitWidth / sr.Width, tileUnitHeight / sr.Height);
             Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
         }
 
-        public void CreateObstacle(Aiv.Tiled.Object obj, int index, float tileWidth, float tileUnitWidth, float tileUnitHeight) {
-            Vector2 pos = new Vector2(((float)obj.X / tileWidth) * tileUnitWidth, ((float)obj.Y / tileWidth) * tileUnitHeight);
+        private void CreateObstacle(Aiv.Tiled.Object obj, int index, float tileWidth, float tileUnitWidth, float tileUnitHeight) {
+            Vector2 pos = new Vector2(
+                ((float)obj.X / tileWidth) * tileUnitWidth + (tileUnitWidth / 2),
+                ((float)obj.Y / tileWidth) * tileUnitHeight - (tileUnitHeight / 2)
+            );
             GameObject go = new GameObject("Object_Obstacle_" + index, pos);
-            SpriteRenderer sr = SpriteRenderer.Factory(go, "crate", Vector2.UnitY, DrawLayer.Background);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "crate", Vector2.One * 0.5f, DrawLayer.Background);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(tileUnitWidth / sr.Width, tileUnitHeight / sr.Height);
             Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
         }
-        
-        public void CreateButton(Aiv.Tiled.Object obj, int index, float tileWidth, float tileUnitWidth, float tileUnitHeight) {
-            Vector2 pos = new Vector2(((float)obj.X / tileWidth) * tileUnitWidth,((float)obj.Y / tileWidth) * tileUnitHeight);
+
+        private void CreateButton(Aiv.Tiled.Object obj, int index, float tileWidth, float tileUnitWidth, float tileUnitHeight) {
+            Vector2 pos = new Vector2(
+                ((float)obj.X / tileWidth) * tileUnitWidth + (tileUnitWidth / 2),
+                ((float)obj.Y / tileWidth) * tileUnitHeight - (tileUnitHeight / 2)
+            );
             GameObject go = new GameObject("Object_Red_Button_" + index, pos);
-            SpriteRenderer sr = SpriteRenderer.Factory(go, "red_button", Vector2.UnitY, DrawLayer.Background);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "red_button", Vector2.One * 0.5f, DrawLayer.Background);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(tileUnitWidth / sr.Width, tileUnitHeight / sr.Height);
             int ID = 0;
@@ -103,22 +116,28 @@ namespace MisteryDungeon {
             Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
         }
 
-        public void CreateLampGate(Aiv.Tiled.Object obj, int index, float tileWidth, float tileUnitWidth, float tileUnitHeight) {
-            Vector2 pos = new Vector2(((float)obj.X / tileWidth) * tileUnitWidth, ((float)obj.Y / tileWidth) * tileUnitHeight);
+        private void CreateLampGate(Aiv.Tiled.Object obj, int index, float tileWidth, float tileUnitWidth, float tileUnitHeight) {
+            Vector2 pos = new Vector2(
+                ((float)obj.X / tileWidth) * tileUnitWidth + (tileUnitWidth / 2),
+                ((float)obj.Y / tileWidth) * tileUnitHeight - (tileUnitHeight / 2)
+            );
             GameObject go = new GameObject("Object_Lamp_Gate_" + index, pos);
-            SpriteRenderer sr = SpriteRenderer.Factory(go, "lamp_gate", Vector2.UnitY, DrawLayer.Background);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "lamp_gate", Vector2.One * 0.5f, DrawLayer.Background);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(tileUnitWidth / sr.Width, tileUnitHeight / sr.Height);
             int ID = 0;
-            foreach(var property in obj.Properties) {
+            foreach (var property in obj.Properties) {
                 if (property.Name != "gateId") ID = int.Parse(property.Value);
             }
             go.AddComponent<LampGate>(ID);
             Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
         }
 
-        public void CreateDoor(Aiv.Tiled.Object obj, int index, float tileWidth, float tileUnitWidth, float tileUnitHeight) {
-            Vector2 pos = new Vector2(((float)obj.X / tileWidth) * tileUnitWidth, ((float)obj.Y / tileWidth) * tileUnitHeight);
+        private void CreateDoor(Aiv.Tiled.Object obj, int index, float tileWidth, float tileUnitWidth, float tileUnitHeight) {
+            Vector2 pos = new Vector2(
+                ((float)obj.X / tileWidth) * tileUnitWidth + (tileUnitWidth / 2),
+                ((float)obj.Y / tileWidth) * tileUnitHeight - (tileUnitHeight / 2)
+            );
             GameObject go = new GameObject("Object_Lamp_Gate_" + index, pos);
             int ID = 0;
             foreach (var property in obj.Properties) {
@@ -128,17 +147,27 @@ namespace MisteryDungeon {
             Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
         }
 
-        public void CreatePlayer(float tileUnitWidth, float tileUnitHeight) {
-            Vector2 pos = new Vector2(8 * tileUnitWidth, 3 * tileUnitHeight);
+        private void CreatePlayer(Aiv.Tiled.Object obj, float tileUnitWidth, float tileUnitHeight, Map map, MovementGrid grid) {
+            Vector2 cellIndex = new Vector2(
+                (float)obj.X / map.TileWidth,
+                ((float)obj.Y / map.TileWidth) -1
+            );
+            Vector2 pos = new Vector2(
+                cellIndex.X * tileUnitWidth + (tileUnitWidth / 2),
+                cellIndex.Y * tileUnitHeight + (tileUnitHeight / 2)
+            );
             GameObject go = new GameObject("Player", pos);
             Sheet sheet = new Sheet(GfxMgr.GetTexture("player"), 6, 4);
-            SpriteRenderer sr = SpriteRenderer.Factory(go, "player", Vector2.Zero,
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "player", Vector2.One * 0.5f,
                 DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(tileUnitWidth / sr.Width, tileUnitHeight / sr.Height);
             CreateAnimations(go, sheet);
-            go.AddComponent<PlayerController>();
-            Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+            go.AddComponent<PlayerController>(grid, 3f, tileUnitWidth, tileUnitHeight, map.Height, map.Width);
+            Rigidbody rb = go.AddComponent<Rigidbody>();
+            rb.Type = RigidbodyType.Player;
+            go.AddComponent(ColliderFactory.CreateBoxFor(go));
+            Console.WriteLine("Creato " + go.Name + " in cella " + cellIndex.ToString());
         }
 
         private void CreateAnimations(GameObject go, Sheet sheet) {
@@ -179,6 +208,18 @@ namespace MisteryDungeon {
             animator.AddClip(walkingRight);
             animator.AddClip(walkingLeft);
             animator.AddClip(walkingDown);
+        }
+
+        private void PrintMovementGrid(MovementGrid grid) {
+            Console.WriteLine("Mappa pathfinding");
+            Console.WriteLine();
+            for (int x = 0; x < grid.Map.GetLength(0); ++x) {
+                for (int y = 0; y < grid.Map.GetLength(1); ++y) {
+                    Console.Write((int)grid.Map[x, y] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
         }
     }
 }
