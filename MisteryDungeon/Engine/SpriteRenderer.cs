@@ -40,6 +40,11 @@ namespace Aiv.Fast2D.Component {
                 return height * transform.Scale.Y;
             }
         }
+        public float HeightUnscaled {
+            get {
+                return height;
+            }
+        }
         private float width;
         public float Width {
             get {
@@ -47,6 +52,12 @@ namespace Aiv.Fast2D.Component {
             }
             set {
                 width = value;
+            }
+        }
+
+        public float WidthUnscaled {
+            get {
+                return width;
             }
         }
 

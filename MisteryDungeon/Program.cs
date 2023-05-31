@@ -2,7 +2,16 @@
 using Aiv.Fast2D.Component;
 
 namespace MisteryDungeon.MysteryDungeon {
-    internal class Program {
+
+    public enum GameObjectTag {
+        Player,
+        Bullet,
+        Enemy,
+        Door,
+        Box
+    }
+
+    class Program {
         static void Main(string[] args) {
             Input.AddUserButton("Player_Move", new ButtonMatch[] {
                 new MouseButtonMatch(MouseButton.LeftMouse)

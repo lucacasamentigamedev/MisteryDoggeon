@@ -124,7 +124,9 @@
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
     <Compile Include="MysteryDungeon\LampGate.cs" />
     <Compile Include="MysteryDungeon\PlayerController.cs" />
-    <Compile Include="MysteryDungeon\Room_0.cs" />
+    <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
+    <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />
+    <Compile Include="MysteryDungeon\TiledMapCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

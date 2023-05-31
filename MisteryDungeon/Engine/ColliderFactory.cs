@@ -20,5 +20,11 @@ namespace Aiv.Fast2D.Component {
                 new Vector2 ((0.5f - sr.Pivot.X) * sr.Width, (0.5f - sr.Pivot.Y) * sr.Height));
         }
 
+        public static Collider CreateUnscaledBoxFor(GameObject obj) {
+            SpriteRenderer sr = obj.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+            return new BoxCollider(obj, sr.WidthUnscaled, sr.HeightUnscaled,
+                new Vector2((0.5f - sr.Pivot.X) * sr.WidthUnscaled, (0.5f - sr.Pivot.Y) * sr.HeightUnscaled));
+        }
+
     }
 }

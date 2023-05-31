@@ -1,4 +1,6 @@
-﻿using Aiv.Fast2D.Component;
+﻿using System;
+using Aiv.Fast2D.Component;
+using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
     internal class Door : UserComponent {

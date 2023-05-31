@@ -4,16 +4,21 @@ using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting;
 
 namespace MisteryDungeon.MysteryDungeon {
     internal class PlayerController : UserComponent {
 
-        private SearchTree.AStarSearchProgress<MovementGrid.GridMovementState> searchProgress = null;
+        //pathfinding
         private MovementGrid grid;
         private List<Vector2> path = new List<Vector2>();
+
+        //ref
         private Rigidbody rigidbody;
+
+        //working var
         private float moveSpeed;
-        private bool isMoving = false;
+        private bool isMoving;
         private float tileUnitWidth;
         private float tileUnitHeight;
         private int mapTileColumns;
@@ -27,6 +32,7 @@ namespace MisteryDungeon.MysteryDungeon {
             this.tileUnitHeight = tileUnitHeight;
             this.mapTileColumns = mapTileColumns;
             this.mapTileRows = mapTileRows;
+            isMoving = false;
         }
 
         public override void Awake() {
@@ -105,6 +111,15 @@ namespace MisteryDungeon.MysteryDungeon {
         private void StopMovement() {
             rigidbody.Velocity = Vector2.Zero;
             isMoving = false;
+        }
+
+        public override void OnCollide(Collision collisionInfo) {
+            if (collisionInfo.Collider.gameObject.Tag == (int)GameObjectTag.Door) {
+                int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().ID;
+                Console.WriteLine("Il player ha toccato una porta");
+                Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
+                Game.TriggerChangeScene(nextScene);
+            }
         }
     }
 }

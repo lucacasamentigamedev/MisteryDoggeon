@@ -40,7 +40,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 DrawLayer.Playground));
             Rigidbody rb = bullet.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Bullet;
-            rb.AddCollisionType((uint)RigidbodyType.Obstacle);
+            rb.AddCollisionType((uint)RigidbodyType.Box);
             rb.AddCollisionType((uint)RigidbodyType.Enemy);
             bullet.AddComponent(ColliderFactory.CreateBoxFor(bullet));
             bullet.AddComponent<FaceVelocity>();

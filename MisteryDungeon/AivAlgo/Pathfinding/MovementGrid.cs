@@ -1,14 +1,13 @@
 ﻿using Aiv;
 using Aiv.Tiled;
 using OpenTK;
-using System;
 using System.Collections.Generic;
 
 namespace MisteryDungeon.AivAlgo.Pathfinding {
     public class MovementGrid {
         public enum EGridTile {
             Floor = 1,
-            Obstacle = -1
+            Wall = -1
         }
 
         public class GridMovementState : Aiv.ISearchTreeState<GridMovementState> {
@@ -28,10 +27,10 @@ namespace MisteryDungeon.AivAlgo.Pathfinding {
             public List<Aiv.SearchTreeAction<GridMovementState>> GetActions() {
                 List<Aiv.SearchTreeAction<GridMovementState>> actions = new List<Aiv.SearchTreeAction<GridMovementState>>();
 
-                if (X > 0 && map[X - 1, Y] != EGridTile.Obstacle) actions.Add(new Aiv.SearchTreeAction<GridMovementState> { Cost = (float)map[X - 1, Y], NewState = new GridMovementState { X = X - 1, Y = Y, map = map } });
-                if (X < map.GetLength(0) - 1 && map[X + 1, Y] != EGridTile.Obstacle) actions.Add(new Aiv.SearchTreeAction<GridMovementState> { Cost = (float)map[X + 1, Y], NewState = new GridMovementState { X = X + 1, Y = Y, map = map } });
-                if (Y > 0 && map[X, Y - 1] != EGridTile.Obstacle) actions.Add(new Aiv.SearchTreeAction<GridMovementState> { Cost = (float)map[X, Y - 1], NewState = new GridMovementState { X = X, Y = Y - 1, map = map } });
-                if (Y < map.GetLength(1) - 1 && map[X, Y + 1] != EGridTile.Obstacle) actions.Add(new Aiv.SearchTreeAction<GridMovementState> { Cost = (float)map[X, Y + 1], NewState = new GridMovementState { X = X, Y = Y + 1, map = map } });
+                if (X > 0 && map[X - 1, Y] != EGridTile.Wall) actions.Add(new Aiv.SearchTreeAction<GridMovementState> { Cost = (float)map[X - 1, Y], NewState = new GridMovementState { X = X - 1, Y = Y, map = map } });
+                if (X < map.GetLength(0) - 1 && map[X + 1, Y] != EGridTile.Wall) actions.Add(new Aiv.SearchTreeAction<GridMovementState> { Cost = (float)map[X + 1, Y], NewState = new GridMovementState { X = X + 1, Y = Y, map = map } });
+                if (Y > 0 && map[X, Y - 1] != EGridTile.Wall) actions.Add(new Aiv.SearchTreeAction<GridMovementState> { Cost = (float)map[X, Y - 1], NewState = new GridMovementState { X = X, Y = Y - 1, map = map } });
+                if (Y < map.GetLength(1) - 1 && map[X, Y + 1] != EGridTile.Wall) actions.Add(new Aiv.SearchTreeAction<GridMovementState> { Cost = (float)map[X, Y + 1], NewState = new GridMovementState { X = X, Y = Y + 1, map = map } });
 
                 return actions;
             }
@@ -55,7 +54,7 @@ namespace MisteryDungeon.AivAlgo.Pathfinding {
             Map = new EGridTile[width, height];
             for (int x = 0; x < Map.GetLength(0); ++x) {
                 for (int y = 0; y < Map.GetLength(1); ++y) {
-                    Map[x, y] = rnd.NextDouble() < 0.8 ? EGridTile.Floor : EGridTile.Obstacle;
+                    Map[x, y] = rnd.NextDouble() < 0.8 ? EGridTile.Floor : EGridTile.Wall;
                 }
             }
         }
@@ -64,7 +63,8 @@ namespace MisteryDungeon.AivAlgo.Pathfinding {
             Map = new EGridTile[width, height];
             for (int x = 0; x < Map.GetLength(0); ++x) {
                 for (int y = 0; y < Map.GetLength(1); ++y) {
-                    Map[x, y] = collisionLayer.Tiles[x, y].Gid != 0 ? EGridTile.Obstacle : EGridTile.Floor;
+                    //237 is the gid of collision tile
+                    Map[x, y] = collisionLayer.Tiles[x, y].Gid == 237 ? EGridTile.Wall : EGridTile.Floor;
                 }
             }
         }
