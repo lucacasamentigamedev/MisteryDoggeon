@@ -1,4 +1,6 @@
-﻿namespace Aiv.Fast2D.Component {
+﻿using OpenTK;
+
+namespace Aiv.Fast2D.Component {
     static class Game {
 
         private static bool changeScene;
@@ -103,5 +105,11 @@
             currentScene.Start();
         }
 
+        public static void SetLoadingScene() {
+            GameObject load = new GameObject("Loading_Scene", new Vector2(Win.OrthoWidth / 2, Win.OrthoHeight / 2));
+            SpriteRenderer sr = SpriteRenderer.Factory(load, "loading", Vector2.One * 0.5f, DrawLayer.GUI);
+            load.transform.Scale = new Vector2(Win.OrthoWidth / sr.Width / 1.5f, Win.OrthoHeight / sr.Width / 1.5f);
+            load.AddComponent(sr);
+        }
     }
 }

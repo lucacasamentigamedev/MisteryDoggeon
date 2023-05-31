@@ -1,10 +1,8 @@
-﻿using Aiv;
-using Aiv.Fast2D.Component;
+﻿using Aiv.Fast2D.Component;
 using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting;
 
 namespace MisteryDungeon.MysteryDungeon {
     internal class PlayerController : UserComponent {
@@ -116,8 +114,8 @@ namespace MisteryDungeon.MysteryDungeon {
         public override void OnCollide(Collision collisionInfo) {
             if (collisionInfo.Collider.gameObject.Tag == (int)GameObjectTag.Door) {
                 int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().ID;
-                Console.WriteLine("Il player ha toccato una porta");
                 Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
+                Game.SetLoadingScene();
                 Game.TriggerChangeScene(nextScene);
             }
         }

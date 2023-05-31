@@ -146,6 +146,9 @@
     <Content Include="Assets\crate.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\loading.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\lamp_gate.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

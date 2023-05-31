@@ -8,6 +8,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("red_button", "Assets/red_button.png");
             GfxMgr.AddTexture("crate", "Assets/crate.png");
             GfxMgr.AddTexture("door", "Assets/crate.png");
+            GfxMgr.AddTexture("loading", "Assets/loading.png");
             GfxMgr.AddTexture("lamp_gate", "Assets/lamp_gate.png");
             GfxMgr.AddTexture("default_bullet", "Assets/default_bullet.png");
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
