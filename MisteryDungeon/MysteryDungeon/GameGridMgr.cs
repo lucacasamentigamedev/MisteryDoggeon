@@ -23,9 +23,9 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public static void ChangeGridTileType(Vector2 pos, int roomId, MovementGrid.EGridTile type) {
-            Console.WriteLine("Setto " + type + " in stanza " + roomId + " in pos " + pos.ToString());
+            if(GameConfigMgr.debugPathfinding)Console.WriteLine("Setto " + type + " in stanza " + roomId + " in pos " + pos.ToString());
             GetRoomGrid(roomId).Map[(int)pos.X, (int)pos.Y] = type;
-            PrintMovementGrid(roomId);
+            if (GameConfigMgr.debugPathfinding) PrintMovementGrid(roomId);
         }
 
         public static void PrintMovementGrid(int roomId) {

@@ -1,6 +1,8 @@
 ﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
+using OpenTK;
+using System;
 
 namespace MisteryDungeon {
     internal class Room_0 : Scene {
@@ -17,6 +19,13 @@ namespace MisteryDungeon {
         public override void InitializeScene() {
             base.InitializeScene();
             GameMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
+            CreatePuzzleMgr();
+        }
+
+        public void CreatePuzzleMgr() {
+            GameObject go = new GameObject("PuzzleMgr", Vector2.Zero);
+            go.AddComponent<PuzzleMgr>(10, 2);
+            if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + Vector2.Zero);
         }
     }
 }

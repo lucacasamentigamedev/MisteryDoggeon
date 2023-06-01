@@ -1,5 +1,13 @@
 ﻿namespace MisteryDungeon.MysteryDungeon {
     static class GameConfigMgr {
+
+        /* DEBUG var, to active/disactive Console.Writeline*/
+        public static bool debugPathfinding = false;
+        public static bool debugPuzzle = true;
+        public static bool debugGameObjectCreations = false;
+        public static bool debugBoxColliderWireframe = true;
+        /************************************************/
+
         private static float tileUnitWidth;
         public static float TileUnitWidth {
             get { return tileUnitWidth; }
@@ -45,6 +53,12 @@
         public static int MapColumns {
             get { return mapColumns; }
             set { mapColumns = value; }
+        }
+
+        private static int platformButtons;
+        public static int PlatformButtons {
+            get { return platformButtons; }
+            set { platformButtons = value; }
         }
     }
 }

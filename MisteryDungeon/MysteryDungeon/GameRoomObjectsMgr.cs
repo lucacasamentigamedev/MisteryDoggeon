@@ -43,7 +43,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 (int)Math.Ceiling(xPos / GameConfigMgr.TilePixelWidth),
                 (int)Math.Ceiling(yPos / GameConfigMgr.TilePixelHeight) - 1
             );
-            Console.WriteLine("Setto false per l'oggetto " + objectId + " e Floor nella cella " + cellPos.ToString());
+            if (GameConfigMgr.debugPathfinding) Console.WriteLine("Setto false per l'oggetto " + objectId + " e Floor nella cella " + cellPos.ToString());
             GameGridMgr.ChangeGridTileType(cellPos, roomId, MovementGrid.EGridTile.Floor);
         }
     }

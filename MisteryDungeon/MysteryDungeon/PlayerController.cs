@@ -72,7 +72,7 @@ namespace MisteryDungeon.MysteryDungeon {
             );
 
             path = grid.FindPath(startingCell, targetCell);
-            PrintPath();
+            if (GameConfigMgr.debugPathfinding) PrintPath();
 
             //click on wall or obstacle
             if (path.Count <= 0) {
@@ -82,8 +82,8 @@ namespace MisteryDungeon.MysteryDungeon {
             };
 
             //convert map position into unit position
-            Console.WriteLine("Cella inizio = " + startingCell.ToString());
-            Console.WriteLine("Cella fine = " + path[path.Count-1].ToString());
+            if (GameConfigMgr.debugPathfinding) Console.WriteLine("Cella inizio = " + startingCell.ToString());
+            if (GameConfigMgr.debugPathfinding) Console.WriteLine("Cella fine = " + path[path.Count-1].ToString());
             for (int i = 0; i < path.Count; i++) {
                 path[i] = new Vector2(
                     ((Game.Win.OrthoWidth * path[i].X) / mapRows) + (tileUnitWidth / 2),
@@ -112,11 +112,14 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void OnCollide(Collision collisionInfo) {
             if (collisionInfo.Collider.gameObject.Tag == (int)GameObjectTag.Door) {
-                if(!GameConfigMgr.FirstDoorPassed) GameConfigMgr.FirstDoorPassed = true;
+                if (!GameConfigMgr.FirstDoorPassed) GameConfigMgr.FirstDoorPassed = true;
                 int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
                 Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
                 Game.SetLoadingScene();
                 Game.TriggerChangeScene(nextScene);
+            } else if (collisionInfo.Collider.gameObject.Tag == (int)GameObjectTag.PlatformButton) {
+                int seqId = collisionInfo.Collider.gameObject.GetComponent<PlatformButton>().SequenceId;
+                EventManager.CastEvent(EventList.ButtonPressed, EventArgsFactory.ButtonPressedFactory(seqId));
             }
         }
     }

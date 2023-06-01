@@ -1,9 +1,5 @@
 ﻿using OpenTK;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aiv.Fast2D.Component {
     public static class ColliderFactory {
@@ -25,6 +21,10 @@ namespace Aiv.Fast2D.Component {
             return new BoxCollider(obj, sr.WidthUnscaled, sr.HeightUnscaled,
                 new Vector2((0.5f - sr.Pivot.X) * sr.WidthUnscaled, (0.5f - sr.Pivot.Y) * sr.HeightUnscaled));
         }
-
+        public static Collider CreateHalfUnscaledBoxFor(GameObject obj) {
+            SpriteRenderer sr = obj.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+            return new BoxCollider(obj, sr.WidthUnscaled / 2, sr.HeightUnscaled / 2,
+                new Vector2((0.5f - sr.Pivot.X) * sr.WidthUnscaled, (0.5f - sr.Pivot.Y) * sr.HeightUnscaled));
+        }
     }
 }

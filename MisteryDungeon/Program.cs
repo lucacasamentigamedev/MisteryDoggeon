@@ -1,14 +1,12 @@
-﻿using Aiv.Fast2D;
-using Aiv.Fast2D.Component;
+﻿using Aiv.Fast2D.Component;
 
 namespace MisteryDungeon.MysteryDungeon {
 
     public enum GameObjectTag {
         Player,
-        Bullet,
         Enemy,
         Door,
-        Box
+        PlatformButton
     }
 
     class Program {

@@ -3,11 +3,7 @@
 namespace Aiv.Fast2D.Component {
 
     public enum EventList {
-        //BulletDestroyed,
-        //CannonShooted,
-        //BoxDestroyed,
-        //PlayerHPChanged,
-        //BulletSpawned
+        ButtonPressed
     }
 
     public static class EventManager {
@@ -32,39 +28,15 @@ namespace Aiv.Fast2D.Component {
 
     }
 
-    public class SingleIntDoubleFloatEventArgs : EventArgs {
+    public class SingleIntEventArgs : EventArgs {
 
         private int intParameter;
         public int IntParameter {
             get { return intParameter; }
         }
-        private float firstFloatParameter;
-        public float FirstFloatParameter {
-            get { return firstFloatParameter; }
-        }
-        private float secondFloatParameter;
-        public float SecondFloatParameter {
-            get { return secondFloatParameter; }
-        }
 
-        public SingleIntDoubleFloatEventArgs(int intParameter, float firstFloatParameter, 
-            float secondFloatParameter) {
+        public SingleIntEventArgs(int intParameter) {
             this.intParameter = intParameter;
-            this.firstFloatParameter = firstFloatParameter;
-            this.secondFloatParameter = secondFloatParameter;
         }
-
     }
-
-    //public class BulletSpawnedEventArgs : EventArgs {
-    //    private Bullet bullet;
-    //    public Bullet Bullet {
-    //        get { return bullet; }
-    //    }
-
-    //    public BulletSpawnedEventArgs (Bullet bullet) {
-    //        this.bullet = bullet;
-    //    }
-    //}
-
 }

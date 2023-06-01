@@ -4,13 +4,13 @@ namespace MisteryDungeon.MysteryDungeon {
     internal class PlatformButton : UserComponent {
 
         private int id;
-        private int sequenceStep;
+        private int sequenceId;
         public int ID { get { return id; } }
-        public int SequenceStep { get { return sequenceStep; } }
+        public int SequenceId { get { return sequenceId; } }
 
-        public PlatformButton(GameObject go, int id, int sequenceStep) : base(go) {
+        public PlatformButton(GameObject go, int id, int sequenceId) : base(go) {
             this.id = ID;
-            this.sequenceStep = sequenceStep;
+            this.sequenceId = sequenceId;
         }
     }
 }
