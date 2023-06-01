@@ -117,17 +117,17 @@
     <Compile Include="Engine\UserComponent.cs" />
     <Compile Include="EventSystem\EventArgsFactory.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
-    <Compile Include="MysteryDungeon\Bullet.cs" />
-    <Compile Include="MysteryDungeon\BulletMgr.cs" />
-    <Compile Include="MysteryDungeon\GameConfig.cs" />
+    <Compile Include="MysteryDungeon\GameConfigMgr.cs" />
+    <Compile Include="MysteryDungeon\GameGridMgr.cs" />
+    <Compile Include="MysteryDungeon\GameRoomObjectsMgr.cs" />
     <Compile Include="MysteryDungeon\PlatformButton.cs" />
     <Compile Include="MysteryDungeon\Door.cs" />
-    <Compile Include="MysteryDungeon\FaceVelocity.cs" />
-    <Compile Include="MysteryDungeon\LampGate.cs" />
+    <Compile Include="MysteryDungeon\Gate.cs" />
     <Compile Include="MysteryDungeon\PlayerController.cs" />
+    <Compile Include="MysteryDungeon\Obstacle.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />
-    <Compile Include="MysteryDungeon\TiledMapCreator.cs" />
+    <Compile Include="MysteryDungeon\GameMapMgr.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

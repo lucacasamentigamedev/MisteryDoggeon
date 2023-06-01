@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
+
 namespace MisteryDungeon {
     internal class Room_0 : Scene {
         protected override void LoadAssets() {
@@ -9,15 +10,13 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("crate", "Assets/crate.png");
             GfxMgr.AddTexture("door", "Assets/crate.png");
             GfxMgr.AddTexture("loading", "Assets/loading.png");
-            GfxMgr.AddTexture("lamp_gate", "Assets/lamp_gate.png");
-            GfxMgr.AddTexture("default_bullet", "Assets/default_bullet.png");
+            GfxMgr.AddTexture("gate", "Assets/lamp_gate.png");
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
         }
 
         public override void InitializeScene() {
             base.InitializeScene();
-            TiledMapCreator tmc = new TiledMapCreator(0);
-            tmc.CreateMap();
+            GameMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
         }
     }
 }

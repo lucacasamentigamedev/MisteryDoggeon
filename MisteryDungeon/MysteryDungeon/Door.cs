@@ -1,15 +1,16 @@
-﻿using System;
-using Aiv.Fast2D.Component;
-using OpenTK;
+﻿using Aiv.Fast2D.Component;
 
 namespace MisteryDungeon.MysteryDungeon {
     internal class Door : UserComponent {
 
         private int id;
         public int ID { get { return id; } }
+        private int roomToGo;
+        public int RoomToGo { get { return roomToGo; } }
 
-        public Door(GameObject owner, int ID) : base(owner) {
-            id = ID;
+        public Door(GameObject owner, int id, int roomToGo) : base(owner) {
+            this.id = id;
+            this.roomToGo = roomToGo;
         }
     }
 }

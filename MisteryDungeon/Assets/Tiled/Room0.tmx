@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="46">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="47">
  <tileset firstgid="1" source="MapTileset.tsx"/>
- <layer id="1" name="Background" width="15" height="15">
+ <layer id="1" name="Background" width="15" height="15" visible="0">
   <data encoding="csv">
 107,207,207,207,207,207,207,207,207,207,207,207,207,207,108,
 192,217,169,217,217,217,217,217,217,217,217,217,169,217,190,
@@ -21,27 +21,18 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
-  <object id="22" name="weapon" gid="2" x="112" y="128" width="16" height="16">
-   <properties>
-    <property name="weaponId" type="int" value="0"/>
-   </properties>
-  </object>
+  <object id="22" name="weapon" gid="2" x="96" y="128" width="16" height="16"/>
   <object id="25" name="door" gid="2" x="224" y="128" width="16" height="16">
    <properties>
-    <property name="doorId" type="int" value="1"/>
+    <property name="roomToGo" type="int" value="1"/>
    </properties>
   </object>
   <object id="26" name="door" gid="2" x="0" y="128" width="16" height="16">
    <properties>
-    <property name="doorId" type="int" value="0"/>
-    <property name="true" type="bool" value="true"/>
+    <property name="roomToGo" type="int" value="2"/>
    </properties>
   </object>
-  <object id="27" name="gate" gid="2" x="16" y="128" width="16" height="16">
-   <properties>
-    <property name="gateId" type="int" value="0"/>
-   </properties>
-  </object>
+  <object id="27" name="gate" gid="2" x="16" y="128" width="16" height="16"/>
   <object id="28" name="button" gid="2" x="16" y="32" width="16" height="16">
    <properties>
     <property name="sequenceId" type="int" value="0"/>
@@ -88,8 +79,9 @@
     <property name="startPosition" type="bool" value="false"/>
    </properties>
   </object>
+  <object id="46" name="key" gid="2" x="128" y="128" width="16" height="16"/>
  </objectgroup>
- <layer id="5" name="Collisions" width="15" height="15" opacity="0.5">
+ <layer id="5" name="Collisions" width="15" height="15" visible="0" opacity="0.5">
   <data encoding="csv">
 237,237,237,237,237,237,237,237,237,237,237,237,237,237,237,
 237,0,237,0,0,0,0,0,0,0,0,0,237,237,237,

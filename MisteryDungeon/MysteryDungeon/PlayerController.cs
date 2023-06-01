@@ -19,17 +19,16 @@ namespace MisteryDungeon.MysteryDungeon {
         private bool isMoving;
         private float tileUnitWidth;
         private float tileUnitHeight;
-        private int mapTileColumns;
-        private int mapTileRows;
+        private int mapColumns;
+        private int mapRows;
 
-        public PlayerController(GameObject owner, MovementGrid grid, float moveSpeed, float tileUnitWidth,
-            float tileUnitHeight, int mapTileColumns, int mapTileRows) : base(owner) {
+        public PlayerController(GameObject owner, MovementGrid grid, float moveSpeed) : base(owner) {
             this.grid = grid;
             this.moveSpeed = moveSpeed;
-            this.tileUnitWidth = tileUnitWidth;
-            this.tileUnitHeight = tileUnitHeight;
-            this.mapTileColumns = mapTileColumns;
-            this.mapTileRows = mapTileRows;
+            tileUnitWidth = GameConfigMgr.TileUnitWidth;
+            tileUnitHeight = GameConfigMgr.TileUnitHeight;
+            mapColumns = GameConfigMgr.MapColumns;
+            mapRows = GameConfigMgr.MapRows;
             isMoving = false;
         }
 
@@ -87,8 +86,8 @@ namespace MisteryDungeon.MysteryDungeon {
             Console.WriteLine("Cella fine = " + path[path.Count-1].ToString());
             for (int i = 0; i < path.Count; i++) {
                 path[i] = new Vector2(
-                    ((Game.Win.OrthoWidth * path[i].X) / mapTileRows) + (tileUnitWidth / 2),
-                    ((Game.Win.OrthoHeight * path[i].Y) / mapTileColumns) + (tileUnitHeight / 2)
+                    ((Game.Win.OrthoWidth * path[i].X) / mapRows) + (tileUnitWidth / 2),
+                    ((Game.Win.OrthoHeight * path[i].Y) / mapColumns) + (tileUnitHeight / 2)
                 );
             }
             isMoving = true;
@@ -113,8 +112,8 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void OnCollide(Collision collisionInfo) {
             if (collisionInfo.Collider.gameObject.Tag == (int)GameObjectTag.Door) {
-                if(!GameConfig.FirstDoorPassed) GameConfig.FirstDoorPassed = true;
-                int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().ID;
+                if(!GameConfigMgr.FirstDoorPassed) GameConfigMgr.FirstDoorPassed = true;
+                int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
                 Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
                 Game.SetLoadingScene();
                 Game.TriggerChangeScene(nextScene);
