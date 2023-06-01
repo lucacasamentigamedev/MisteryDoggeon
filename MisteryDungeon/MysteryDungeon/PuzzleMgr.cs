@@ -13,26 +13,27 @@ namespace MisteryDungeon.MysteryDungeon {
         private float waitingResetPuzzleTimer;
         private float currentWaitingResetPuzzleTimer;
         private bool puzzleReady;
+        private int lastRemainingSecs;
+        private int gateId;
+        private int roomId;
 
-        private float PuzzleTimer {
-            get { return puzzleTimer; }
-            set { puzzleTimer = value; }
-        }
-
-        public PuzzleMgr(GameObject owner, float puzzleTimer, float waitingResetPuzzleTimer) : base(owner) {
+        public PuzzleMgr(GameObject owner, float puzzleTimer, float waitingResetPuzzleTimer, int roomId, int gateId) : base(owner) {
             this.puzzleTimer = puzzleTimer;
             this.waitingResetPuzzleTimer = waitingResetPuzzleTimer;
             ResetPuzzle();
+            this.gateId = gateId;
+            this.roomId = roomId;
         }
 
         public override void Update() {
             if (GameStats.PuzzleResolved) return;
             if (!puzzleReady) currentWaitingResetPuzzleTimer -= Game.DeltaTime;
             if (currentWaitingResetPuzzleTimer > 0) return;
-            //test console.write
             if(!puzzleReady && GameConfigMgr.debugPuzzle) Console.WriteLine("Pronto");
             puzzleReady = true;
             if (!puzzleActive) return;
+            int actualRemainingSecs = (int)currentPuzzleTimer;
+            if (actualRemainingSecs != lastRemainingSecs) TickCountdown(actualRemainingSecs);
             currentPuzzleTimer -= Game.DeltaTime;
             if (currentPuzzleTimer > 0) return;
             if(GameConfigMgr.debugPuzzle) Console.WriteLine("Tempo scaduto");
@@ -42,11 +43,13 @@ namespace MisteryDungeon.MysteryDungeon {
         public void ResetPuzzle() {
             if (GameConfigMgr.debugPuzzle) Console.WriteLine("Reset puzzle");
             puzzleActive = false;
-            currentPuzzleTimer = puzzleTimer;
+            currentPuzzleTimer = puzzleTimer+0.99f; //metto +0.99 così riesco effettivamente a fare un conteggio
+            //che rispecchia il numero di secondi in ingresso
             lastButtonPressed = -1;
             sequenceProgress = 0;
             puzzleReady = false;
             currentWaitingResetPuzzleTimer = waitingResetPuzzleTimer;
+            lastRemainingSecs = 0;
         }
 
         public override void Start() {
@@ -80,8 +83,15 @@ namespace MisteryDungeon.MysteryDungeon {
                 //TODO: sbloccare gate
                 //TODO: spawn pistola
                 GameStats.PuzzleResolved = true;
-                ResetPuzzle();
+                GameObject.Find("Object_" + roomId + "_" + gateId).IsActive = false;
+                GameRoomObjectsMgr.SetRoomObjectActiveness(roomId, gateId, false);
             }
+        }
+
+        private void TickCountdown(int actualRemainingSecs) {
+            lastRemainingSecs = actualRemainingSecs;
+            //TODO: suono conteggio
+            if (GameConfigMgr.debugPuzzle) Console.WriteLine("Secondi rimanenti = " + lastRemainingSecs);
         }
     }
 }

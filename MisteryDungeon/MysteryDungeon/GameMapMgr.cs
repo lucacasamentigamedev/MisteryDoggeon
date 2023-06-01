@@ -164,7 +164,7 @@ namespace MisteryDungeon.MysteryDungeon {
             go.transform.Scale = new Vector2((GameConfigMgr.TileUnitWidth / sr.Width), (GameConfigMgr.TileUnitHeight / sr.Height));
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Door;
-            go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
+            go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, true);
             if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());

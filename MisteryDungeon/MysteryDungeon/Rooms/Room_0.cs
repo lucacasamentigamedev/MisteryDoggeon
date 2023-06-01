@@ -18,13 +18,19 @@ namespace MisteryDungeon {
 
         public override void InitializeScene() {
             base.InitializeScene();
+            GameConfigMgr.PlatformButtons = 0;
             GameMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
             CreatePuzzleMgr();
         }
 
         public void CreatePuzzleMgr() {
             GameObject go = new GameObject("PuzzleMgr", Vector2.Zero);
-            go.AddComponent<PuzzleMgr>(10, 2);
+            go.AddComponent<PuzzleMgr>(
+                10, //secondi totali del timer del puzzle
+                2,  //secondi da aspettare prima che il puzzle sia pronto
+                0,  //room che contiene il gate da sbloccare col puzzle
+                27  //ID del gate da sbloccare nella stanza del parametro sopra
+            );
             if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + Vector2.Zero);
         }
     }

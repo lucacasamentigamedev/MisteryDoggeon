@@ -55,7 +55,7 @@
             set { mapColumns = value; }
         }
 
-        private static int platformButtons;
+        private static int platformButtons = 5;
         public static int PlatformButtons {
             get { return platformButtons; }
             set { platformButtons = value; }
