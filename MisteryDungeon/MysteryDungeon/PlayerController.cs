@@ -37,7 +37,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public override void Update() {
-            if(Input.GetUserButtonDown("Player_Move") && !isMoving) {
+            if(Input.GetUserButtonDown("Move") && !isMoving) {
                 PerformPathfinding();
             }
             if(isMoving) {
@@ -111,15 +111,31 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public override void OnCollide(Collision collisionInfo) {
-            if (collisionInfo.Collider.gameObject.Tag == (int)GameObjectTag.Door) {
-                if (!GameConfigMgr.FirstDoorPassed) GameConfigMgr.FirstDoorPassed = true;
-                int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
-                Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
-                Game.SetLoadingScene();
-                Game.TriggerChangeScene(nextScene);
-            } else if (collisionInfo.Collider.gameObject.Tag == (int)GameObjectTag.PlatformButton) {
-                int seqId = collisionInfo.Collider.gameObject.GetComponent<PlatformButton>().SequenceId;
-                EventManager.CastEvent(EventList.ButtonPressed, EventArgsFactory.ButtonPressedFactory(seqId));
+            switch(collisionInfo.Collider.gameObject.Tag) {
+                case (int)GameObjectTag.Door:
+                    if (!GameConfigMgr.FirstDoorPassed) GameConfigMgr.FirstDoorPassed = true;
+                    int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
+                    Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
+                    Game.SetLoadingScene();
+                    Game.TriggerChangeScene(nextScene);
+                    break;
+                case (int)GameObjectTag.PlatformButton:
+                    int seqId = collisionInfo.Collider.gameObject.GetComponent<PlatformButton>().SequenceId;
+                    EventManager.CastEvent(EventList.ButtonPressed, EventArgsFactory.ButtonPressedFactory(seqId));
+                    break;
+                case (int)GameObjectTag.Weapon:
+                    Weapon weapon = collisionInfo.Collider.gameObject.GetComponent<Weapon>();
+                    ShootModule sm = GetComponent<ShootModule>();
+                    sm.Enabled = true;
+                    sm.SetWeapon( weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot );
+                    if(!GameStats.CanShoot) GameStats.CanShoot = true;
+                    switch(weapon.BulletType) {
+                        case BulletType.Arrow:
+                            GameStats.BowPicked = true;
+                            break;
+                    }
+                    weapon.gameObject.IsActive = false;
+                    break;
             }
         }
     }

@@ -4,7 +4,7 @@
         /* DEBUG var, to active/disactive Console.Writeline*/
         public static bool debugPathfinding = false;
         public static bool debugPuzzle = true;
-        public static bool debugGameObjectCreations = false;
+        public static bool debugGameObjectCreations = true;
         public static bool debugBoxColliderWireframe = true;
         /************************************************/
 

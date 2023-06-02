@@ -1,4 +1,5 @@
-﻿using Aiv.Fast2D.Component;
+﻿using Aiv.Fast2D;
+using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
 using OpenTK;
@@ -14,6 +15,8 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("loading", "Assets/loading.png");
             GfxMgr.AddTexture("gate", "Assets/lamp_gate.png");
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
+            GfxMgr.AddTexture("bow", "Assets/bow.png");
+            GfxMgr.AddTexture("arrow", "Assets/arrow.png");
         }
 
         public override void InitializeScene() {
@@ -21,6 +24,11 @@ namespace MisteryDungeon {
             GameConfigMgr.PlatformButtons = 0;
             GameMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
             CreatePuzzleMgr();
+            //SetCamera();
+
+            /*********TODO: TEST per provare subito l'arma*****************/
+            GameObject.Find("Object_0_22").IsActive = true;
+            /*********TODO: TEST pre provare subito l'arma*****************/
         }
 
         public void CreatePuzzleMgr() {
@@ -28,10 +36,18 @@ namespace MisteryDungeon {
             go.AddComponent<PuzzleMgr>(
                 10, //secondi totali del timer del puzzle
                 2,  //secondi da aspettare prima che il puzzle sia pronto
-                0,  //room che contiene il gate da sbloccare col puzzle
-                27  //ID del gate da sbloccare nella stanza del parametro sopra
+                new Vector2[] { new Vector2(0, 22)}, //arma, da attivare
+                new Vector2[] { new Vector2(0, 27) } //gate, da disattivare
             );
             if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + Vector2.Zero);
         }
+
+        /*private void SetCamera() {
+            CameraMgr.Init(new Vector2(Game.Win.OrthoWidth * 0.5f, Game.Win.OrthoHeight * 0.5f),
+                new Vector2(Game.Win.OrthoWidth * 0.5f, Game.Win.OrthoHeight * 0.5f));
+            CameraMgr.SetCameraLimits(Game.Win.OrthoWidth * 0.5f, Game.Win.OrthoWidth * 0.5f,
+                Game.Win.OrthoHeight * 0.5f, Game.Win.OrthoHeight * 0.5f);
+            CameraMgr.AddCamera("GUI", new Camera(), 0);
+        }*/
     }
 }

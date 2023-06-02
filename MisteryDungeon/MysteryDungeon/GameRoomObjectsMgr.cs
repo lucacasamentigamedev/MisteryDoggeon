@@ -25,10 +25,11 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        public static void SetRoomObjectActiveness(int roomId, int objectId, bool isActive) {
+        public static void SetRoomObjectActiveness(int roomId, int objectId, bool activeness,
+            bool changeGridType = true, MovementGrid.EGridTile gridType = MovementGrid.EGridTile.Floor) {
             if (!roomObjects[roomId].ContainsKey(objectId)) return;
-            roomObjects[roomId][objectId] = isActive;
-            if (isActive) return;
+            roomObjects[roomId][objectId] = activeness;
+            if (activeness) return;
             float xPos = 0;
             float yPos = 0;
             Map map = GameMapMgr.GetMap(roomId);
@@ -44,7 +45,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 (int)Math.Ceiling(yPos / GameConfigMgr.TilePixelHeight) - 1
             );
             if (GameConfigMgr.debugPathfinding) Console.WriteLine("Setto false per l'oggetto " + objectId + " e Floor nella cella " + cellPos.ToString());
-            GameGridMgr.ChangeGridTileType(cellPos, roomId, MovementGrid.EGridTile.Floor);
+            if(changeGridType) GameGridMgr.ChangeGridTileType(cellPos, roomId, gridType);
         }
     }
 }

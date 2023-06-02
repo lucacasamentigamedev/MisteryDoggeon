@@ -1,4 +1,5 @@
 ﻿using Aiv.Fast2D.Component;
+using OpenTK;
 using System;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -14,15 +15,16 @@ namespace MisteryDungeon.MysteryDungeon {
         private float currentWaitingResetPuzzleTimer;
         private bool puzzleReady;
         private int lastRemainingSecs;
-        private int gateId;
-        private int roomId;
+        private Vector2[] objectsToActiveAfterPuzzleResolved;
+        private Vector2[] objectsToDisactiveAfterPuzzleResolved;
 
-        public PuzzleMgr(GameObject owner, float puzzleTimer, float waitingResetPuzzleTimer, int roomId, int gateId) : base(owner) {
+        public PuzzleMgr(GameObject owner, float puzzleTimer, float waitingResetPuzzleTimer,
+            Vector2[] objectsToActiveAfterPuzzleResolved, Vector2[] objectsToDisactiveAfterPuzzleResolved) : base(owner) {
             this.puzzleTimer = puzzleTimer;
             this.waitingResetPuzzleTimer = waitingResetPuzzleTimer;
             ResetPuzzle();
-            this.gateId = gateId;
-            this.roomId = roomId;
+            this.objectsToActiveAfterPuzzleResolved = objectsToActiveAfterPuzzleResolved;
+            this.objectsToDisactiveAfterPuzzleResolved = objectsToDisactiveAfterPuzzleResolved;
         }
 
         public override void Update() {
@@ -83,8 +85,14 @@ namespace MisteryDungeon.MysteryDungeon {
                 //TODO: sbloccare gate
                 //TODO: spawn pistola
                 GameStats.PuzzleResolved = true;
-                GameObject.Find("Object_" + roomId + "_" + gateId).IsActive = false;
-                GameRoomObjectsMgr.SetRoomObjectActiveness(roomId, gateId, false);
+                foreach(Vector2 v in objectsToActiveAfterPuzzleResolved) {
+                    GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
+                    GameRoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);
+                }
+                foreach (Vector2 v in objectsToDisactiveAfterPuzzleResolved) {
+                    GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
+                    GameRoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
+                }
             }
         }
 

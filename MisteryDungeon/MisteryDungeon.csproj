@@ -117,6 +117,9 @@
     <Compile Include="Engine\UserComponent.cs" />
     <Compile Include="EventSystem\EventArgsFactory.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
+    <Compile Include="MysteryDungeon\Bullet.cs" />
+    <Compile Include="MysteryDungeon\BulletMgr.cs" />
+    <Compile Include="MysteryDungeon\FaceVelocity.cs" />
     <Compile Include="MysteryDungeon\GameConfigMgr.cs" />
     <Compile Include="MysteryDungeon\GameGridMgr.cs" />
     <Compile Include="MysteryDungeon\GameRoomObjectsMgr.cs" />
@@ -130,6 +133,8 @@
     <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />
     <Compile Include="MysteryDungeon\GameMapMgr.cs" />
+    <Compile Include="MysteryDungeon\ShootModule.cs" />
+    <Compile Include="MysteryDungeon\Weapon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,7 +151,13 @@
     <Folder Include="bin\Debug\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\crate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\bow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\loading.png">
@@ -167,6 +178,7 @@
     <Content Include="Assets\text_sheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Tiled\arrow.png" />
     <Content Include="Assets\Tiled\ObjectsTileset.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -41,44 +41,12 @@ namespace MisteryDungeon.MysteryDungeon {
             //Objects layers
             foreach (ObjectGroup objectGroup in maps[id].ObjectGroups) {
                 for (int i = 0; i < objectGroup.Objects.Count; i++) {
-                    switch (objectGroup.Objects[i].Name) {
-                        case "obstacle":
-                            CreateObstacle(objectGroup.Objects[i]);
-                            break;
-                        case "platformButton":
-                            CreatePlatformButton(objectGroup.Objects[i]);
-                            break;
-                        case "gate":
-                            CreateGate(objectGroup.Objects[i]);
-                            break;
-                        case "door":
-                            CreateDoor(objectGroup.Objects[i]);
-                            break;
-                        case "player":
-                            bool defaultPos = bool.Parse(getPropertyValueByName("startPosition", objectGroup.Objects[i].Properties));
-                            if(defaultPos && !GameConfigMgr.FirstDoorPassed) {
-                                //disegno player in posizione di default (prima volta che apri il gioco)
-                                CreatePlayer(objectGroup.Objects[i]);
-                            } else if (!defaultPos && GameConfigMgr.FirstDoorPassed) {
-                                //disegno player a fianco della porta in uscita (come da mappa tiled)
-                                CreatePlayer(objectGroup.Objects[i]);
-                            }
-                            break;
-                    }
+                    CreateObjectTile(objectGroup.Objects[i]);
                 }
             }
+            //other
+            CreateBulletMgr();
         }
-
-        private static void CreatePathfindingMap(Layer layer) {
-            if (GameGridMgr.GetRoomGrid(roomId) == null) {
-                if (GameConfigMgr.debugPathfinding) Console.WriteLine("Mappa stanza " + roomId + " non presente, la creo ex novo");
-                GameGridMgr.SetRoomGrid(roomId, new MovementGrid(GameConfigMgr.MapRows, GameConfigMgr.MapColumns, layer));
-            } else {
-                if (GameConfigMgr.debugPathfinding) Console.WriteLine("Mappa stanza " + roomId + " esistente, uso quella");
-            };
-            if (GameConfigMgr.debugPathfinding) GameGridMgr.PrintMovementGrid(roomId);
-        }
-
         private static void CreateBackground(Layer layer) {
             for (int i = 0; i < layer.Tiles.GetLength(0); i++) {
                 for (int j = 0; j < layer.Tiles.GetLength(1); j++) {
@@ -100,17 +68,61 @@ namespace MisteryDungeon.MysteryDungeon {
             if(GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
         }
 
+        private static void CreatePathfindingMap(Layer layer) {
+            if (GameGridMgr.GetRoomGrid(roomId) == null) {
+                if (GameConfigMgr.debugPathfinding) Console.WriteLine("Mappa stanza " + roomId + " non presente, la creo ex novo");
+                GameGridMgr.SetRoomGrid(roomId, new MovementGrid(GameConfigMgr.MapRows, GameConfigMgr.MapColumns, layer));
+            } else {
+                if (GameConfigMgr.debugPathfinding) Console.WriteLine("Mappa stanza " + roomId + " esistente, uso quella");
+            };
+            if (GameConfigMgr.debugPathfinding) GameGridMgr.PrintMovementGrid(roomId);
+        }
+
+        private static void CreateObjectTile(Aiv.Tiled.Object obj) {
+            switch (obj.Name) {
+                case "obstacle":
+                    CreateObstacle(obj);
+                    break;
+                case "platformButton":
+                    CreatePlatformButton(obj);
+                    break;
+                case "gate":
+                    CreateGate(obj);
+                    break;
+                case "door":
+                    CreateDoor(obj);
+                    break;
+                case "weapon":
+                    CreateWeapon(obj);
+                    break;
+                case "player":
+                    bool defaultPos = bool.Parse(getPropertyValueByName("startPosition", obj.Properties));
+                    if (defaultPos && !GameConfigMgr.FirstDoorPassed) {
+                        //disegno player in posizione di default (prima volta che apri il gioco)
+                        CreatePlayer(obj);
+                    } else if (!defaultPos && GameConfigMgr.FirstDoorPassed) {
+                        //disegno player a fianco della porta in uscita (come da mappa tiled)
+                        CreatePlayer(obj);
+                    }
+                    break;
+            }
+        }
+
         private static void CreateObstacle(Aiv.Tiled.Object obj) {
             Vector2 pos = new Vector2(
                 ((float)obj.X / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitWidth + (GameConfigMgr.TileUnitWidth / 2),
                 ((float)obj.Y / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitHeight - (GameConfigMgr.TileUnitHeight / 2)
             );
             GameObject go = new GameObject("Object_" + roomId + "_" + obj.Id, pos);
+            go.Tag = (int)GameObjectTag.Obstacle;
             SpriteRenderer sr = SpriteRenderer.Factory(go, "crate", Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(GameConfigMgr.TileUnitWidth / sr.Width, GameConfigMgr.TileUnitHeight / sr.Height);
-            go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, true);
+            go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
             go.AddComponent<Obstacle>(obj.Id);
+            Rigidbody rb = go.AddComponent<Rigidbody>();
+            rb.Type = RigidbodyType.Obstacle;
+            go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
             if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
         }
 
@@ -126,7 +138,7 @@ namespace MisteryDungeon.MysteryDungeon {
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(GameConfigMgr.TileUnitWidth / sr.Width, GameConfigMgr.TileUnitHeight / sr.Height);
             go.AddComponent<PlatformButton>(obj.Id, sequenceId);
-            go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, true);
+            go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
             GameConfigMgr.PlatformButtons++;
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.PlatformButton;
@@ -145,7 +157,7 @@ namespace MisteryDungeon.MysteryDungeon {
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(GameConfigMgr.TileUnitWidth / sr.Width, GameConfigMgr.TileUnitHeight / sr.Height);
             go.AddComponent<Gate>(obj.Id);
-            go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, true);
+            go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
             if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
         }
 
@@ -166,8 +178,37 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.Type = RigidbodyType.Door;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
-            go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, true);
+            go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
             if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+        }
+
+        private static void CreateWeapon(Aiv.Tiled.Object obj) {
+            Vector2 pos = new Vector2(
+                ((float)obj.X / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitWidth + (GameConfigMgr.TileUnitWidth / 2),
+                ((float)obj.Y / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitHeight - (GameConfigMgr.TileUnitHeight / 2)
+            );
+            GameObject go = new GameObject("Object_" + roomId + "_" + obj.Id, pos);
+            go.Tag = (int)GameObjectTag.Weapon;
+            string weaponType = getPropertyValueByName("weaponType", obj.Properties);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, weaponType, Vector2.One * 0.5f, DrawLayer.Middleground);
+            go.AddComponent(sr);
+            go.transform.Scale = new Vector2((GameConfigMgr.TileUnitWidth / sr.Width), (GameConfigMgr.TileUnitHeight / sr.Height));
+            Rigidbody rb = go.AddComponent<Rigidbody>();
+            rb.Type = RigidbodyType.Weapon;
+            go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            BulletType bulletType = (BulletType)int.Parse(getPropertyValueByName("bulletType", obj.Properties));
+            float reloadTime = float.Parse(getPropertyValueByName("reloadTime", obj.Properties));
+            float offsetShootX = float.Parse(getPropertyValueByName("offsetShootX", obj.Properties));
+            float offsetShootY = float.Parse(getPropertyValueByName("offsetShootY", obj.Properties));
+            go.AddComponent<Weapon>(bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY));
+            go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
+            if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+        }
+
+        private static void CreateBulletMgr() {
+            GameObject bulletMgr = new GameObject("BulletMgr", Vector2.Zero);
+            bulletMgr.AddComponent<BulletMgr>(5);
         }
 
         private static void CreatePlayer(Aiv.Tiled.Object obj) {
@@ -190,9 +231,11 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.Type = RigidbodyType.Player;
             rb.AddCollisionType((uint)RigidbodyType.Door);
             rb.AddCollisionType((uint)RigidbodyType.PlatformButton);
-            go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
+            rb.AddCollisionType((uint)RigidbodyType.Weapon);
+            go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             CreatePlayerAnimations(go, sheet);
+            go.AddComponent<ShootModule>().Enabled = GameStats.CanShoot;
             if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in cella " + cellIndex.ToString());
         }
 
