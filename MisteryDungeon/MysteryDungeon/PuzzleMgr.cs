@@ -9,7 +9,7 @@ namespace MisteryDungeon.MysteryDungeon {
         private float puzzleTimer;
         private float currentPuzzleTimer;
         private int lastButtonPressed;
-        private int sequenceProgress;
+        private int buttonToPress;
         private bool puzzleActive;
         private float waitingResetPuzzleTimer;
         private float currentWaitingResetPuzzleTimer;
@@ -48,7 +48,7 @@ namespace MisteryDungeon.MysteryDungeon {
             currentPuzzleTimer = puzzleTimer+0.99f; //metto +0.99 così riesco effettivamente a fare un conteggio
             //che rispecchia il numero di secondi in ingresso
             lastButtonPressed = -1;
-            sequenceProgress = 0;
+            buttonToPress = 0;
             puzzleReady = false;
             currentWaitingResetPuzzleTimer = waitingResetPuzzleTimer;
             lastRemainingSecs = 0;
@@ -69,23 +69,22 @@ namespace MisteryDungeon.MysteryDungeon {
             puzzleActive = true;
             EventArgsFactory.ButtonPressedParser(message, out int sequenceId);
             if (sequenceId == lastButtonPressed) return;
-            if (sequenceId < lastButtonPressed) {
+            if (sequenceId != buttonToPress) {
                 if (GameConfigMgr.debugPuzzle) Console.WriteLine("Sequenza puzzle sbagliata");
                 //TODO: rumore di sequenza sbagliata
                 ResetPuzzle();
                 return;
             };
-            //TODO: rumore di sequenza giusta
             lastButtonPressed = sequenceId;
-            sequenceProgress++;
-            if (GameConfigMgr.debugPuzzle) Console.WriteLine("Premuto pulsante giusto " + sequenceProgress + "/" + GameConfigMgr.PlatformButtons);
-            if(sequenceProgress == GameConfigMgr.PlatformButtons) {
+            buttonToPress++;
+            if (GameConfigMgr.debugPuzzle) Console.WriteLine("Premuto pulsante giusto " + buttonToPress + "/" + GameConfigMgr.PlatformButtons);
+            if(buttonToPress == GameConfigMgr.PlatformButtons) {
                 if (GameConfigMgr.debugPuzzle) Console.WriteLine("Puzzle risolto");
                 //TODO: rumore puzzle completato
                 //TODO: sbloccare gate
                 //TODO: spawn pistola
                 GameStats.PuzzleResolved = true;
-                foreach(Vector2 v in objectsToActiveAfterPuzzleResolved) {
+                foreach (Vector2 v in objectsToActiveAfterPuzzleResolved) {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
                     GameRoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);
                 }
