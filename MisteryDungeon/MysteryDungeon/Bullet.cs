@@ -17,6 +17,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public float speed;
 
         protected Rigidbody rb;
+        protected SpriteRenderer sr;
 
         public Bullet(GameObject owner, float damage, BulletType bulletType, float speed) : base(owner) {
             this.damage = damage;
@@ -26,12 +27,14 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void Awake() {
             rb = GetComponent<Rigidbody>();
+            sr = GetComponent<SpriteRenderer>();
         }
 
         public override void LateUpdate() {
-            if (!CameraMgr.InsideCameraLimits(transform.Position + GetComponent<SpriteRenderer>().Pivot)) {
-                DestroyBullet();
-            }
+            if((transform.Position.X - sr.Pivot.X) > Game.Win.OrthoWidth) DestroyBullet();
+            else if((transform.Position.X + sr.Pivot.X) < 0) DestroyBullet();
+            if ((transform.Position.Y - sr.Pivot.Y) > Game.Win.OrthoHeight) DestroyBullet();
+            else if ((transform.Position.Y + sr.Pivot.Y) < 0) DestroyBullet();
         }
 
         public virtual void Shoot(Vector2 startPosition, Vector2 direction) {

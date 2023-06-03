@@ -1,5 +1,4 @@
-﻿using System;
-using Aiv.Fast2D.Component;
+﻿using Aiv.Fast2D.Component;
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -35,7 +34,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public override void Update() {
             currentReloadTime -= Game.DeltaTime;
             if (currentReloadTime <= 0 && Input.GetUserButton("Shoot") && GameStats.CanShoot) {
-                if (Shoot(transform.Position, Game.Win.MousePosition - transform.Position)) {
+                if (Shoot(transform.Position + (Game.Win.MousePosition - transform.Position).Normalized() * 0.5f, Game.Win.MousePosition - transform.Position)) {
                     currentReloadTime = reloadTime;
                 }
             }

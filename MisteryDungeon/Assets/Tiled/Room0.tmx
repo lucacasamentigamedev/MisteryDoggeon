@@ -51,7 +51,7 @@
     <property name="sequenceId" type="int" value="0"/>
    </properties>
   </object>
-  <object id="30" name="platformButton" gid="2" x="160" y="144" width="16" height="16">
+  <object id="30" name="platformButton" gid="2" x="176" y="144" width="16" height="16">
    <properties>
     <property name="sequenceId" type="int" value="1"/>
    </properties>
