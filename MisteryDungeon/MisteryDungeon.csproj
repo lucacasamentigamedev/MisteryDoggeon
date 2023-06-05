@@ -119,6 +119,8 @@
     <Compile Include="EventSystem\EventManager.cs" />
     <Compile Include="MysteryDungeon\Bullet.cs" />
     <Compile Include="MysteryDungeon\BulletMgr.cs" />
+    <Compile Include="MysteryDungeon\Enemy.cs" />
+    <Compile Include="MysteryDungeon\SpawnPoint.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
     <Compile Include="MysteryDungeon\GameConfigMgr.cs" />
     <Compile Include="MysteryDungeon\Key.cs" />
@@ -166,6 +168,9 @@
     <Content Include="Assets\bow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\blob.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\key.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -173,6 +178,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\lamp_gate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\spawn_point.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Spritesheets\player.png">

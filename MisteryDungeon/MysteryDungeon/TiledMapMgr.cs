@@ -99,6 +99,9 @@ namespace MisteryDungeon.MysteryDungeon {
                 case "key":
                     CreateKey(obj);
                     break;
+                case "spawnPoint":
+                    CreateSpawnPoint(obj);
+                    break;
                 case "player":
                     int fromRoom = int.Parse(getPropertyValueByName("fromRoom", obj.Properties));
                     if (GameStats.ActualRoom == fromRoom) CreatePlayer(obj);
@@ -200,6 +203,28 @@ namespace MisteryDungeon.MysteryDungeon {
             go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
+        
+        private static void CreateSpawnPoint(Object obj) {
+            if(GameStats.HordeDefeated) return;
+            Vector2 pos = new Vector2(
+                ((float)obj.X / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitWidth + (GameConfigMgr.TileUnitWidth / 2),
+                ((float)obj.Y / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitHeight - (GameConfigMgr.TileUnitHeight / 2)
+            );
+            EnemyType enemyType = (EnemyType)int.Parse(getPropertyValueByName("enemyType", obj.Properties));
+            float spawnTimer = float.Parse(getPropertyValueByName("spawnTimer", obj.Properties));
+            GameObject go = new GameObject("Object_" + roomId + "_" + obj.Id, pos);
+            go.Tag = (int)GameObjectTag.SpawnPoint;
+            go.AddComponent<SpawnPoint>(10, enemyType, spawnTimer);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "spawnPoint", Vector2.One * 0.5f, DrawLayer.Middleground);
+            go.AddComponent(sr);
+            go.transform.Scale = new Vector2((GameConfigMgr.TileUnitWidth / sr.Width), (GameConfigMgr.TileUnitHeight / sr.Height));
+            Rigidbody rb = go.AddComponent<Rigidbody>();
+            rb.Type = RigidbodyType.SpawnPoint;
+            go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
+        }
 
         private static void CreateWeapon(Object obj) {
             string weaponType = getPropertyValueByName("weaponType", obj.Properties);
@@ -253,6 +278,7 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.AddCollisionType((uint)RigidbodyType.PlatformButton);
             rb.AddCollisionType((uint)RigidbodyType.Weapon);
             rb.AddCollisionType((uint)RigidbodyType.Key);
+            rb.AddCollisionType((uint)RigidbodyType.Enemy);
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             CreatePlayerAnimations(go, sheet);

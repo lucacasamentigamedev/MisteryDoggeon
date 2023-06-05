@@ -13,6 +13,8 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("loading", "Assets/loading.png");
             GfxMgr.AddTexture("arrow", "Assets/arrow.png");
             GfxMgr.AddTexture("gate", "Assets/lamp_gate.png");
+            GfxMgr.AddTexture("blob", "Assets/blob.gif");
+            GfxMgr.AddTexture("spawnPoint", "Assets/spawn_point.png");
         }
 
         public override void InitializeScene() {
@@ -24,9 +26,9 @@ namespace MisteryDungeon {
         public void CreateLogMgr() {
             GameObject go = new GameObject("LogMgr", Vector2.Zero);
             go.AddComponent<LogMgr>(
-                false,   //print pathfinding logs
-                false,   //print puzzle logs
-                false    //print object creations logs
+                false,  //print pathfinding logs
+                false,  //print puzzle logs
+                true    //print object creations logs
             );
         }
 

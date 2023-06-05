@@ -17,5 +17,6 @@ namespace MisteryDungeon.MysteryDungeon {
                 actualRoom = value;
             }
         }
+        public static bool HordeDefeated { get; set; }
     }
 }

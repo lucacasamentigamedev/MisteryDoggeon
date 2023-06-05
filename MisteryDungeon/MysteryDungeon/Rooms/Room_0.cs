@@ -23,9 +23,9 @@ namespace MisteryDungeon {
             CreateMap();
             CreatePuzzleMgr();
 
-            //test
-            //RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
-            //GameObject.Find("Object_0_27").IsActive = false;
+            //chewat per andare subito in stanza 2
+            RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
+            GameObject.Find("Object_0_27").IsActive = false;
         }
 
         public void CreateLogMgr() {

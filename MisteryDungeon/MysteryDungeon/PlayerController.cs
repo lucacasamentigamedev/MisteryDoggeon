@@ -147,7 +147,15 @@ namespace MisteryDungeon.MysteryDungeon {
                     GameStats.collectedKeys.Add(key.ID);
                     key.gameObject.IsActive = false;
                     break;
+                case (int)GameObjectTag.Enemy:
+                    //TODO: suono danno al player
+                    Enemy enemy = collisionInfo.Collider.gameObject.GetComponent<Enemy>();
+                    enemy.DestroyEnemy();
+                    TakeDamage(enemy.Damage);
+                    break;
             }
         }
+
+        public void TakeDamage(float damages) { }
     }
 }

@@ -23,15 +23,16 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         private Bullet CreateArrow(int index) {
-            GameObject bullet = new GameObject("Bullet_Arrow_" + index, Vector2.Zero, false);
-            bullet.AddComponent(SpriteRenderer.Factory(bullet, "arrow", new Vector2(1, 0.5f), DrawLayer.Playground));
-            Rigidbody rb = bullet.AddComponent<Rigidbody>();
+            GameObject go = new GameObject("Bullet_Arrow_" + index, Vector2.Zero, false);
+            go.AddComponent(SpriteRenderer.Factory(go, "arrow", new Vector2(1, 0.5f), DrawLayer.Playground));
+            Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.PlayerBullet;
             rb.AddCollisionType((uint)RigidbodyType.Enemy);
             rb.AddCollisionType((uint)RigidbodyType.Obstacle);
-            bullet.AddComponent(ColliderFactory.CreateBoxFor(bullet));
-            bullet.AddComponent<FaceVelocity>();
-            return bullet.AddComponent<Bullet>(5, BulletType.Arrow, 5);
+            go.AddComponent(ColliderFactory.CreateBoxFor(go));
+            go.AddComponent<FaceVelocity>();
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
+            return go.AddComponent<Bullet>(5, BulletType.Arrow, 5);
         }
 
         public Bullet GetBullet(BulletType bulletType) {
