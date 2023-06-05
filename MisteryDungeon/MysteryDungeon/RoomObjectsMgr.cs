@@ -6,11 +6,11 @@ using System;
 using System.Collections.Generic;
 
 namespace MisteryDungeon.MysteryDungeon {
-    static class GameRoomObjectsMgr {
+    static class RoomObjectsMgr {
 
         private static Dictionary<int, bool>[] roomObjects;
 
-        static GameRoomObjectsMgr() {
+        static RoomObjectsMgr() {
             roomObjects = new Dictionary<int, bool>[GameConfigMgr.RoomsNumber];
             for (int i = 0; i < GameConfigMgr.RoomsNumber; i++) {
                 roomObjects[i] = new Dictionary<int, bool>();
@@ -33,7 +33,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if (activeness) return;
             float xPos = 0;
             float yPos = 0;
-            Map map = GameMapMgr.GetMap(roomId);
+            Map map = GameTiledMapMgr.GetMap(roomId);
             foreach(ObjectGroup objectGroup in map.ObjectGroups) {
                 foreach (Aiv.Tiled.Object obj in objectGroup.Objects) {
                     if (obj.Id != objectId) continue;
@@ -46,7 +46,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 (int)Math.Ceiling(yPos / GameConfigMgr.TilePixelHeight) - 1
             );
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto false per l'oggetto " + objectId + " e Floor nella cella " + cellPos.ToString()));
-            if(changeGridType) GameGridMgr.ChangeGridTileType(cellPos, roomId, gridType);
+            if(changeGridType) MovementGridMgr.ChangeGridTileType(cellPos, roomId, gridType);
         }
     }
 }

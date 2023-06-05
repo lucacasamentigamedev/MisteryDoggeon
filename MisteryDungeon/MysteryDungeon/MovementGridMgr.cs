@@ -3,11 +3,11 @@ using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
-    static class GameGridMgr {
+    static class MovementGridMgr {
 
         private static MovementGrid[] grids;
 
-        static GameGridMgr() {
+        static MovementGridMgr() {
             grids = new MovementGrid[GameConfigMgr.RoomsNumber];
             for (int i = 0; i < grids.Length; i++) {
                 grids[i] = null;
@@ -33,7 +33,7 @@ namespace MisteryDungeon.MysteryDungeon {
             final += "\n";
             final += "Mappa pathfinding\n";
             final += "\n";
-            MovementGrid grid = GameGridMgr.GetRoomGrid(roomId);
+            MovementGrid grid = MovementGridMgr.GetRoomGrid(roomId);
             for (int x = 0; x < grid.Map.GetLength(0); ++x) {
                 for (int y = 0; y < grid.Map.GetLength(1); ++y) {
                     final += (int)grid.Map[y, x] + " ";

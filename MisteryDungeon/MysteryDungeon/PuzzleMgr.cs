@@ -86,11 +86,11 @@ namespace MisteryDungeon.MysteryDungeon {
                 GameStats.PuzzleResolved = true;
                 foreach (Vector2 v in objectsToActiveAfterPuzzleResolved) {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
-                    GameRoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);
+                    RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);
                 }
                 foreach (Vector2 v in objectsToDisactiveAfterPuzzleResolved) {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
-                    GameRoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
+                    RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
                 }
             }
         }

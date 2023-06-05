@@ -36,7 +36,7 @@ namespace MisteryDungeon {
 
         public void CreateMap() {
             GameConfigMgr.PlatformButtons = 0;
-            GameMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
+            GameTiledMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
         }
 
         public void CreatePuzzleMgr() {

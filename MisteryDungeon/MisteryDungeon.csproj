@@ -121,8 +121,8 @@
     <Compile Include="MysteryDungeon\BulletMgr.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
     <Compile Include="MysteryDungeon\GameConfigMgr.cs" />
-    <Compile Include="MysteryDungeon\GameGridMgr.cs" />
-    <Compile Include="MysteryDungeon\GameRoomObjectsMgr.cs" />
+    <Compile Include="MysteryDungeon\MovementGridMgr.cs" />
+    <Compile Include="MysteryDungeon\RoomObjectsMgr.cs" />
     <Compile Include="MysteryDungeon\GameStats.cs" />
     <Compile Include="MysteryDungeon\PlatformButton.cs" />
     <Compile Include="MysteryDungeon\Door.cs" />
@@ -133,7 +133,7 @@
     <Compile Include="MysteryDungeon\PuzzleMgr.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />
-    <Compile Include="MysteryDungeon\GameMapMgr.cs" />
+    <Compile Include="MysteryDungeon\GameTiledMapMgr.cs" />
     <Compile Include="MysteryDungeon\ShootModule.cs" />
     <Compile Include="MysteryDungeon\Weapon.cs" />
     <Compile Include="Program.cs" />
@@ -159,6 +159,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\bow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\key.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\loading.png">

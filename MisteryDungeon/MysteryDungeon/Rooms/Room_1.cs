@@ -12,6 +12,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
             GfxMgr.AddTexture("loading", "Assets/loading.png");
             GfxMgr.AddTexture("arrow", "Assets/arrow.png");
+            GfxMgr.AddTexture("key", "Assets/key.png");
         }
 
         public override void InitializeScene() {
@@ -30,7 +31,7 @@ namespace MisteryDungeon {
         }
 
         public void CreateMap() {
-            GameMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
+            GameTiledMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
         }
     }
 }
