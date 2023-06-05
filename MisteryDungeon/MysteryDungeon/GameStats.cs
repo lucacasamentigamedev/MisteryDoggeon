@@ -12,6 +12,12 @@
             set { canShoot = value; }
         }
 
+        private static Weapon activeWeapon;
+        public static Weapon ActiveWeapon {
+            get { return activeWeapon; }
+            set { activeWeapon = value; }
+        }
+
         private static bool bowPicked = false;
         public static bool BowPicked {
             get { return bowPicked; }

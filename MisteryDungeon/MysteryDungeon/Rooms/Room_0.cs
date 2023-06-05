@@ -24,10 +24,8 @@ namespace MisteryDungeon {
             GameConfigMgr.PlatformButtons = 0;
             GameMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
             CreatePuzzleMgr();
-            //SetCamera();
-
             /*********TODO: TEST per provare subito l'arma*****************/
-            GameObject.Find("Object_0_22").IsActive = true;
+            //GameObject.Find("Object_0_22").IsActive = true;
             /*********TODO: TEST pre provare subito l'arma*****************/
         }
 
@@ -35,19 +33,11 @@ namespace MisteryDungeon {
             GameObject go = new GameObject("PuzzleMgr", Vector2.Zero);
             go.AddComponent<PuzzleMgr>(
                 10, //secondi totali del timer del puzzle
-                2,  //secondi da aspettare prima che il puzzle sia pronto
+                1,  //secondi da aspettare prima che il puzzle sia pronto
                 new Vector2[] { new Vector2(0, 22)}, //arma, da attivare
                 new Vector2[] { new Vector2(0, 27) } //gate, da disattivare
             );
             if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + Vector2.Zero);
         }
-
-        /*private void SetCamera() {
-            CameraMgr.Init(new Vector2(Game.Win.OrthoWidth * 0.5f, Game.Win.OrthoHeight * 0.5f),
-                new Vector2(Game.Win.OrthoWidth * 0.5f, Game.Win.OrthoHeight * 0.5f));
-            CameraMgr.SetCameraLimits(Game.Win.OrthoWidth * 0.5f, Game.Win.OrthoWidth * 0.5f,
-                Game.Win.OrthoHeight * 0.5f, Game.Win.OrthoHeight * 0.5f);
-            CameraMgr.AddCamera("GUI", new Camera(), 0);
-        }*/
     }
 }

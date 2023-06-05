@@ -183,13 +183,14 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         private static void CreateWeapon(Aiv.Tiled.Object obj) {
+            string weaponType = getPropertyValueByName("weaponType", obj.Properties);
+            if (weaponType == "bow" && GameStats.BowPicked) return;
             Vector2 pos = new Vector2(
                 ((float)obj.X / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitWidth + (GameConfigMgr.TileUnitWidth / 2),
                 ((float)obj.Y / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitHeight - (GameConfigMgr.TileUnitHeight / 2)
             );
             GameObject go = new GameObject("Object_" + roomId + "_" + obj.Id, pos);
             go.Tag = (int)GameObjectTag.Weapon;
-            string weaponType = getPropertyValueByName("weaponType", obj.Properties);
             SpriteRenderer sr = SpriteRenderer.Factory(go, weaponType, Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((GameConfigMgr.TileUnitWidth / sr.Width), (GameConfigMgr.TileUnitHeight / sr.Height));
@@ -235,7 +236,13 @@ namespace MisteryDungeon.MysteryDungeon {
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             CreatePlayerAnimations(go, sheet);
-            go.AddComponent<ShootModule>().Enabled = GameStats.CanShoot;
+            ShootModule sm = go.AddComponent<ShootModule>();
+            if(GameStats.CanShoot) {
+                sm.Enabled = GameStats.CanShoot;
+                Weapon weapon = GameStats.ActiveWeapon;
+                sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
+
+            }
             if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in cella " + cellIndex.ToString());
         }
 

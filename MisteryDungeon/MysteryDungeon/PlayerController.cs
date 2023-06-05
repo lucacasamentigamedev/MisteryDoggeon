@@ -125,6 +125,7 @@ namespace MisteryDungeon.MysteryDungeon {
                     break;
                 case (int)GameObjectTag.Weapon:
                     Weapon weapon = collisionInfo.Collider.gameObject.GetComponent<Weapon>();
+                    GameStats.ActiveWeapon = weapon;
                     ShootModule sm = GetComponent<ShootModule>();
                     sm.Enabled = true;
                     sm.SetWeapon( weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot );

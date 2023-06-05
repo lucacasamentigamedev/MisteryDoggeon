@@ -1,4 +1,5 @@
-﻿using Aiv.Fast2D.Component;
+﻿using System;
+using Aiv.Fast2D.Component;
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -42,7 +43,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public bool Shoot(Vector2 startPosition, Vector2 velocity) {
             Bullet bullet = bulletMgr.GetBullet(bulletType);
-            if (bullet == null) return false;
+            if (bullet == null) { Console.WriteLine("non ci sono proiettili"); return false; };
             bullet.Shoot(startPosition, velocity);
             return true;
         }
