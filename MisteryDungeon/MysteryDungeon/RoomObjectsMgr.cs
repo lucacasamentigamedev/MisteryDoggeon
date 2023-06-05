@@ -30,7 +30,8 @@ namespace MisteryDungeon.MysteryDungeon {
             bool changeGridType = true, MovementGrid.EGridTile gridType = MovementGrid.EGridTile.Floor) {
             if (!roomObjects[roomId].ContainsKey(objectId)) return;
             roomObjects[roomId][objectId] = activeness;
-            if (activeness) return;
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto" + activeness + "per l'oggetto " + objectId));
+            if (!changeGridType) return;
             float xPos = 0;
             float yPos = 0;
             Map map = TiledMapMgr.GetMap(roomId);
@@ -45,8 +46,8 @@ namespace MisteryDungeon.MysteryDungeon {
                 (int)Math.Ceiling(xPos / GameConfigMgr.TilePixelWidth),
                 (int)Math.Ceiling(yPos / GameConfigMgr.TilePixelHeight) - 1
             );
-            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto false per l'oggetto " + objectId + " e Floor nella cella " + cellPos.ToString()));
-            if(changeGridType) MovementGridMgr.ChangeGridTileType(cellPos, roomId, gridType);
+            MovementGridMgr.ChangeGridTileType(cellPos, roomId, gridType);
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto " + gridType + " nella cella " + cellPos.ToString()));
         }
     }
 }

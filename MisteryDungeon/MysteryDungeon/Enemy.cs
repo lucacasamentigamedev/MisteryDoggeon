@@ -19,7 +19,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void Start() {
             rigidbody = GetComponent<Rigidbody>();
-            targetTransform = GameObject.Find("player").transform;
+            targetTransform = GameObject.Find("Player").transform;
         }
 
         public override void Update() {

@@ -10,9 +10,14 @@ namespace MisteryDungeon.MysteryDungeon {
         private Enemy[] enemiesPool;
         private float spawnTimer;
         private float currentSpawnTimer;
+        private float readyTimer;
+        private float currentReadyTimer;
 
-        public SpawnPoint(GameObject owner, int poolSize, EnemyType enemyType, float spawnTimer) : base(owner) {
+        public SpawnPoint(GameObject owner, int poolSize, EnemyType enemyType, float spawnTimer, float readyTimer) : base(owner) {
+            this.readyTimer = readyTimer;
+            currentReadyTimer = readyTimer;
             this.spawnTimer = spawnTimer;
+            currentSpawnTimer = spawnTimer;
             enemiesPool = new Enemy[poolSize];
             for (int i = 0; i < enemiesPool.Length; i++) {
                 switch (enemyType) {
@@ -25,12 +30,15 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private Enemy CreateBlob(int index) {
             GameObject go = new GameObject("Enemy_Blob_" + index, Vector2.Zero, false);
-            go.AddComponent(SpriteRenderer.Factory(go, "blob", Vector2.One * 0.5f, DrawLayer.Playground));
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "blob", Vector2.One * 0.5f, DrawLayer.Playground);
+            go.AddComponent(sr);
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Enemy;
             go.AddComponent(ColliderFactory.CreateBoxFor(go));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
-            return go.AddComponent<Enemy>(3, 5);
+            go.IsActive = false;
+            go.transform.Scale = new Vector2((GameConfigMgr.TileUnitWidth / sr.Width), (GameConfigMgr.TileUnitHeight / sr.Height));
+            return go.AddComponent<Enemy>(1.5f, 5);
         }
 
         public Enemy GetEnemy() {
@@ -42,10 +50,12 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public override void Update() {
+            currentReadyTimer -= Game.DeltaTime;
+            if (currentReadyTimer > 0) return;
             currentSpawnTimer -= Game.DeltaTime;
             if (currentSpawnTimer > 0) return;
             Enemy enemy = GetEnemy();
-            if (enemy == null) {
+            if (enemy != null) {
                 enemy.Spawn(transform.Position);
                 currentSpawnTimer = spawnTimer;
             }

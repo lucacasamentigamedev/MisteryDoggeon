@@ -212,9 +212,10 @@ namespace MisteryDungeon.MysteryDungeon {
             );
             EnemyType enemyType = (EnemyType)int.Parse(getPropertyValueByName("enemyType", obj.Properties));
             float spawnTimer = float.Parse(getPropertyValueByName("spawnTimer", obj.Properties));
+            float readyTimer = float.Parse(getPropertyValueByName("readyTimer", obj.Properties));
             GameObject go = new GameObject("Object_" + roomId + "_" + obj.Id, pos);
             go.Tag = (int)GameObjectTag.SpawnPoint;
-            go.AddComponent<SpawnPoint>(10, enemyType, spawnTimer);
+            go.AddComponent<SpawnPoint>(10, enemyType, spawnTimer, readyTimer);
             SpriteRenderer sr = SpriteRenderer.Factory(go, "spawnPoint", Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((GameConfigMgr.TileUnitWidth / sr.Width), (GameConfigMgr.TileUnitHeight / sr.Height));

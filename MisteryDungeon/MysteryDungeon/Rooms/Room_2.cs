@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
+using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 
 namespace MisteryDungeon {
@@ -21,6 +22,7 @@ namespace MisteryDungeon {
             base.InitializeScene();
             CreateLogMgr();
             CreateMap();
+            CheckHordeConditions();
         }
 
         public void CreateLogMgr() {
@@ -34,6 +36,19 @@ namespace MisteryDungeon {
 
         public void CreateMap() {
             TiledMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
+        }
+
+        public void CheckHordeConditions() {
+            if(!GameStats.HordeDefeated && GameStats.ActiveWeapon != null) {
+                //attivo gate
+                GameObject.Find("Object_2_39").IsActive = true;
+                RoomObjectsMgr.SetRoomObjectActiveness(2, 39, true, true, MovementGrid.EGridTile.Wall);
+                //attivo spawn point
+                GameObject.Find("Object_2_40").IsActive = true;
+                GameObject.Find("Object_2_41").IsActive = true;
+                GameObject.Find("Object_2_42").IsActive = true;
+                GameObject.Find("Object_2_43").IsActive = true;
+            }
         }
     }
 }

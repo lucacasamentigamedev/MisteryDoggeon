@@ -23,9 +23,11 @@ namespace MisteryDungeon {
             CreateMap();
             CreatePuzzleMgr();
 
-            //chewat per andare subito in stanza 2
+            //FIXME: da togliere cheat per andare subito in stanza 2 e avere subito l'arma
             RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
             GameObject.Find("Object_0_27").IsActive = false;
+            GameObject.Find("Object_0_22").IsActive = true;
+            /*****************************************************/
         }
 
         public void CreateLogMgr() {
