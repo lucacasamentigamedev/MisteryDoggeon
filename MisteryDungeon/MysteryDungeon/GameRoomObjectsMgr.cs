@@ -1,4 +1,5 @@
-﻿using Aiv.Tiled;
+﻿using Aiv.Fast2D.Component;
+using Aiv.Tiled;
 using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 using System;
@@ -44,7 +45,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 (int)Math.Ceiling(xPos / GameConfigMgr.TilePixelWidth),
                 (int)Math.Ceiling(yPos / GameConfigMgr.TilePixelHeight) - 1
             );
-            if (GameConfigMgr.debugPathfinding) Console.WriteLine("Setto false per l'oggetto " + objectId + " e Floor nella cella " + cellPos.ToString());
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto false per l'oggetto " + objectId + " e Floor nella cella " + cellPos.ToString()));
             if(changeGridType) GameGridMgr.ChangeGridTileType(cellPos, roomId, gridType);
         }
     }

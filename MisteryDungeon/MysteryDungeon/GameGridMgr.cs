@@ -1,6 +1,6 @@
-﻿using MisteryDungeon.AivAlgo.Pathfinding;
+﻿using Aiv.Fast2D.Component;
+using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
-using System;
 
 namespace MisteryDungeon.MysteryDungeon {
     static class GameGridMgr {
@@ -23,23 +23,25 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public static void ChangeGridTileType(Vector2 pos, int roomId, MovementGrid.EGridTile type) {
-            if(GameConfigMgr.debugPathfinding)Console.WriteLine("Setto " + type + " in stanza " + roomId + " in pos " + pos.ToString());
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto " + type + " in stanza " + roomId + " in pos " + pos.ToString()));
             GetRoomGrid(roomId).Map[(int)pos.X, (int)pos.Y] = type;
-            if (GameConfigMgr.debugPathfinding) PrintMovementGrid(roomId);
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(PrintMovementGrid(roomId)));
         }
 
-        public static void PrintMovementGrid(int roomId) {
-            Console.WriteLine();
-            Console.WriteLine("Mappa pathfinding");
-            Console.WriteLine();
+        public static string PrintMovementGrid(int roomId) {
+            string final = "";
+            final += "\n";
+            final += "Mappa pathfinding\n";
+            final += "\n";
             MovementGrid grid = GameGridMgr.GetRoomGrid(roomId);
             for (int x = 0; x < grid.Map.GetLength(0); ++x) {
                 for (int y = 0; y < grid.Map.GetLength(1); ++y) {
-                    Console.Write((int)grid.Map[y, x] + " ");
+                    final += (int)grid.Map[y, x] + " ";
                 }
-                Console.WriteLine();
+                final += "\n";
             }
-            Console.WriteLine();
+            final += "\n";
+            return final;
         }
     }
 }

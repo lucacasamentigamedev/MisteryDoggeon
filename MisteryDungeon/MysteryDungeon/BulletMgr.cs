@@ -1,5 +1,4 @@
-﻿using System;
-using Aiv.Fast2D.Component;
+﻿using Aiv.Fast2D.Component;
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -37,8 +36,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public Bullet GetBullet(BulletType bulletType) {
             for (int i = 0; i < bulletsPool.GetLength(1); i++) {
-                if (bulletsPool[(int)bulletType, i].gameObject.IsActive) { Console.WriteLine("indice " + i + "gia attivo"); continue; };
-                Console.WriteLine("sparo il " + i);
+                if (bulletsPool[(int)bulletType, i].gameObject.IsActive) continue;
                 return bulletsPool[(int)bulletType, i];
             }
             return null;

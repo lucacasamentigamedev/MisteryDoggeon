@@ -72,7 +72,7 @@ namespace MisteryDungeon.MysteryDungeon {
             );
 
             path = grid.FindPath(startingCell, targetCell);
-            if (GameConfigMgr.debugPathfinding) PrintPath();
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(PrintPath()));
 
             //click on wall or obstacle
             if (path.Count <= 0) {
@@ -81,9 +81,9 @@ namespace MisteryDungeon.MysteryDungeon {
                 return;
             };
 
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Cella inizio = " + startingCell.ToString()));
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Cella fine = " + path[path.Count - 1].ToString()));
             //convert map position into unit position
-            if (GameConfigMgr.debugPathfinding) Console.WriteLine("Cella inizio = " + startingCell.ToString());
-            if (GameConfigMgr.debugPathfinding) Console.WriteLine("Cella fine = " + path[path.Count-1].ToString());
             for (int i = 0; i < path.Count; i++) {
                 path[i] = new Vector2(
                     ((Game.Win.OrthoWidth * path[i].X) / mapRows) + (tileUnitWidth / 2),
@@ -93,16 +93,18 @@ namespace MisteryDungeon.MysteryDungeon {
             isMoving = true;
         }
 
-        public void PrintPath() {
+        public string PrintPath() {
+            string final = "";
             if(path.Count > 0) {
-                Console.Write("Percorso: ");
+                final += "Percorso: ";
                 foreach (var point in path) {
-                    Console.Write("("+point.X+","+point.Y+") ");
+                    final += "(" + point.X + "," + point.Y + ") ";
                 }
-                Console.WriteLine();
+                final += "\n";
             } else {
-                Console.WriteLine("Nessun percorso disponibile");
+                final += "Nessun percorso disponibile\n";
             }
+            return final;
         }
 
         private void StopMovement() {

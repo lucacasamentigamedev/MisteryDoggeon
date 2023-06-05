@@ -3,6 +3,9 @@
 namespace Aiv.Fast2D.Component {
 
     public enum EventList {
+        LOG_Pathfinding,
+        LOG_GameObjectCreation,
+        LOG_Puzzle,
         ButtonPressed
     }
 
@@ -28,15 +31,27 @@ namespace Aiv.Fast2D.Component {
 
     }
 
-    public class SingleIntEventArgs : EventArgs {
+    public class SingleIntEventArg : EventArgs {
 
         private int intParameter;
         public int IntParameter {
             get { return intParameter; }
         }
 
-        public SingleIntEventArgs(int intParameter) {
+        public SingleIntEventArg(int intParameter) {
             this.intParameter = intParameter;
+        }
+    }
+    
+    public class SingleStringEventArg : EventArgs {
+
+        private string stringParameter;
+        public string StringParameter {
+            get { return stringParameter; }
+        }
+
+        public SingleStringEventArg(string stringParameter) {
+            this.stringParameter = stringParameter;
         }
     }
 }

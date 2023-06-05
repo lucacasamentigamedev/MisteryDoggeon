@@ -31,19 +31,19 @@ namespace MisteryDungeon.MysteryDungeon {
             if (GameStats.PuzzleResolved) return;
             if (!puzzleReady) currentWaitingResetPuzzleTimer -= Game.DeltaTime;
             if (currentWaitingResetPuzzleTimer > 0) return;
-            if(!puzzleReady && GameConfigMgr.debugPuzzle) Console.WriteLine("Pronto");
+            if(!puzzleReady) EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Puzzle pronto"));
             puzzleReady = true;
             if (!puzzleActive) return;
             int actualRemainingSecs = (int)currentPuzzleTimer;
             if (actualRemainingSecs != lastRemainingSecs) TickCountdown(actualRemainingSecs);
             currentPuzzleTimer -= Game.DeltaTime;
             if (currentPuzzleTimer > 0) return;
-            if(GameConfigMgr.debugPuzzle) Console.WriteLine("Tempo scaduto");
+            EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Tempo scaduto"));
             ResetPuzzle();
         }
 
         public void ResetPuzzle() {
-            if (GameConfigMgr.debugPuzzle) Console.WriteLine("Reset puzzle");
+            EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Reset puzzle"));
             puzzleActive = false;
             currentPuzzleTimer = puzzleTimer+0.99f; //metto +0.99 così riesco effettivamente a fare un conteggio
             //che rispecchia il numero di secondi in ingresso
@@ -65,21 +65,21 @@ namespace MisteryDungeon.MysteryDungeon {
         public void OnButtonPressed(EventArgs message) {
             if (GameStats.PuzzleResolved || !puzzleReady) return;
             //test console.write
-            if (!puzzleActive && GameConfigMgr.debugPuzzle) Console.WriteLine("Attivo il puzzle, comincia il countdown");
+            if (!puzzleActive) EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Attivo il puzzle"));
             puzzleActive = true;
             EventArgsFactory.ButtonPressedParser(message, out int sequenceId);
             if (sequenceId == lastButtonPressed) return;
             if (sequenceId != buttonToPress) {
-                if (GameConfigMgr.debugPuzzle) Console.WriteLine("Sequenza puzzle sbagliata");
+                EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Sequenza puzzle sbagliata"));
                 //TODO: rumore di sequenza sbagliata
                 ResetPuzzle();
                 return;
             };
             lastButtonPressed = sequenceId;
             buttonToPress++;
-            if (GameConfigMgr.debugPuzzle) Console.WriteLine("Premuto pulsante giusto " + buttonToPress + "/" + GameConfigMgr.PlatformButtons);
+            EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Premuto pulsante giusto " + buttonToPress + "/" + GameConfigMgr.PlatformButtons));
             if(buttonToPress == GameConfigMgr.PlatformButtons) {
-                if (GameConfigMgr.debugPuzzle) Console.WriteLine("Puzzle risolto");
+                EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Puzzle risolto"));
                 //TODO: rumore puzzle completato
                 //TODO: sbloccare gate
                 //TODO: spawn pistola
@@ -98,7 +98,7 @@ namespace MisteryDungeon.MysteryDungeon {
         private void TickCountdown(int actualRemainingSecs) {
             lastRemainingSecs = actualRemainingSecs;
             //TODO: suono conteggio
-            if (GameConfigMgr.debugPuzzle) Console.WriteLine("Secondi rimanenti = " + lastRemainingSecs);
+            EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Secondi rimanenti = " + lastRemainingSecs));
         }
     }
 }

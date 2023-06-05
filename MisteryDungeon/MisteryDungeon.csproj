@@ -129,6 +129,7 @@
     <Compile Include="MysteryDungeon\Gate.cs" />
     <Compile Include="MysteryDungeon\PlayerController.cs" />
     <Compile Include="MysteryDungeon\Obstacle.cs" />
+    <Compile Include="MysteryDungeon\LogMgr.cs" />
     <Compile Include="MysteryDungeon\PuzzleMgr.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />

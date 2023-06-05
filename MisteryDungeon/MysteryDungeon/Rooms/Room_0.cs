@@ -3,7 +3,6 @@ using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
 using OpenTK;
-using System;
 
 namespace MisteryDungeon {
     internal class Room_0 : Scene {
@@ -21,12 +20,23 @@ namespace MisteryDungeon {
 
         public override void InitializeScene() {
             base.InitializeScene();
+            CreateLogMgr();
+            CreateMap();
+            CreatePuzzleMgr();
+        }
+
+        public void CreateLogMgr() {
+            GameObject go = new GameObject("LogMgr", Vector2.Zero);
+            go.AddComponent<LogMgr>(
+                false,  //print pathfinding logs
+                true,   //print puzzle logs
+                false   //print object creations logs
+            );
+        }
+
+        public void CreateMap() {
             GameConfigMgr.PlatformButtons = 0;
             GameMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
-            CreatePuzzleMgr();
-            /*********TODO: TEST per provare subito l'arma*****************/
-            //GameObject.Find("Object_0_22").IsActive = true;
-            /*********TODO: TEST pre provare subito l'arma*****************/
         }
 
         public void CreatePuzzleMgr() {
@@ -37,7 +47,7 @@ namespace MisteryDungeon {
                 new Vector2[] { new Vector2(0, 22)}, //arma, da attivare
                 new Vector2[] { new Vector2(0, 27) } //gate, da disattivare
             );
-            if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + Vector2.Zero);
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
+using OpenTK;
 
 namespace MisteryDungeon {
     internal class Room_1 : Scene {
@@ -15,6 +16,20 @@ namespace MisteryDungeon {
 
         public override void InitializeScene() {
             base.InitializeScene();
+            CreateLogMgr();
+            CreateMap();
+        }
+
+        public void CreateLogMgr() {
+            GameObject go = new GameObject("LogMgr", Vector2.Zero);
+            go.AddComponent<LogMgr>(
+                false,   //print pathfinding logs
+                false,   //print puzzle logs
+                false    //print object creations logs
+            );
+        }
+
+        public void CreateMap() {
             GameMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
         }
     }

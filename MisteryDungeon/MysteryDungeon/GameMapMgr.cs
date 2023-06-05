@@ -65,17 +65,17 @@ namespace MisteryDungeon.MysteryDungeon {
             SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
             sr.TextureOffset = new Vector2(tileSprite.OffsetX, tileSprite.OffsetY);
             go.transform.Scale = new Vector2(GameConfigMgr.TileUnitWidth / sr.Width, GameConfigMgr.TileUnitHeight / sr.Height);
-            if(GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         private static void CreatePathfindingMap(Layer layer) {
             if (GameGridMgr.GetRoomGrid(roomId) == null) {
-                if (GameConfigMgr.debugPathfinding) Console.WriteLine("Mappa stanza " + roomId + " non presente, la creo ex novo");
+                EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Mappa stanza " + roomId + " non presente, la creo ex novo"));
                 GameGridMgr.SetRoomGrid(roomId, new MovementGrid(GameConfigMgr.MapRows, GameConfigMgr.MapColumns, layer));
             } else {
-                if (GameConfigMgr.debugPathfinding) Console.WriteLine("Mappa stanza " + roomId + " esistente, uso quella");
+                EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Mappa stanza " + roomId + " esistente, uso quella"));
             };
-            if (GameConfigMgr.debugPathfinding) GameGridMgr.PrintMovementGrid(roomId);
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(GameGridMgr.PrintMovementGrid(roomId)));
         }
 
         private static void CreateObjectTile(Aiv.Tiled.Object obj) {
@@ -123,7 +123,7 @@ namespace MisteryDungeon.MysteryDungeon {
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Obstacle;
             go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
-            if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         private static void CreatePlatformButton(Aiv.Tiled.Object obj) {
@@ -144,7 +144,7 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.Type = RigidbodyType.PlatformButton;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if(GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
-            if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         private static void CreateGate(Aiv.Tiled.Object obj) {
@@ -158,7 +158,7 @@ namespace MisteryDungeon.MysteryDungeon {
             go.transform.Scale = new Vector2(GameConfigMgr.TileUnitWidth / sr.Width, GameConfigMgr.TileUnitHeight / sr.Height);
             go.AddComponent<Gate>(obj.Id);
             go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
-            if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         private static void CreateDoor(Aiv.Tiled.Object obj) {
@@ -179,7 +179,7 @@ namespace MisteryDungeon.MysteryDungeon {
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
-            if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         private static void CreateWeapon(Aiv.Tiled.Object obj) {
@@ -204,7 +204,7 @@ namespace MisteryDungeon.MysteryDungeon {
             float offsetShootY = float.Parse(getPropertyValueByName("offsetShootY", obj.Properties));
             go.AddComponent<Weapon>(bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY));
             go.IsActive = GameRoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
-            if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in posizione " + pos.ToString());
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         private static void CreateBulletMgr() {
@@ -243,7 +243,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
 
             }
-            if (GameConfigMgr.debugGameObjectCreations) Console.WriteLine("Creato " + go.Name + " in cella " + cellIndex.ToString());
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
         }
 
         private static void CreatePlayerAnimations(GameObject go, Sheet sheet) {
