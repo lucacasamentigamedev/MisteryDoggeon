@@ -4,7 +4,7 @@ using MisteryDungeon.MysteryDungeon;
 using OpenTK;
 
 namespace MisteryDungeon {
-    internal class Room_1 : Scene {
+    internal class Room_2 : Scene {
         protected override void LoadAssets() {
             FontMgr.AddFont("std_font", "Assets/text_sheet.png", 15, 32, 20, 20);
             GfxMgr.AddTexture("crate", "Assets/crate.png");
@@ -12,7 +12,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
             GfxMgr.AddTexture("loading", "Assets/loading.png");
             GfxMgr.AddTexture("arrow", "Assets/arrow.png");
-            GfxMgr.AddTexture("key", "Assets/key.png");
+            GfxMgr.AddTexture("gate", "Assets/lamp_gate.png");
         }
 
         public override void InitializeScene() {

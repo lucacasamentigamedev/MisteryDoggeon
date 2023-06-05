@@ -1,5 +1,4 @@
-﻿using Aiv.Fast2D;
-using Aiv.Fast2D.Component;
+﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
 using OpenTK;
@@ -23,20 +22,24 @@ namespace MisteryDungeon {
             CreateLogMgr();
             CreateMap();
             CreatePuzzleMgr();
+
+            //test
+            //RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
+            //GameObject.Find("Object_0_27").IsActive = false;
         }
 
         public void CreateLogMgr() {
             GameObject go = new GameObject("LogMgr", Vector2.Zero);
             go.AddComponent<LogMgr>(
                 false,  //print pathfinding logs
-                true,   //print puzzle logs
+                false,  //print puzzle logs
                 false   //print object creations logs
             );
         }
 
         public void CreateMap() {
             GameConfigMgr.PlatformButtons = 0;
-            GameTiledMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
+            TiledMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
         }
 
         public void CreatePuzzleMgr() {

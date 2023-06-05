@@ -1,7 +1,7 @@
 ﻿namespace MisteryDungeon.MysteryDungeon {
     static class GameConfigMgr {
 
-        public static bool debugBoxColliderWireframe = true;
+        public static bool debugBoxColliderWireframe = false;
         public static float TileUnitWidth { get; set; }
         public static float TileUnitHeight { get; set; }
 

@@ -2,7 +2,16 @@
 
 namespace Aiv.Fast2D.Component {
 
-    public enum RigidbodyType { Player = 1, Enemy = 2, Door = 4, PlatformButton = 8, Weapon = 16, PlayerBullet = 32, Obstacle = 64 }
+    public enum RigidbodyType {
+        Player = 1,
+        Enemy = 2,
+        Door = 4,
+        PlatformButton = 8,
+        Weapon = 16,
+        PlayerBullet = 32,
+        Obstacle = 64,
+        Key = 128
+    }
 
     public static class PhysicsMgr {
 

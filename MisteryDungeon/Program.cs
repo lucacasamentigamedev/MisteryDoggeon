@@ -1,5 +1,4 @@
-﻿using Aiv.Fast2D;
-using Aiv.Fast2D.Component;
+﻿using Aiv.Fast2D.Component;
 
 namespace MisteryDungeon.MysteryDungeon {
 
@@ -10,7 +9,8 @@ namespace MisteryDungeon.MysteryDungeon {
         PlatformButton,
         Weapon,
         PlayerBullet,
-        Obstacle
+        Obstacle,
+        Key
     }
 
     class Program {

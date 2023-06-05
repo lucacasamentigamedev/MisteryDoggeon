@@ -33,7 +33,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if (activeness) return;
             float xPos = 0;
             float yPos = 0;
-            Map map = GameTiledMapMgr.GetMap(roomId);
+            Map map = TiledMapMgr.GetMap(roomId);
             foreach(ObjectGroup objectGroup in map.ObjectGroups) {
                 foreach (Aiv.Tiled.Object obj in objectGroup.Objects) {
                     if (obj.Id != objectId) continue;

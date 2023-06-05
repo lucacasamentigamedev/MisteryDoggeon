@@ -121,6 +121,7 @@
     <Compile Include="MysteryDungeon\BulletMgr.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
     <Compile Include="MysteryDungeon\GameConfigMgr.cs" />
+    <Compile Include="MysteryDungeon\Key.cs" />
     <Compile Include="MysteryDungeon\MovementGridMgr.cs" />
     <Compile Include="MysteryDungeon\RoomObjectsMgr.cs" />
     <Compile Include="MysteryDungeon\GameStats.cs" />
@@ -131,9 +132,10 @@
     <Compile Include="MysteryDungeon\Obstacle.cs" />
     <Compile Include="MysteryDungeon\LogMgr.cs" />
     <Compile Include="MysteryDungeon\PuzzleMgr.cs" />
+    <Compile Include="MysteryDungeon\Rooms\Room_2.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />
-    <Compile Include="MysteryDungeon\GameTiledMapMgr.cs" />
+    <Compile Include="MysteryDungeon\TiledMapMgr.cs" />
     <Compile Include="MysteryDungeon\ShootModule.cs" />
     <Compile Include="MysteryDungeon\Weapon.cs" />
     <Compile Include="Program.cs" />
@@ -142,6 +144,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Assets\Tiled\Room0.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Tiled\Room2.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Tiled\Room1.tmx">

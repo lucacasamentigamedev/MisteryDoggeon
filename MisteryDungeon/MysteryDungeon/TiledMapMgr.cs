@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 namespace MisteryDungeon.MysteryDungeon {
 
-    static class GameTiledMapMgr {
+    static class TiledMapMgr {
 
         private static Map[] maps;
         private static int roomId;
 
-        static GameTiledMapMgr() {
+        static TiledMapMgr() {
             maps = new Map[GameConfigMgr.RoomsNumber];
             for(int i = 0; i < maps.Length; i++) {
                 maps[i] = null;
@@ -45,6 +45,8 @@ namespace MisteryDungeon.MysteryDungeon {
             }
             //other
             CreateBulletMgr();
+            GameStats.PreviousRoom = GameStats.ActualRoom;
+            GameStats.ActualRoom = roomId;
         }
         private static void CreateBackground(Layer layer) {
             for (int i = 0; i < layer.Tiles.GetLength(0); i++) {
@@ -77,7 +79,7 @@ namespace MisteryDungeon.MysteryDungeon {
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(MovementGridMgr.PrintMovementGrid(roomId)));
         }
 
-        private static void CreateObjectTile(Aiv.Tiled.Object obj) {
+        private static void CreateObjectTile(Object obj) {
             switch (obj.Name) {
                 case "obstacle":
                     CreateObstacle(obj);
@@ -94,20 +96,17 @@ namespace MisteryDungeon.MysteryDungeon {
                 case "weapon":
                     CreateWeapon(obj);
                     break;
+                case "key":
+                    CreateKey(obj);
+                    break;
                 case "player":
-                    bool defaultPos = bool.Parse(getPropertyValueByName("startPosition", obj.Properties));
-                    if (defaultPos && !GameConfigMgr.FirstDoorPassed) {
-                        //disegno player in posizione di default (prima volta che apri il gioco)
-                        CreatePlayer(obj);
-                    } else if (!defaultPos && GameConfigMgr.FirstDoorPassed) {
-                        //disegno player a fianco della porta in uscita (come da mappa tiled)
-                        CreatePlayer(obj);
-                    }
+                    int fromRoom = int.Parse(getPropertyValueByName("fromRoom", obj.Properties));
+                    if (GameStats.ActualRoom == fromRoom) CreatePlayer(obj);
                     break;
             }
         }
 
-        private static void CreateObstacle(Aiv.Tiled.Object obj) {
+        private static void CreateObstacle(Object obj) {
             Vector2 pos = new Vector2(
                 ((float)obj.X / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitWidth + (GameConfigMgr.TileUnitWidth / 2),
                 ((float)obj.Y / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitHeight - (GameConfigMgr.TileUnitHeight / 2)
@@ -125,7 +124,7 @@ namespace MisteryDungeon.MysteryDungeon {
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
-        private static void CreatePlatformButton(Aiv.Tiled.Object obj) {
+        private static void CreatePlatformButton(Object obj) {
             Vector2 pos = new Vector2(
                 ((float)obj.X / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitWidth + (GameConfigMgr.TileUnitWidth / 2),
                 ((float)obj.Y / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitHeight - (GameConfigMgr.TileUnitHeight / 2)
@@ -146,7 +145,7 @@ namespace MisteryDungeon.MysteryDungeon {
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
-        private static void CreateGate(Aiv.Tiled.Object obj) {
+        private static void CreateGate(Object obj) {
             Vector2 pos = new Vector2(
                 ((float)obj.X / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitWidth + (GameConfigMgr.TileUnitWidth / 2),
                 ((float)obj.Y / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitHeight - (GameConfigMgr.TileUnitHeight / 2)
@@ -160,7 +159,7 @@ namespace MisteryDungeon.MysteryDungeon {
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
-        private static void CreateDoor(Aiv.Tiled.Object obj) {
+        private static void CreateDoor(Object obj) {
             Vector2 pos = new Vector2(
                 ((float)obj.X / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitWidth + (GameConfigMgr.TileUnitWidth / 2),
                 ((float)obj.Y / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitHeight - (GameConfigMgr.TileUnitHeight / 2)
@@ -181,7 +180,28 @@ namespace MisteryDungeon.MysteryDungeon {
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
-        private static void CreateWeapon(Aiv.Tiled.Object obj) {
+        private static void CreateKey(Object obj) {
+            if(GameStats.collectedKeys.Contains(obj.Id)) return;
+            Vector2 pos = new Vector2(
+                ((float)obj.X / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitWidth + (GameConfigMgr.TileUnitWidth / 2),
+                ((float)obj.Y / GameConfigMgr.TilePixelWidth) * GameConfigMgr.TileUnitHeight - (GameConfigMgr.TileUnitHeight / 2)
+            );
+            int gateId = int.Parse(getPropertyValueByName("gateId", obj.Properties));
+            GameObject go = new GameObject("Object_" + roomId + "_" + obj.Id, pos);
+            go.Tag = (int)GameObjectTag.Key;
+            go.AddComponent<Key>(obj.Id, gateId);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "key", Vector2.One * 0.5f, DrawLayer.Middleground);
+            go.AddComponent(sr);
+            go.transform.Scale = new Vector2((GameConfigMgr.TileUnitWidth / sr.Width), (GameConfigMgr.TileUnitHeight / sr.Height));
+            Rigidbody rb = go.AddComponent<Rigidbody>();
+            rb.Type = RigidbodyType.Key;
+            go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
+        }
+
+        private static void CreateWeapon(Object obj) {
             string weaponType = getPropertyValueByName("weaponType", obj.Properties);
             if (weaponType == "bow" && GameStats.BowPicked) return;
             Vector2 pos = new Vector2(
@@ -211,7 +231,7 @@ namespace MisteryDungeon.MysteryDungeon {
             bulletMgr.AddComponent<BulletMgr>(5);
         }
 
-        private static void CreatePlayer(Aiv.Tiled.Object obj) {
+        private static void CreatePlayer(Object obj) {
             Vector2 cellIndex = new Vector2(
                 (float)obj.X / GameConfigMgr.TilePixelWidth,
                 ((float)obj.Y / GameConfigMgr.TilePixelWidth) - 1
@@ -232,6 +252,7 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.AddCollisionType((uint)RigidbodyType.Door);
             rb.AddCollisionType((uint)RigidbodyType.PlatformButton);
             rb.AddCollisionType((uint)RigidbodyType.Weapon);
+            rb.AddCollisionType((uint)RigidbodyType.Key);
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             CreatePlayerAnimations(go, sheet);

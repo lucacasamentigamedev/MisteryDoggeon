@@ -115,6 +115,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public override void OnCollide(Collision collisionInfo) {
             switch(collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Door:
+                    //TODO: suono porta
                     if (!GameConfigMgr.FirstDoorPassed) GameConfigMgr.FirstDoorPassed = true;
                     int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
                     Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
@@ -126,6 +127,7 @@ namespace MisteryDungeon.MysteryDungeon {
                     EventManager.CastEvent(EventList.ButtonPressed, EventArgsFactory.ButtonPressedFactory(seqId));
                     break;
                 case (int)GameObjectTag.Weapon:
+                    //TODO: suono weapon raccolta
                     Weapon weapon = collisionInfo.Collider.gameObject.GetComponent<Weapon>();
                     GameStats.ActiveWeapon = weapon;
                     ShootModule sm = GetComponent<ShootModule>();
@@ -138,6 +140,12 @@ namespace MisteryDungeon.MysteryDungeon {
                             break;
                     }
                     weapon.gameObject.IsActive = false;
+                    break;
+                case (int)GameObjectTag.Key:
+                    //TODO: suono chiave raccolta
+                    Key key = collisionInfo.Collider.gameObject.GetComponent<Key>();
+                    GameStats.collectedKeys.Add(key.ID);
+                    key.gameObject.IsActive = false;
                     break;
             }
         }
