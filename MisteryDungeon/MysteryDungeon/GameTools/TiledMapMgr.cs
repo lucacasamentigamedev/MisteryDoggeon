@@ -356,13 +356,14 @@ namespace MisteryDungeon.MysteryDungeon {
             float speed = float.Parse(getPropertyValueByName("reloadTime", obj.Properties));
             float offsetShootX = float.Parse(getPropertyValueByName("offsetShootX", obj.Properties));
             float offsetShootY = float.Parse(getPropertyValueByName("offsetShootY", obj.Properties));
+            float deathTimer = float.Parse(getPropertyValueByName("deathTimer", obj.Properties));
             GameObject go = new GameObject("Boss", pos);
             go.Tag = (int)GameObjectTag.Boss;
             Sheet sheet = new Sheet(GfxMgr.GetTexture("boss"), 4, 2);
             SpriteRenderer sr = SpriteRenderer.Factory(go, "boss", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((GameConfig.TileUnitWidth / sr.Width) * 2, (GameConfig.TileUnitHeight / sr.Height) * 2);
-            go.AddComponent<BossController>(readyTimer, speed);
+            go.AddComponent<BossController>(readyTimer, speed, deathTimer);
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Boss;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));

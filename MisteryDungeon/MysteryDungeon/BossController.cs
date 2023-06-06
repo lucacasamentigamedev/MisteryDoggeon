@@ -4,21 +4,23 @@ using OpenTK;
 namespace MisteryDungeon.MysteryDungeon {
     internal class BossController : UserComponent {
 
-        float readyTimer;
-        float currentReadyTimer;
-        float speed;
-        bool active;
+        private float currentReadyTimer;
+        private float currentDeathTimer;
+        private float speed;
+        private bool active;
+        private bool dead;
 
         private SheetAnimator animator;
         private Transform targetTransform;
         private Rigidbody rigidBody;
         private ShootModule shootModule;
 
-        public BossController(GameObject owner, float readyTimer, float speed) : base(owner) {
-            this.readyTimer = readyTimer;
+        public BossController(GameObject owner, float readyTimer, float speed, float deathTimer) : base(owner) {
             currentReadyTimer = readyTimer;
             this.speed = speed;
-            this.active = false;
+            active = false;
+            dead = false;
+            currentDeathTimer = deathTimer;
         }
         public override void Awake() {
             animator = GetComponent<SheetAnimator>();
@@ -33,17 +35,25 @@ namespace MisteryDungeon.MysteryDungeon {
         public void TakeDamage(float damage) {
             if (GetComponent<HealthModule>().TakeDamage(damage)) {
                 //TODO: suono boss sconfitto
+                rigidBody.Velocity = Vector2.Zero;
                 animator.ChangeClip("death");
-                gameObject.IsActive = false;
-                GameStats.BossDefeated = true;
+                dead = true;
                 RoomObjectsMgr.SetRoomObjectActiveness(3, 39, false, true);
                 GameObject.Find("Object_3_39").IsActive = false;
+                GameStats.BossDefeated = true;
+                shootModule.Enabled = false;
             } else {
                 //TODO: suono danno al boss
             }
         }
 
         public override void Update() {
+            if (dead) {
+                currentDeathTimer -= Game.DeltaTime;
+                if (currentDeathTimer > 0) return;
+                gameObject.IsActive = false;
+                return;
+            }
             currentReadyTimer -= Game.DeltaTime;
             if (currentReadyTimer > 0) {
                 shootModule.Enabled = false;

@@ -36,6 +36,7 @@
   <object id="51" name="boss" gid="457" x="112" y="128" width="16" height="16">
    <properties>
     <property name="bulletType" type="int" value="1"/>
+    <property name="deathTimer" type="float" value="2"/>
     <property name="health" type="float" value="50"/>
     <property name="offsetShootX" type="float" value="0.5"/>
     <property name="offsetShootY" type="float" value="0.5"/>
