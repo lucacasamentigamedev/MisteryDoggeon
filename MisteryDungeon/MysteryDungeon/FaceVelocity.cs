@@ -12,7 +12,7 @@ namespace MisteryDungeon.MysteryDungeon {
             rb = GetComponent<Rigidbody>();
         }
 
-        public override void LateUpdate() {
+        public override void Update() {
             if (rb.Velocity == Vector2.Zero) return;
             transform.Forward = rb.Velocity.Normalized();
         }

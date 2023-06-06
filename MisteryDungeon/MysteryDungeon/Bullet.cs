@@ -1,4 +1,5 @@
 ﻿using Aiv.Fast2D.Component;
+using MisteryDungeon.MysteryDungeon.Rooms;
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -40,6 +41,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public virtual void Shoot(Vector2 startPosition, Vector2 direction) {
             transform.Position = startPosition;
             rb.Velocity = direction.Normalized() * speed;
+            transform.Forward = rb.Velocity.Normalized();
             gameObject.IsActive = true;
         }
 
@@ -47,6 +49,30 @@ namespace MisteryDungeon.MysteryDungeon {
             gameObject.IsActive = false;
         }
 
-        public override void OnCollide(Collision collisionInfo) {}
+        public override void OnCollide(Collision collisionInfo) {
+            switch (collisionInfo.Collider.gameObject.Tag) {
+                case (int)GameObjectTag.Enemy:
+                    //TODO: suono nemico muore
+                    DestroyBullet();
+                    Enemy enemy = collisionInfo.Collider.gameObject.GetComponent<Enemy>();
+                    enemy.TakeDamage(Damage);
+                    break;
+                case (int)GameObjectTag.SpawnPoint:
+                    DestroyBullet();
+                    SpawnPoint spawnPoint = collisionInfo.Collider.gameObject.GetComponent<SpawnPoint>();
+                    spawnPoint.TakeDamage(Damage);
+                    break;
+                case (int)GameObjectTag.Obstacle:
+                    //TODO: suono cassa distrutta
+                    DestroyBullet();
+                    Obstacle obstacle = collisionInfo.Collider.gameObject.GetComponent<Obstacle>();
+                    obstacle.gameObject.IsActive = false;
+                    RoomObjectsMgr.SetRoomObjectActiveness(obstacle.RoomId, obstacle.ID, false, true);
+                    break;
+                case (int)GameObjectTag.Wall:
+                    DestroyBullet();
+                    break;
+            }
+        }
     }
 }

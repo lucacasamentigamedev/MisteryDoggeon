@@ -15,6 +15,7 @@ namespace MisteryDungeon.MysteryDungeon {
         private float currentWaitingResetPuzzleTimer;
         private bool puzzleReady;
         private int lastRemainingSecs;
+        public int TotalButtons { get; set; }
         private Vector2[] objectsToActiveAfterPuzzleResolved;
         private Vector2[] objectsToDisactiveAfterPuzzleResolved;
 
@@ -25,6 +26,7 @@ namespace MisteryDungeon.MysteryDungeon {
             ResetPuzzle();
             this.objectsToActiveAfterPuzzleResolved = objectsToActiveAfterPuzzleResolved;
             this.objectsToDisactiveAfterPuzzleResolved = objectsToDisactiveAfterPuzzleResolved;
+            TotalButtons = 0;
         }
 
         public override void Update() {
@@ -77,8 +79,8 @@ namespace MisteryDungeon.MysteryDungeon {
             };
             lastButtonPressed = sequenceId;
             buttonToPress++;
-            EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Premuto pulsante giusto " + buttonToPress + "/" + GameConfigMgr.PlatformButtons));
-            if(buttonToPress == GameConfigMgr.PlatformButtons) {
+            EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Premuto pulsante giusto " + buttonToPress + "/" + TotalButtons));
+            if(buttonToPress == TotalButtons) {
                 EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Puzzle risolto"));
                 //TODO: rumore puzzle completato
                 //TODO: sbloccare gate

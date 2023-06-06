@@ -15,18 +15,24 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
             GfxMgr.AddTexture("bow", "Assets/bow.png");
             GfxMgr.AddTexture("arrow", "Assets/arrow.png");
+            GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
+            GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
         }
 
         public override void InitializeScene() {
             base.InitializeScene();
             CreateLogMgr();
-            CreateMap();
             CreatePuzzleMgr();
+            CreateMap();
 
-            //FIXME: da togliere cheat per andare subito in stanza 2 e avere subito l'arma
-            RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
-            GameObject.Find("Object_0_27").IsActive = false;
-            GameObject.Find("Object_0_22").IsActive = true;
+            /******************FIXME: cheat da togliere**************/
+            /*RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
+            GameObject g = GameObject.Find("Object_0_27");
+            if (g != null) g.IsActive = false;
+            g = GameObject.Find("Object_0_22");
+            if (g != null) g.IsActive = true;
+            GameStats.HordeDefeated = true;
+            GameStats.collectedKeys.Add(25);*/
             /*****************************************************/
         }
 
@@ -34,13 +40,13 @@ namespace MisteryDungeon {
             GameObject go = new GameObject("LogMgr", Vector2.Zero);
             go.AddComponent<LogMgr>(
                 false,  //print pathfinding logs
-                false,  //print puzzle logs
-                false   //print object creations logs
+                true,   //print puzzle logs
+                false,  //print object creations logs
+                false   //print enemy horde logs
             );
         }
 
         public void CreateMap() {
-            GameConfigMgr.PlatformButtons = 0;
             TiledMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
         }
 

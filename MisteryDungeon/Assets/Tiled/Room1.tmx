@@ -23,7 +23,8 @@
  <objectgroup id="2" name="Objects">
   <object id="25" name="key" gid="2" x="112" y="128" width="16" height="16">
    <properties>
-    <property name="gateId" type="int" value="0"/>
+    <property name="gateId" type="int" value="38"/>
+    <property name="gateRoom" type="int" value="2"/>
    </properties>
   </object>
   <object id="26" name="obstacle" gid="388" x="32" y="48" width="16" height="16"/>
@@ -34,13 +35,14 @@
   <object id="31" name="obstacle" gid="388" x="63.3333" y="208" width="16" height="16"/>
   <object id="32" name="obstacle" gid="388" x="32" y="192" width="16" height="16"/>
   <object id="33" name="obstacle" gid="388" x="144" y="176" width="16" height="16"/>
-  <object id="34" name="player" gid="326" x="16.2093" y="127.907" width="16" height="16">
+  <object id="34" name="player" gid="326" x="32" y="128" width="16" height="16">
    <properties>
     <property name="fromRoom" type="int" value="0"/>
    </properties>
   </object>
   <object id="35" name="door" gid="2" x="0" y="128" width="16" height="16">
    <properties>
+    <property name="lockedBy" type="int" value="-1"/>
     <property name="roomToGo" type="int" value="0"/>
    </properties>
   </object>

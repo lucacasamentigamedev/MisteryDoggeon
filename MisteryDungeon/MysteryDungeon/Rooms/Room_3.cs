@@ -4,7 +4,7 @@ using MisteryDungeon.MysteryDungeon;
 using OpenTK;
 
 namespace MisteryDungeon {
-    public class Room_2 : Scene {
+    public class Room_3 : Scene {
         protected override void LoadAssets() {
             FontMgr.AddFont("std_font", "Assets/text_sheet.png", 15, 32, 20, 20);
             GfxMgr.AddTexture("crate", "Assets/crate.png");
@@ -15,7 +15,6 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("gate", "Assets/lamp_gate.png");
             GfxMgr.AddTexture("blob", "Assets/blob.gif");
             GfxMgr.AddTexture("spines", "Assets/spines.png");
-            GfxMgr.AddTexture("spawnPoint", "Assets/spawn_point.png");
             GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
             GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
         }
@@ -23,14 +22,7 @@ namespace MisteryDungeon {
         public override void InitializeScene() {
             base.InitializeScene();
             CreateLogMgr();
-            CreateHordeMgr();
             CreateMap();
-
-            /******************FIXME: cheat da togliere**************/
-            /*RoomObjectsMgr.SetRoomObjectActiveness(2, 38, false, true);
-            GameObject g = GameObject.Find("Object_2_38");
-            if (g != null) g.IsActive = false;*/
-            /********************************/
         }
 
         public void CreateLogMgr() {
@@ -41,11 +33,6 @@ namespace MisteryDungeon {
                 false,  //print object creations logs
                 true    //print enemy horde logs
             );
-        }
-        public void CreateHordeMgr() {
-            GameObject go = new GameObject("HordeMgr", Vector2.Zero);
-            go.AddComponent<HordeMgr>();
-            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
         }
 
         public void CreateMap() {

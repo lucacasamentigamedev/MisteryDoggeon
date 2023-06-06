@@ -3,6 +3,7 @@ using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 using System;
 using System.Collections.Generic;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MisteryDungeon.MysteryDungeon {
     public class PlayerController : UserComponent {
@@ -25,10 +26,10 @@ namespace MisteryDungeon.MysteryDungeon {
         public PlayerController(GameObject owner, MovementGrid grid, float moveSpeed) : base(owner) {
             this.grid = grid;
             this.moveSpeed = moveSpeed;
-            tileUnitWidth = GameConfigMgr.TileUnitWidth;
-            tileUnitHeight = GameConfigMgr.TileUnitHeight;
-            mapColumns = GameConfigMgr.MapColumns;
-            mapRows = GameConfigMgr.MapRows;
+            tileUnitWidth = GameConfig.TileUnitWidth;
+            tileUnitHeight = GameConfig.TileUnitHeight;
+            mapColumns = GameConfig.MapColumns;
+            mapRows = GameConfig.MapRows;
             isMoving = false;
         }
 
@@ -115,8 +116,10 @@ namespace MisteryDungeon.MysteryDungeon {
         public override void OnCollide(Collision collisionInfo) {
             switch(collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Door:
+                    Door door = collisionInfo.Collider.gameObject.GetComponent<Door>();
+                    if (door.LockedBy >= 0 && !GameStats.collectedKeys.Contains(door.LockedBy)) return;
                     //TODO: suono porta
-                    if (!GameConfigMgr.FirstDoorPassed) GameConfigMgr.FirstDoorPassed = true;
+                    if (!GameConfig.FirstDoorPassed) GameConfig.FirstDoorPassed = true;
                     int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
                     Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
                     Game.SetLoadingScene();
@@ -156,6 +159,11 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        public void TakeDamage(float damages) { }
+        public void TakeDamage(float damage) {
+            if (GetComponent<HealthModule>().TakeDamage(damage)) {
+                //Finisce il gioco
+                //TODO: schermata di fine gioco
+            }
+        }
     }
 }

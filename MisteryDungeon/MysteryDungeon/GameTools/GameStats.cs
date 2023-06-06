@@ -10,13 +10,10 @@ namespace MisteryDungeon.MysteryDungeon {
         public static int PreviousRoom { get; set; }
         private static int actualRoom = -1;
         public static int ActualRoom {
-            get {
-                return actualRoom;
-            }
-            set {
-                actualRoom = value;
-            }
+            get { return actualRoom;  }
+            set { actualRoom = value; }
         }
         public static bool HordeDefeated { get; set; }
+        public static bool BossDefeated { get; set; }
     }
 }

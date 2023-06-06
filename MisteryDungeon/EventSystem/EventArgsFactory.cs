@@ -1,8 +1,25 @@
-﻿using MisteryDungeon.MysteryDungeon;
-using System;
+﻿using System;
 
 namespace Aiv.Fast2D.Component {
     public static class EventArgsFactory {
+
+        public static EventArgs EnemySpawnedFactory() {
+            return new EventArgs();
+        }
+
+        public static void EnemySpawnedParser() { }
+
+        public static EventArgs EnemyDestroyedFactory() {
+            return new EventArgs();
+        }
+
+        public static void EnemyDestroyedParser() { }
+
+        public static EventArgs SpawnPointDestroyedFactory() {
+            return new EventArgs();
+        }
+
+        public static void SpawnPointDestroyedParser() {}
 
         public static EventArgs ButtonPressedFactory(int sequenceId) {
             return new SingleIntEventArg(sequenceId);

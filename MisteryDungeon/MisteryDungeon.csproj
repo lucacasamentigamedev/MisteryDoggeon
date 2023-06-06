@@ -118,29 +118,31 @@
     <Compile Include="EventSystem\EventArgsFactory.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
     <Compile Include="MysteryDungeon\Bullet.cs" />
-    <Compile Include="MysteryDungeon\BulletMgr.cs" />
+    <Compile Include="MysteryDungeon\Mgr\BulletMgr.cs" />
     <Compile Include="MysteryDungeon\Enemy.cs" />
+    <Compile Include="MysteryDungeon\HealthModule.cs" />
+    <Compile Include="MysteryDungeon\Rooms\Room_3.cs" />
     <Compile Include="MysteryDungeon\SpawnPoint.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
-    <Compile Include="MysteryDungeon\GameConfigMgr.cs" />
-    <Compile Include="MysteryDungeon\Key.cs" />
-    <Compile Include="MysteryDungeon\MovementGridMgr.cs" />
-    <Compile Include="MysteryDungeon\RoomObjectsMgr.cs" />
-    <Compile Include="MysteryDungeon\GameStats.cs" />
+    <Compile Include="MysteryDungeon\GameTools\GameConfig.cs" />
+    <Compile Include="MysteryDungeon\RoomObjects\Key.cs" />
+    <Compile Include="MysteryDungeon\GameTools\MovementGridMgr.cs" />
+    <Compile Include="MysteryDungeon\GameTools\RoomObjectsMgr.cs" />
+    <Compile Include="MysteryDungeon\GameTools\GameStats.cs" />
     <Compile Include="MysteryDungeon\PlatformButton.cs" />
-    <Compile Include="MysteryDungeon\Door.cs" />
-    <Compile Include="MysteryDungeon\Gate.cs" />
+    <Compile Include="MysteryDungeon\RoomObjects\Door.cs" />
+    <Compile Include="MysteryDungeon\RoomObjects\Gate.cs" />
     <Compile Include="MysteryDungeon\PlayerController.cs" />
-    <Compile Include="MysteryDungeon\Obstacle.cs" />
-    <Compile Include="MysteryDungeon\LogMgr.cs" />
-    <Compile Include="MysteryDungeon\PuzzleMgr.cs" />
+    <Compile Include="MysteryDungeon\RoomObjects\Obstacle.cs" />
+    <Compile Include="MysteryDungeon\GameTools\LogMgr.cs" />
+    <Compile Include="MysteryDungeon\Mgr\PuzzleMgr.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_2.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />
-    <Compile Include="MysteryDungeon\SpawnPointMgr.cs" />
-    <Compile Include="MysteryDungeon\TiledMapMgr.cs" />
+    <Compile Include="MysteryDungeon\Mgr\HordeMgr.cs" />
+    <Compile Include="MysteryDungeon\GameTools\TiledMapMgr.cs" />
     <Compile Include="MysteryDungeon\ShootModule.cs" />
-    <Compile Include="MysteryDungeon\Weapon.cs" />
+    <Compile Include="MysteryDungeon\RoomObjects\Weapon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -149,12 +151,16 @@
     <None Include="Assets\Tiled\Room0.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Assets\Tiled\Room3.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Assets\Tiled\Room2.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Tiled\Room1.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="MysteryDungeon\RoomObjects\Spines.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
@@ -184,6 +190,15 @@
     <Content Include="Assets\spawn_point.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\healthbar_foreground.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\healthbar_background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\spines.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Spritesheets\player.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -196,7 +211,6 @@
     <Content Include="Assets\text_sheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Tiled\arrow.png" />
     <Content Include="Assets\Tiled\ObjectsTileset.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

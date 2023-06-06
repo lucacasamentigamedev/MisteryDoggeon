@@ -8,7 +8,10 @@ namespace Aiv.Fast2D.Component {
         LOG_GameObjectCreation,
         LOG_Puzzle,
         LOG_EnemyHorde,
-        ButtonPressed
+        ButtonPressed,
+        EnemySpawned,
+        EnemyDestroyed,
+        SpawnPointDestroyed
     }
 
     public static class EventManager {

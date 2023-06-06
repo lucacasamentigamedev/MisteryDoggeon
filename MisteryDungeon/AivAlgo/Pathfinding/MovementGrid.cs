@@ -88,5 +88,9 @@ namespace MisteryDungeon.AivAlgo.Pathfinding {
 
             return result;
         }
+
+        public EGridTile GetGridType(Vector2 cell) {
+            return Map[(int)cell.X, (int)cell.Y];
+        }
     }
 }

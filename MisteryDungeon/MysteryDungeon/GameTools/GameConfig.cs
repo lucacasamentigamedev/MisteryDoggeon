@@ -1,7 +1,7 @@
 ﻿namespace MisteryDungeon.MysteryDungeon {
-    static class GameConfigMgr {
+    static class GameConfig {
 
-        public static bool debugBoxColliderWireframe = false;
+        public static bool debugBoxColliderWireframe = true;
         public static float TileUnitWidth { get; set; }
         public static float TileUnitHeight { get; set; }
 
@@ -14,10 +14,5 @@
         public static float TilePixelHeight { get; set; }
         public static int MapRows { get; set; }
         public static int MapColumns { get; set; }
-        private static int platformButtons = 5;
-        public static int PlatformButtons {
-            get { return platformButtons; }
-            set { platformButtons = value; }
-        }
     }
 }

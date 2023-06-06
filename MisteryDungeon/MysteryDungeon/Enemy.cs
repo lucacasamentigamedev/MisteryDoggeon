@@ -30,9 +30,19 @@ namespace MisteryDungeon.MysteryDungeon {
         public void Spawn(Vector2 startPosition) {
             transform.Position = startPosition;
             gameObject.IsActive = true;
+            GetComponent<HealthModule>().ResetHealth();
+        }
+
+        public void TakeDamage(float damage) {
+            HealthModule hm = GetComponent<HealthModule>();
+            if (hm.TakeDamage(damage)) DestroyEnemy();
+            else EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Enemy colpito, vita rimanente " + hm.Health));
         }
 
         public void DestroyEnemy() {
+            //TODO: suono distruzione nemico
+            EventManager.CastEvent(EventList.EnemyDestroyed, EventArgsFactory.EnemyDestroyedFactory());
+            EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Enemy distrutto"));
             gameObject.IsActive = false;
         }
     }

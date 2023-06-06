@@ -6,8 +6,12 @@ namespace MisteryDungeon.MysteryDungeon.Rooms {
         private int id;
         public int ID { get { return id; } }
 
-        public Obstacle(GameObject owner, int id) : base(owner) {
+        private int roomId;
+        public int RoomId { get { return roomId; } }
+
+        public Obstacle(GameObject owner, int id, int roomId) : base(owner) {
             this.id = id;
+            this.roomId = roomId;
         }
     }
 }

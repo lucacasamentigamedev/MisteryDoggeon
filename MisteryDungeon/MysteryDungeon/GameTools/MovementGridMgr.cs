@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
+using static MisteryDungeon.AivAlgo.Pathfinding.MovementGrid;
 
 namespace MisteryDungeon.MysteryDungeon {
     static class MovementGridMgr {
@@ -8,7 +9,7 @@ namespace MisteryDungeon.MysteryDungeon {
         private static MovementGrid[] grids;
 
         static MovementGridMgr() {
-            grids = new MovementGrid[GameConfigMgr.RoomsNumber];
+            grids = new MovementGrid[GameConfig.RoomsNumber];
             for (int i = 0; i < grids.Length; i++) {
                 grids[i] = null;
             }
@@ -42,6 +43,10 @@ namespace MisteryDungeon.MysteryDungeon {
             }
             final += "\n";
             return final;
+        }
+
+        public static EGridTile GetGridTile(int roomId, Vector2 cell) {
+            return GetRoomGrid(roomId).GetGridType(cell);
         }
     }
 }

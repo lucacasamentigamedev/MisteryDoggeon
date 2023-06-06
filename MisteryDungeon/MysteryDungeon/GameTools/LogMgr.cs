@@ -40,10 +40,12 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        public LogMgr(GameObject owner, bool debugPathfinding = true, bool debugPuzzle = true, bool debugGameObjectCreations = true) : base(owner) {
+        public LogMgr(GameObject owner, bool debugPathfinding = true, bool debugPuzzle = true,
+            bool debugGameObjectCreations = true, bool debugEnemyHorde = true) : base(owner) {
             DebugPathfinding = debugPathfinding;
             DebugPuzzle = debugPuzzle;
             DebugGameObjectCreations = debugGameObjectCreations;
+            DebugEnemyHorde = debugEnemyHorde;
         }
 
         public override void OnDestroy() {

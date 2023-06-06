@@ -13,6 +13,8 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("loading", "Assets/loading.png");
             GfxMgr.AddTexture("arrow", "Assets/arrow.png");
             GfxMgr.AddTexture("key", "Assets/key.png");
+            GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
+            GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
         }
 
         public override void InitializeScene() {
@@ -26,7 +28,8 @@ namespace MisteryDungeon {
             go.AddComponent<LogMgr>(
                 false,   //print pathfinding logs
                 false,   //print puzzle logs
-                false    //print object creations logs
+                false,   //print object creations logs
+                false    //print enemy horde logs
             );
         }
 

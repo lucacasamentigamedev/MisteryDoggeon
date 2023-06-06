@@ -26,17 +26,19 @@
     <property name="bulletType" type="int" value="0"/>
     <property name="offsetShootX" type="float" value="0.5"/>
     <property name="offsetShootY" type="float" value="0.5"/>
-    <property name="reloadTime" type="float" value="0.5"/>
+    <property name="reloadTime" type="float" value="0.4"/>
     <property name="weaponType" value="bow"/>
    </properties>
   </object>
   <object id="25" name="door" gid="2" x="224" y="128" width="16" height="16">
    <properties>
+    <property name="lockedBy" type="int" value="-1"/>
     <property name="roomToGo" type="int" value="1"/>
    </properties>
   </object>
   <object id="26" name="door" gid="2" x="0" y="128" width="16" height="16">
    <properties>
+    <property name="lockedBy" type="int" value="-1"/>
     <property name="roomToGo" type="int" value="2"/>
    </properties>
   </object>
@@ -82,18 +84,18 @@
     <property name="fromRoom" type="int" value="-1"/>
    </properties>
   </object>
-  <object id="45" name="player" gid="450" x="208" y="128" width="16" height="16">
+  <object id="45" name="player" gid="450" x="192" y="128" width="16" height="16">
    <properties>
     <property name="fromRoom" type="int" value="1"/>
    </properties>
   </object>
-  <object id="47" name="player" gid="450" x="16" y="128" width="16" height="16">
+  <object id="47" name="player" gid="450" x="32" y="128" width="16" height="16">
    <properties>
     <property name="fromRoom" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>
- <layer id="5" name="Collisions" width="15" height="15" opacity="0.5">
+ <layer id="5" name="Collisions" width="15" height="15" visible="0" opacity="0.5">
   <data encoding="csv">
 237,237,237,237,237,237,237,237,237,237,237,237,237,237,237,
 237,0,237,0,0,0,0,0,0,0,0,0,237,237,237,

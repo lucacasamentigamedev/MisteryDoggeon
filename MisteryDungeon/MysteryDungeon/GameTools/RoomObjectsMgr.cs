@@ -11,8 +11,8 @@ namespace MisteryDungeon.MysteryDungeon {
         private static Dictionary<int, bool>[] roomObjects;
 
         static RoomObjectsMgr() {
-            roomObjects = new Dictionary<int, bool>[GameConfigMgr.RoomsNumber];
-            for (int i = 0; i < GameConfigMgr.RoomsNumber; i++) {
+            roomObjects = new Dictionary<int, bool>[GameConfig.RoomsNumber];
+            for (int i = 0; i < GameConfig.RoomsNumber; i++) {
                 roomObjects[i] = new Dictionary<int, bool>();
             }
         }
@@ -43,8 +43,8 @@ namespace MisteryDungeon.MysteryDungeon {
                 }
             }
             Vector2 cellPos = new Vector2(
-                (int)Math.Ceiling(xPos / GameConfigMgr.TilePixelWidth),
-                (int)Math.Ceiling(yPos / GameConfigMgr.TilePixelHeight) - 1
+                (int)Math.Ceiling(xPos / GameConfig.TilePixelWidth),
+                (int)Math.Ceiling(yPos / GameConfig.TilePixelHeight) - 1
             );
             MovementGridMgr.ChangeGridTileType(cellPos, roomId, gridType);
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto " + gridType + " nella cella " + cellPos.ToString()));
