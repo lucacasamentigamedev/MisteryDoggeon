@@ -27,13 +27,13 @@ namespace MisteryDungeon {
             CreateMap();
 
             /******************FIXME: cheat da togliere**************/
-            RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
+            /*RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
             GameObject g = GameObject.Find("Object_0_27");
             if (g != null) g.IsActive = false;
             g = GameObject.Find("Object_0_22");
             if (g != null) g.IsActive = true;
             GameStats.HordeDefeated = true;
-            GameStats.collectedKeys.Add(25);
+            GameStats.collectedKeys.Add(25);*/
             /*****************************************************/
         }
 

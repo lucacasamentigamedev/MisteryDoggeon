@@ -33,6 +33,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void TakeDamage(float damage) {
+            if (dead) return;
             if (GetComponent<HealthModule>().TakeDamage(damage)) {
                 //TODO: suono boss sconfitto
                 rigidBody.Velocity = Vector2.Zero;

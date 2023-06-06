@@ -268,7 +268,7 @@ namespace MisteryDungeon.MysteryDungeon {
             go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
             if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
-            go.AddComponent<HealthModule>(spawnPointHealth, new Vector2(-0.5f, -0.5f));
+            go.AddComponent<HealthModule>(spawnPointHealth, spawnPointHealth, new Vector2(-0.5f, -0.5f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
@@ -335,7 +335,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 Weapon weapon = GameStats.ActiveWeapon;
                 sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
             }
-            go.AddComponent<HealthModule>(15, new Vector2(-0.45f, -0.5f));
+            go.AddComponent<HealthModule>(GameStats.PlayerHealth, GameStats.maxPlayerHealth, new Vector2(-0.45f, -0.5f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
         }
         
@@ -359,8 +359,8 @@ namespace MisteryDungeon.MysteryDungeon {
             float deathTimer = float.Parse(getPropertyValueByName("deathTimer", obj.Properties));
             GameObject go = new GameObject("Boss", pos);
             go.Tag = (int)GameObjectTag.Boss;
-            Sheet sheet = new Sheet(GfxMgr.GetTexture("boss"), 4, 2);
-            SpriteRenderer sr = SpriteRenderer.Factory(go, "boss", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
+            Sheet sheet = new Sheet(GfxMgr.GetTexture("redBlob"), 4, 2);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "redBlob", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((GameConfig.TileUnitWidth / sr.Width) * 2, (GameConfig.TileUnitHeight / sr.Height) * 2);
             go.AddComponent<BossController>(readyTimer, speed, deathTimer);
@@ -372,7 +372,7 @@ namespace MisteryDungeon.MysteryDungeon {
             ShootModule sm = go.AddComponent<ShootModule>("", true);
             Weapon weapon = new Weapon(go, (BulletType)bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY));
             sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
-            go.AddComponent<HealthModule>(health, new Vector2(-0.45f, -0.5f));
+            go.AddComponent<HealthModule>(health, health, new Vector2(-0.45f, -0.5f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
         }
 

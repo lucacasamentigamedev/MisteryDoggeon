@@ -36,7 +36,8 @@ namespace MisteryDungeon.MysteryDungeon {
         private Enemy CreateBlob(int index) {
             GameObject go = new GameObject("Enemy_Blob_" + index, Vector2.Zero, false);
             go.Tag = (int)GameObjectTag.Enemy;
-            SpriteRenderer sr = SpriteRenderer.Factory(go, "blob", Vector2.One * 0.5f, DrawLayer.Playground);
+            Sheet sheet = new Sheet(GfxMgr.GetTexture("greenBlob"), 4, 2);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "greenBlob", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
             go.AddComponent(sr);
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Enemy;
@@ -45,8 +46,21 @@ namespace MisteryDungeon.MysteryDungeon {
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
             go.IsActive = false;
             go.transform.Scale = new Vector2((GameConfig.TileUnitWidth / sr.Width), (GameConfig.TileUnitHeight / sr.Height));
-            go.AddComponent<HealthModule>(enemyHealth, new Vector2(-0.45f, -0.4f));
+            go.AddComponent<HealthModule>(enemyHealth, enemyHealth, new Vector2(-0.45f, -0.4f));
+            CreateBlobAnimations(go, sheet);
             return go.AddComponent<Enemy>(enemySpeed, enemyDamage);
+        }
+
+        private static void CreateBlobAnimations(GameObject go, Sheet sheet) {
+            SheetClip walking = new SheetClip(
+                sheet, "walking", new int[] { 0, 1, 2, 3, 4 }, true, 7
+            );
+            SheetClip death = new SheetClip(
+                sheet, "death", new int[] { 5, 6, 7 }, false, 7
+            );
+            SheetAnimator animator = go.AddComponent<SheetAnimator>(go.GetComponent<SpriteRenderer>());
+            animator.AddClip(walking);
+            animator.AddClip(death);
         }
 
         public Enemy GetEnemy() {
@@ -64,10 +78,10 @@ namespace MisteryDungeon.MysteryDungeon {
             if (currentSpawnTimer > 0) return;
             Enemy enemy = GetEnemy();
             if (enemy != null) {
-                EventManager.CastEvent(EventList.EnemySpawned, EventArgsFactory.EnemySpawnedFactory());
-                EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Spaw nemico in posizione " + transform.Position.ToString()));
                 enemy.Spawn(transform.Position);
                 currentSpawnTimer = spawnTimer;
+                EventManager.CastEvent(EventList.EnemySpawned, EventArgsFactory.EnemySpawnedFactory());
+                EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Spaw blob nemico"));
             }
         }
 

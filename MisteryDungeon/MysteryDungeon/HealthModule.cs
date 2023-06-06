@@ -6,7 +6,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private const float UIScale = 0.3f;
         private Vector2 UIOffset;
-        private float health;
+        private float maxHealth;
         private Transform energyBackgroundUI;
         private GameObject energyBackgroundGameObject;
         private Transform energyUI;
@@ -17,14 +17,15 @@ namespace MisteryDungeon.MysteryDungeon {
             get { return currentHealth; }
         }
         public float HealthPercentage {
-            get { return currentHealth / health; }
+            get { return currentHealth / maxHealth; }
         }
 
-        public HealthModule(GameObject owner, float health, Vector2 UIOffset) : base(owner) {
-            this.health = health;
-            currentHealth = health;
+        public HealthModule(GameObject owner, float currentHealth, float maxHealth, Vector2 UIOffset) : base(owner) {
+            this.maxHealth = maxHealth;
+            this.currentHealth = currentHealth;
             this.UIOffset = UIOffset;
             CreateUI();
+            energyUI.Scale = new Vector2(UIScale * HealthPercentage, energyUI.Scale.Y);
         }
 
         private void CreateUI() {
@@ -50,7 +51,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public bool TakeDamage(float damage) {
             currentHealth -= damage;
-            if (currentHealth > health) currentHealth = health;
+            if (currentHealth > maxHealth) currentHealth = maxHealth;
             energyUI.Scale = new Vector2(UIScale * HealthPercentage, energyUI.Scale.Y);
             return currentHealth <= 0;
         }
@@ -66,7 +67,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void ResetHealth() {
-            currentHealth = health;
+            currentHealth = maxHealth;
             energyUI.Scale = new Vector2(UIScale * HealthPercentage, energyUI.Scale.Y);
         }
     }

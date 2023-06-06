@@ -37,12 +37,12 @@
    <properties>
     <property name="bulletType" type="int" value="1"/>
     <property name="deathTimer" type="float" value="2"/>
-    <property name="health" type="float" value="50"/>
+    <property name="health" type="float" value="70"/>
     <property name="offsetShootX" type="float" value="0.5"/>
     <property name="offsetShootY" type="float" value="0.5"/>
     <property name="readyTimer" type="float" value="2"/>
-    <property name="reloadTime" type="float" value="0.65"/>
-    <property name="speed" type="float" value="2"/>
+    <property name="reloadTime" type="float" value="0.5"/>
+    <property name="speed" type="float" value="2.2"/>
    </properties>
   </object>
   <object id="52" name="spines" gid="290" x="48" y="64" width="16" height="16"/>

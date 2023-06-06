@@ -169,6 +169,8 @@ namespace MisteryDungeon.MysteryDungeon {
             if (GetComponent<HealthModule>().TakeDamage(damage)) {
                 //Finisce il gioco
                 //TODO: schermata di fine gioco
+            } else {
+                GameStats.PlayerHealth -= damage;
             }
         }
     }

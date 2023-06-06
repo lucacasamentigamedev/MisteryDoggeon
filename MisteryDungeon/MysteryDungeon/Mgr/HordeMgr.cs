@@ -10,17 +10,20 @@ namespace MisteryDungeon.MysteryDungeon {
         private bool hordeActive;
         public static int EnemiesActive { get; set; }
         public static int SpawnPointsActive { get; set; }
+        public static float DeathTimer { get; set; }
 
-        public HordeMgr(GameObject owner) : base(owner) {
+        public HordeMgr(GameObject owner, float deathTimer) : base(owner) {
             spawnPoints = new List<SpawnPoint>();
             hordeActive = false;
             EnemiesActive = 0;
             SpawnPointsActive = 0;
+            DeathTimer = deathTimer;
         }
 
         public void AddSpawnPoint(SpawnPoint spawnPoint) {
             spawnPoints.Add(spawnPoint);
             SpawnPointsActive++;
+            EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Aggiunto spawn point, spawn point attivi " + SpawnPointsActive));
         }
 
         public override void Update() {
@@ -41,20 +44,23 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private void OnEnemySpawned(EventArgs message) {
             EnemiesActive++;
+            EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Nemici attivi: " + EnemiesActive + " SpawnPoint attivi: " + SpawnPointsActive));
         }
 
         private void OnEnemyDestroyed(EventArgs message) {
             EnemiesActive--;
+            EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Nemici attivi: " + EnemiesActive + " SpawnPoint attivi: " + SpawnPointsActive));
             CheckHordeDefeated();
         }
         
         private void OnSpawnPointDestroyed(EventArgs message) {
             SpawnPointsActive--;
+            EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Nemici attivi: " + EnemiesActive + " SpawnPoint attivi: " + SpawnPointsActive));
             CheckHordeDefeated();
         }
 
         private void CheckHordeDefeated() {
-            if (EnemiesActive == 0 && SpawnPointsActive == 0) {
+            if (EnemiesActive <= 0 && SpawnPointsActive <= 0) {
                 //orda sconfitta tolgo i gate
                 EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Orda sconfitta"));
                 GameStats.HordeDefeated = true;
@@ -62,8 +68,6 @@ namespace MisteryDungeon.MysteryDungeon {
                 RoomObjectsMgr.SetRoomObjectActiveness(2, 39, false, true, MovementGrid.EGridTile.Floor);
                 GameObject.Find("Object_2_38").IsActive = false;
                 RoomObjectsMgr.SetRoomObjectActiveness(2, 38, false, true, MovementGrid.EGridTile.Floor);
-            } else {
-                EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Nemici attivi: " + EnemiesActive + " SpawnPoint attivi: " + SpawnPointsActive));
             }
         }
 

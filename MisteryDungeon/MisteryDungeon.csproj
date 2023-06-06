@@ -203,7 +203,10 @@
     <Content Include="Assets\spines.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Spritesheets\boss.png">
+    <Content Include="Assets\Spritesheets\green_blob.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Spritesheets\red_blob.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Spritesheets\player.png">
