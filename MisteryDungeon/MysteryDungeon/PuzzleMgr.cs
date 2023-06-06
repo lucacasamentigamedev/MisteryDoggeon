@@ -4,7 +4,7 @@ using System;
 
 namespace MisteryDungeon.MysteryDungeon {
 
-    internal class PuzzleMgr : UserComponent {
+    public class PuzzleMgr : UserComponent {
 
         private float puzzleTimer;
         private float currentPuzzleTimer;

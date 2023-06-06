@@ -5,7 +5,7 @@ using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 
 namespace MisteryDungeon {
-    internal class Room_2 : Scene {
+    public class Room_2 : Scene {
         protected override void LoadAssets() {
             FontMgr.AddFont("std_font", "Assets/text_sheet.png", 15, 32, 20, 20);
             GfxMgr.AddTexture("crate", "Assets/crate.png");
@@ -21,8 +21,8 @@ namespace MisteryDungeon {
         public override void InitializeScene() {
             base.InitializeScene();
             CreateLogMgr();
+            CreateSpawnPointMgr();
             CreateMap();
-            CheckHordeConditions();
         }
 
         public void CreateLogMgr() {
@@ -33,22 +33,14 @@ namespace MisteryDungeon {
                 true    //print object creations logs
             );
         }
+        public void CreateSpawnPointMgr() {
+            GameObject go = new GameObject("SpawnPointMgr", Vector2.Zero);
+            go.AddComponent<SpawnPointMgr>();
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
+        }
 
         public void CreateMap() {
             TiledMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
-        }
-
-        public void CheckHordeConditions() {
-            if(!GameStats.HordeDefeated && GameStats.ActiveWeapon != null) {
-                //attivo gate
-                GameObject.Find("Object_2_39").IsActive = true;
-                RoomObjectsMgr.SetRoomObjectActiveness(2, 39, true, true, MovementGrid.EGridTile.Wall);
-                //attivo spawn point
-                GameObject.Find("Object_2_40").IsActive = true;
-                GameObject.Find("Object_2_41").IsActive = true;
-                GameObject.Find("Object_2_42").IsActive = true;
-                GameObject.Find("Object_2_43").IsActive = true;
-            }
         }
     }
 }

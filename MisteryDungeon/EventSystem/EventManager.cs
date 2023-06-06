@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MisteryDungeon.MysteryDungeon;
+using System;
 
 namespace Aiv.Fast2D.Component {
 
@@ -6,6 +7,7 @@ namespace Aiv.Fast2D.Component {
         LOG_Pathfinding,
         LOG_GameObjectCreation,
         LOG_Puzzle,
+        LOG_EnemyHorde,
         ButtonPressed
     }
 
@@ -52,6 +54,17 @@ namespace Aiv.Fast2D.Component {
 
         public SingleStringEventArg(string stringParameter) {
             this.stringParameter = stringParameter;
+        }
+    }
+
+    public class SpawnPointCreatedEventArgs : EventArgs {
+        private SpawnPoint spawnPoint;
+        public SpawnPoint SpawnPoint {
+            get { return spawnPoint; }
+        }
+
+        public SpawnPointCreatedEventArgs(SpawnPoint spawnPoint) {
+            this.spawnPoint = spawnPoint;
         }
     }
 }

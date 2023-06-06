@@ -2,7 +2,7 @@
 using System;
 
 namespace MisteryDungeon.MysteryDungeon {
-    internal class LogMgr : UserComponent {
+    public class LogMgr : UserComponent {
 
         private static bool debugPathfinding;
         public bool DebugPathfinding {
@@ -31,6 +31,15 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
+        private static bool debugEnemyHorde;
+        public bool DebugEnemyHorde {
+            get { return debugEnemyHorde; }
+            set {
+                debugEnemyHorde = value;
+                if (debugEnemyHorde) EventManager.AddListener(EventList.LOG_EnemyHorde, OnConsoleLog);
+            }
+        }
+
         public LogMgr(GameObject owner, bool debugPathfinding = true, bool debugPuzzle = true, bool debugGameObjectCreations = true) : base(owner) {
             DebugPathfinding = debugPathfinding;
             DebugPuzzle = debugPuzzle;
@@ -41,6 +50,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if(DebugGameObjectCreations) EventManager.RemoveListener(EventList.LOG_GameObjectCreation, OnConsoleLog);
             if(DebugPathfinding) EventManager.RemoveListener(EventList.LOG_Pathfinding, OnConsoleLog);
             if(DebugPuzzle) EventManager.RemoveListener(EventList.LOG_Puzzle, OnConsoleLog);
+            if(DebugEnemyHorde) EventManager.RemoveListener(EventList.LOG_EnemyHorde, OnConsoleLog);
         }
 
         public void OnConsoleLog(EventArgs message) {

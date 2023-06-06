@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 
 namespace MisteryDungeon.MysteryDungeon {
-    internal class PlayerController : UserComponent {
+    public class PlayerController : UserComponent {
 
         //pathfinding
         private MovementGrid grid;

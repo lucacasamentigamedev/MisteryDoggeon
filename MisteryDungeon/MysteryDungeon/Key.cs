@@ -1,7 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 
 namespace MisteryDungeon.MysteryDungeon {
-    internal class Key : UserComponent {
+    public class Key : UserComponent {
 
         private int id;
         public int ID { get { return id; } }

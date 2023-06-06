@@ -2,7 +2,7 @@
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
-    internal class Enemy : UserComponent {
+    public class Enemy : UserComponent {
 
         private float damage;
         public float Damage {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MisteryDungeon.MysteryDungeon;
+using System;
 
 namespace Aiv.Fast2D.Component {
     public static class EventArgsFactory {

@@ -137,6 +137,7 @@
     <Compile Include="MysteryDungeon\Rooms\Room_2.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />
+    <Compile Include="MysteryDungeon\SpawnPointMgr.cs" />
     <Compile Include="MysteryDungeon\TiledMapMgr.cs" />
     <Compile Include="MysteryDungeon\ShootModule.cs" />
     <Compile Include="MysteryDungeon\Weapon.cs" />

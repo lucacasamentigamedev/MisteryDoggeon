@@ -1,7 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 
 namespace MisteryDungeon.MysteryDungeon {
-    internal class PlatformButton : UserComponent {
+    public class PlatformButton : UserComponent {
 
         private int id;
         private int sequenceId;

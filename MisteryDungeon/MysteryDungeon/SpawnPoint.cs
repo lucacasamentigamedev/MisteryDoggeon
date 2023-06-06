@@ -5,16 +5,15 @@ namespace MisteryDungeon.MysteryDungeon {
 
     public enum EnemyType { Blob, Last }
 
-    internal class SpawnPoint : UserComponent {
+    public class SpawnPoint : UserComponent {
 
         private Enemy[] enemiesPool;
         private float spawnTimer;
         private float currentSpawnTimer;
-        private float readyTimer;
         private float currentReadyTimer;
 
+
         public SpawnPoint(GameObject owner, int poolSize, EnemyType enemyType, float spawnTimer, float readyTimer) : base(owner) {
-            this.readyTimer = readyTimer;
             currentReadyTimer = readyTimer;
             this.spawnTimer = spawnTimer;
             currentSpawnTimer = spawnTimer;

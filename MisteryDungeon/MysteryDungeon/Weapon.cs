@@ -2,7 +2,7 @@
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
-    internal class Weapon : UserComponent {
+    public class Weapon : UserComponent {
 
         private float reloadTime;
         public float ReloadTime {
