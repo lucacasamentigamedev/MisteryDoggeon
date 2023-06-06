@@ -12,7 +12,9 @@ namespace MisteryDungeon.MysteryDungeon {
         Obstacle,
         Key,
         SpawnPoint,
-        Wall
+        Wall,
+        Boss,
+        EnemyBullet
     }
 
     class Program {

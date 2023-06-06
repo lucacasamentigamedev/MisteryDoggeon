@@ -12,6 +12,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
             GfxMgr.AddTexture("loading", "Assets/loading.png");
             GfxMgr.AddTexture("arrow", "Assets/arrow.png");
+            GfxMgr.AddTexture("redGlobe", "Assets/red_globe.png");
             GfxMgr.AddTexture("gate", "Assets/lamp_gate.png");
             GfxMgr.AddTexture("blob", "Assets/blob.gif");
             GfxMgr.AddTexture("spines", "Assets/spines.png");
@@ -27,9 +28,9 @@ namespace MisteryDungeon {
             CreateMap();
 
             /******************FIXME: cheat da togliere**************/
-            /*RoomObjectsMgr.SetRoomObjectActiveness(2, 38, false, true);
+            RoomObjectsMgr.SetRoomObjectActiveness(2, 38, false, true);
             GameObject g = GameObject.Find("Object_2_38");
-            if (g != null) g.IsActive = false;*/
+            if (g != null) g.IsActive = false;
             /********************************/
         }
 
@@ -39,7 +40,7 @@ namespace MisteryDungeon {
                 false,  //print pathfinding logs
                 false,  //print puzzle logs
                 false,  //print object creations logs
-                true    //print enemy horde logs
+                false    //print enemy horde logs
             );
         }
         public void CreateHordeMgr() {

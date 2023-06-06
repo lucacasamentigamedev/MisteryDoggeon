@@ -72,6 +72,12 @@ namespace MisteryDungeon.MysteryDungeon {
                 case (int)GameObjectTag.Wall:
                     DestroyBullet();
                     break;
+                case (int)GameObjectTag.Boss:
+                    //TODO: suono nemico muore
+                    DestroyBullet();
+                    BossController boss = collisionInfo.Collider.gameObject.GetComponent<BossController>();
+                    boss.TakeDamage(Damage);
+                    break;
             }
         }
     }

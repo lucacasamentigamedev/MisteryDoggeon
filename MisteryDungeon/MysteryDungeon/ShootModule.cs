@@ -21,21 +21,37 @@ namespace MisteryDungeon.MysteryDungeon {
             get { return bulletType; }
             set { bulletType = value; }
         }
+        private string shootAction;
+        private bool isEnemy;
 
         private BulletMgr bulletMgr;
+        private Transform targetTransform;
 
-        public ShootModule(GameObject owner) : base(owner) {}
+        public ShootModule(GameObject owner, string shootAction, bool isEnemy) : base(owner) {
+            this.shootAction = shootAction;
+            this.isEnemy = isEnemy;
+        }
 
         public override void Awake() {
             bulletMgr = GameObject.Find("BulletMgr").GetComponent<BulletMgr>();
-            currentReloadTime = reloadTime;
+            currentReloadTime = 0;
+        }
+
+        public override void Start() {
+            if(isEnemy) targetTransform = GameObject.Find("Player").transform;
         }
 
         public override void Update() {
             currentReloadTime -= Game.DeltaTime;
-            if (currentReloadTime <= 0 && Input.GetUserButton("Shoot") && GameStats.CanShoot) {
-                if (Shoot(transform.Position + (Game.Win.MousePosition - transform.Position).Normalized() * 0.5f, Game.Win.MousePosition - transform.Position)) {
-                    currentReloadTime = reloadTime;
+            if (currentReloadTime <= 0) {
+                if(isEnemy || (!isEnemy && Input.GetUserButton(shootAction) && GameStats.PlayerCanShoot) ) {
+                    Vector2 direction = !isEnemy ?
+                        Game.Win.MousePosition - transform.Position :
+                        targetTransform.Position - transform.Position;
+                    Vector2 startPosition = transform.Position + direction.Normalized() * 0.5f;
+                    if (Shoot(startPosition, direction)) {
+                        currentReloadTime = reloadTime;
+                    }
                 }
             }
         }

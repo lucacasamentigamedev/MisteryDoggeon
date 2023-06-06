@@ -125,6 +125,9 @@ namespace MisteryDungeon.MysteryDungeon {
                     int fromRoom = int.Parse(getPropertyValueByName("fromRoom", obj.Properties));
                     if (GameStats.ActualRoom == fromRoom) CreatePlayer(obj);
                     break;
+                case "boss":
+                    CreateBoss(obj);
+                    break;
             }
         }
 
@@ -322,17 +325,53 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.AddCollisionType((uint)RigidbodyType.Weapon);
             rb.AddCollisionType((uint)RigidbodyType.Key);
             rb.AddCollisionType((uint)RigidbodyType.Enemy);
+            rb.AddCollisionType((uint)RigidbodyType.EnemyBullet);
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             CreatePlayerAnimations(go, sheet);
-            ShootModule sm = go.AddComponent<ShootModule>();
-            if(GameStats.CanShoot) {
-                sm.Enabled = GameStats.CanShoot;
+            ShootModule sm = go.AddComponent<ShootModule>("Shoot", false);
+            if(GameStats.PlayerCanShoot) {
+                sm.Enabled = GameStats.PlayerCanShoot;
                 Weapon weapon = GameStats.ActiveWeapon;
                 sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
-
             }
-            go.AddComponent<HealthModule>(15, new Vector2(-0.5f, -0.5f));
+            go.AddComponent<HealthModule>(15, new Vector2(-0.45f, -0.5f));
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
+        }
+        
+        private static void CreateBoss(Aiv.Tiled.Object obj) {
+            if (GameStats.BossDefeated) return;
+            Vector2 cellIndex = new Vector2(
+                (float)obj.X / GameConfig.TilePixelWidth,
+                ((float)obj.Y / GameConfig.TilePixelWidth) - 1
+            );
+            Vector2 pos = new Vector2(
+                cellIndex.X * GameConfig.TileUnitWidth + (GameConfig.TileUnitWidth / 2),
+                cellIndex.Y * GameConfig.TileUnitHeight + (GameConfig.TileUnitHeight / 2)
+            );
+            int bulletType = int.Parse(getPropertyValueByName("bulletType", obj.Properties));
+            float health = float.Parse(getPropertyValueByName("health", obj.Properties));
+            float readyTimer = float.Parse(getPropertyValueByName("readyTimer", obj.Properties));
+            float reloadTime = float.Parse(getPropertyValueByName("reloadTime", obj.Properties));
+            float speed = float.Parse(getPropertyValueByName("reloadTime", obj.Properties));
+            float offsetShootX = float.Parse(getPropertyValueByName("offsetShootX", obj.Properties));
+            float offsetShootY = float.Parse(getPropertyValueByName("offsetShootY", obj.Properties));
+            GameObject go = new GameObject("Boss", pos);
+            go.Tag = (int)GameObjectTag.Boss;
+            Sheet sheet = new Sheet(GfxMgr.GetTexture("boss"), 4, 2);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "boss", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
+            go.AddComponent(sr);
+            go.transform.Scale = new Vector2((GameConfig.TileUnitWidth / sr.Width) * 2, (GameConfig.TileUnitHeight / sr.Height) * 2);
+            go.AddComponent<BossController>(readyTimer, speed);
+            Rigidbody rb = go.AddComponent<Rigidbody>();
+            rb.Type = RigidbodyType.Boss;
+            go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
+            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            CreateBossAnimations(go, sheet);
+            ShootModule sm = go.AddComponent<ShootModule>("", true);
+            Weapon weapon = new Weapon(go, (BulletType)bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY));
+            sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
+            go.AddComponent<HealthModule>(health, new Vector2(-0.45f, -0.5f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
         }
 
@@ -374,6 +413,22 @@ namespace MisteryDungeon.MysteryDungeon {
             animator.AddClip(walkingRight);
             animator.AddClip(walkingLeft);
             animator.AddClip(walkingDown);
+        }
+
+        private static void CreateBossAnimations(GameObject go, Sheet sheet) {
+            SheetClip idle = new SheetClip(
+                sheet, "idle", new int[] { 2 }, true, 10
+            );
+            SheetClip walking = new SheetClip(
+                sheet, "walking", new int[] { 0, 1, 2, 3, 4 }, true, 7
+            );
+            SheetClip death = new SheetClip(
+                sheet, "death", new int[] { 5, 6, 7 }, false, 7
+            );
+            SheetAnimator animator = go.AddComponent<SheetAnimator>(go.GetComponent<SpriteRenderer>());
+            animator.AddClip(idle);
+            animator.AddClip(walking);
+            animator.AddClip(death);
         }
 
         private static string getPropertyValueByName(string name, List<Property> properties) {

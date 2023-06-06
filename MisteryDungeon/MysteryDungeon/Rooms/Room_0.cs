@@ -14,6 +14,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("gate", "Assets/lamp_gate.png");
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
             GfxMgr.AddTexture("bow", "Assets/bow.png");
+            GfxMgr.AddTexture("redGlobe", "Assets/red_globe.png");
             GfxMgr.AddTexture("arrow", "Assets/arrow.png");
             GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
             GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
@@ -26,13 +27,13 @@ namespace MisteryDungeon {
             CreateMap();
 
             /******************FIXME: cheat da togliere**************/
-            /*RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
+            RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
             GameObject g = GameObject.Find("Object_0_27");
             if (g != null) g.IsActive = false;
             g = GameObject.Find("Object_0_22");
             if (g != null) g.IsActive = true;
             GameStats.HordeDefeated = true;
-            GameStats.collectedKeys.Add(25);*/
+            GameStats.collectedKeys.Add(25);
             /*****************************************************/
         }
 
@@ -40,7 +41,7 @@ namespace MisteryDungeon {
             GameObject go = new GameObject("LogMgr", Vector2.Zero);
             go.AddComponent<LogMgr>(
                 false,  //print pathfinding logs
-                true,   //print puzzle logs
+                false,   //print puzzle logs
                 false,  //print object creations logs
                 false   //print enemy horde logs
             );

@@ -136,7 +136,7 @@ namespace MisteryDungeon.MysteryDungeon {
                     ShootModule sm = GetComponent<ShootModule>();
                     sm.Enabled = true;
                     sm.SetWeapon( weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot );
-                    if(!GameStats.CanShoot) GameStats.CanShoot = true;
+                    if(!GameStats.PlayerCanShoot) GameStats.PlayerCanShoot = true;
                     switch(weapon.BulletType) {
                         case BulletType.Arrow:
                             GameStats.BowPicked = true;
@@ -155,6 +155,12 @@ namespace MisteryDungeon.MysteryDungeon {
                     Enemy enemy = collisionInfo.Collider.gameObject.GetComponent<Enemy>();
                     enemy.DestroyEnemy();
                     TakeDamage(enemy.Damage);
+                    break;
+                case (int)GameObjectTag.EnemyBullet:
+                    //TODO: suono danno al player
+                    Bullet bullet = collisionInfo.Collider.gameObject.GetComponent<Bullet>();
+                    bullet.DestroyBullet();
+                    TakeDamage(bullet.Damage);
                     break;
             }
         }

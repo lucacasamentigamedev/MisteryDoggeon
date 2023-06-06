@@ -8,6 +8,8 @@ namespace Aiv.Fast2D.Component {
         private List<SheetClip> myClip;
         private SheetClip currentClip;
 
+        public SheetClip CurrentClip { get { return currentClip; } }
+
         private float sliceTime;
         private float currentSliceTime;
         private int currentFrameIndex;

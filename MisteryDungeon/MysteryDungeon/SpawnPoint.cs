@@ -45,7 +45,7 @@ namespace MisteryDungeon.MysteryDungeon {
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
             go.IsActive = false;
             go.transform.Scale = new Vector2((GameConfig.TileUnitWidth / sr.Width), (GameConfig.TileUnitHeight / sr.Height));
-            go.AddComponent<HealthModule>(enemyHealth, new Vector2(-0.5f, -0.4f));
+            go.AddComponent<HealthModule>(enemyHealth, new Vector2(-0.45f, -0.4f));
             return go.AddComponent<Enemy>(enemySpeed, enemyDamage);
         }
 

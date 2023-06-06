@@ -12,7 +12,9 @@ namespace Aiv.Fast2D.Component {
         Obstacle = 64,
         Key = 128,
         SpawnPoint = 256,
-        Wall = 512
+        Wall = 512,
+        Boss = 1024,
+        EnemyBullet = 2048
     }
 
     public static class PhysicsMgr {
