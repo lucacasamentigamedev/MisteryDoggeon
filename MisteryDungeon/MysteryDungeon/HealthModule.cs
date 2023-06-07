@@ -4,7 +4,7 @@ using OpenTK;
 namespace MisteryDungeon.MysteryDungeon {
     public class HealthModule : UserComponent {
 
-        private const float UIScale = 0.3f;
+        private const float UIScale = 0.35f;
         private Vector2 UIOffset;
         private float maxHealth;
         private Transform energyBackgroundUI;
@@ -38,8 +38,10 @@ namespace MisteryDungeon.MysteryDungeon {
             energyBackgroundUI.Scale = Vector2.One * UIScale;
             GameObject tempObj2 = new GameObject("HealthBar_" + gameObject.Name, Vector2.Zero);
             energyGameObject = tempObj2;
-            tempObj2.AddComponent(SpriteRenderer.Factory(tempObj2, "healthBarForeground",
-                Vector2.UnitY * 0.5f, DrawLayer.GUI));
+            SpriteRenderer sr = SpriteRenderer.Factory(tempObj2, "healthBarForeground",
+                Vector2.UnitY * 0.5f, DrawLayer.GUI);
+            tempObj2.AddComponent(sr);
+            sr.Sprite.SetMultiplyTint(0, 1, 0, 1f);
             energyUI = tempObj2.transform;
             energyUI.Scale = Vector2.One * UIScale;
         }

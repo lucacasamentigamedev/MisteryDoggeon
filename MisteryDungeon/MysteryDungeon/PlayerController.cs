@@ -3,7 +3,6 @@ using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 using System;
 using System.Collections.Generic;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MisteryDungeon.MysteryDungeon {
     public class PlayerController : UserComponent {
@@ -14,6 +13,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         //ref
         private Rigidbody rigidbody;
+        private SheetAnimator animator;
 
         //working var
         private float moveSpeed;
@@ -22,6 +22,7 @@ namespace MisteryDungeon.MysteryDungeon {
         private float tileUnitHeight;
         private int mapColumns;
         private int mapRows;
+
 
         public PlayerController(GameObject owner, MovementGrid grid, float moveSpeed) : base(owner) {
             this.grid = grid;
@@ -35,6 +36,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void Awake() {
             rigidbody = GetComponent<Rigidbody>();
+            animator = GetComponent<SheetAnimator>();
         }
 
         public override void Update() {
@@ -43,6 +45,7 @@ namespace MisteryDungeon.MysteryDungeon {
             }
             if(isMoving) {
                 Vector2 direction = (path[0] - transform.Position);
+                SetCLip(GetCLipAnimationWalkingName(rigidbody.Velocity));
                 if (path.Count == 1) {
                     rigidbody.Velocity = direction.Normalized() * moveSpeed;
                 } else if (path.Count > 1) {
@@ -51,10 +54,10 @@ namespace MisteryDungeon.MysteryDungeon {
                     }
                     rigidbody.Velocity = (path[0] - transform.Position).Normalized() * moveSpeed;
                 } else {
-                    StopMovement();
+                    StopMovement(rigidbody.Velocity);
                 }
                 if ((path[0] - transform.Position).Length <= 0.1f) {
-                    StopMovement();
+                    StopMovement(rigidbody.Velocity);
                 }
             }
         }
@@ -78,7 +81,7 @@ namespace MisteryDungeon.MysteryDungeon {
             //click on wall or obstacle
             if (path.Count <= 0) {
                 //TODO: suono di percorso che non c'è
-                StopMovement();
+                StopMovement(Vector2.Zero);
                 return;
             };
 
@@ -108,7 +111,8 @@ namespace MisteryDungeon.MysteryDungeon {
             return final;
         }
 
-        private void StopMovement() {
+        private void StopMovement(Vector2 direction) {
+            SetCLip(GetCLipAnimationIdleName(direction));
             rigidbody.Velocity = Vector2.Zero;
             isMoving = false;
         }
@@ -172,6 +176,33 @@ namespace MisteryDungeon.MysteryDungeon {
             } else {
                 GameStats.PlayerHealth -= damage;
             }
+        }
+
+        public void SetCLip(string clipName) {
+            if(animator.CurrentClip.AnimationName != clipName) animator.ChangeClip(clipName);
+        }
+
+        public string GetCLipAnimationWalkingName(Vector2 direction) {
+            bool considerX = false;
+            bool considerY = false;
+            if(Math.Abs(direction.X) > Math.Abs(direction.Y)) considerX = true;
+            else considerY = true;
+            if (considerX && direction.X < 0) return "walkingLeft";
+            else if (considerX && direction.X > 0) return "walkingRight";
+            else if (considerY && direction.Y > 0) return "walkingDown";
+            else return "walkingUp";
+        }
+
+        public string GetCLipAnimationIdleName(Vector2 direction) {
+            if(direction == Vector2.Zero) return animator.CurrentClip.AnimationName;
+            bool considerX = false;
+            bool considerY = false;
+            if (Math.Abs(direction.X) > Math.Abs(direction.Y)) considerX = true;
+            else considerY = true;
+            if (considerX && direction.X < 0) return "idleLeft";
+            else if (considerX && direction.X > 0) return "idleRight";
+            else if (considerY && direction.Y > 0) return "idleDown";
+            else return "idleUp";
         }
     }
 }

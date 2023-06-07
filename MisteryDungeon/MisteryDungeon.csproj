@@ -182,6 +182,9 @@
     <Content Include="Assets\bones.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\mushroom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\pot.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

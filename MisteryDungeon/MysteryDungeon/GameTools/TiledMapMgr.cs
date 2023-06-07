@@ -139,7 +139,6 @@ namespace MisteryDungeon.MysteryDungeon {
                 ((float)obj.Y / GameConfig.TilePixelWidth) * GameConfig.TileUnitHeight - (GameConfig.TileUnitHeight / 2)
             );
             GameObject go = new GameObject("Object_" + roomId + "_" + obj.Id, pos);
-            go.transform.Rotation = RandomGenerator.GetRandomInt(0, 361);
             go.Tag = (int)GameObjectTag.Obstacle;
             string spriteName = "";
             int r = RandomGenerator.GetRandomInt(0, 4);
@@ -147,6 +146,7 @@ namespace MisteryDungeon.MysteryDungeon {
             else if (r == 1) spriteName = "pot";
             else if (r == 2) spriteName = "shell";
             else if (r == 3) spriteName = "bones";
+            if(r != 1) go.transform.Rotation = RandomGenerator.GetRandomInt(0, 361);
             SpriteRenderer sr = SpriteRenderer.Factory(go, spriteName, Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(GameConfig.TileUnitWidth / sr.Width, GameConfig.TileUnitHeight / sr.Height);
@@ -347,7 +347,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 Weapon weapon = GameStats.ActiveWeapon;
                 sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
             }
-            go.AddComponent<HealthModule>(GameStats.PlayerHealth, GameStats.maxPlayerHealth, new Vector2(-0.45f, -0.5f));
+            go.AddComponent<HealthModule>(GameStats.PlayerHealth, GameStats.maxPlayerHealth, new Vector2(-0.5f, -0.5f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
         }
         
@@ -384,7 +384,7 @@ namespace MisteryDungeon.MysteryDungeon {
             ShootModule sm = go.AddComponent<ShootModule>("", true);
             Weapon weapon = new Weapon(go, (BulletType)bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY));
             sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
-            go.AddComponent<HealthModule>(health, health, new Vector2(-0.45f, -0.5f));
+            go.AddComponent<HealthModule>(health, health, new Vector2(-0.5f, -0.75f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
         }
 
