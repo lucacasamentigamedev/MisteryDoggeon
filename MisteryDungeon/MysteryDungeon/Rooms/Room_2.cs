@@ -7,7 +7,7 @@ namespace MisteryDungeon {
     public class Room_2 : Scene {
         protected override void LoadAssets() {
             FontMgr.AddFont("std_font", "Assets/text_sheet.png", 15, 32, 20, 20);
-            GfxMgr.AddTexture("crate", "Assets/crate.png");
+            GfxMgr.AddTexture("skull", "Assets/skull.png");
             GfxMgr.AddTexture("door", "Assets/crate.png");
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
             GfxMgr.AddTexture("loading", "Assets/loading.png");

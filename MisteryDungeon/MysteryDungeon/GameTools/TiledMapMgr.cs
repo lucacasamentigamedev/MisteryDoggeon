@@ -54,12 +54,12 @@ namespace MisteryDungeon.MysteryDungeon {
         private static void CreateBackground(Layer layer) {
             for (int i = 0; i < layer.Tiles.GetLength(0); i++) {
                 for (int j = 0; j < layer.Tiles.GetLength(1); j++) {
-                    CreateTile(new TileSprite(maps[roomId].Tilesets, layer.Tiles[i, j]), i, j);
+                    CreateTile(new TileSprite(maps[roomId].Tilesets, layer.Tiles[i, j]), i, j, layer.Tiles[i, j].HorizontalFlip, layer.Tiles[i, j].VerticalFlip);
                 }
             }
         }
 
-        private static void CreateTile(TileSprite tileSprite, int xIndex, int yIndex) {
+        private static void CreateTile(TileSprite tileSprite, int xIndex, int yIndex, bool horizontalFlip, bool verticalFlip) {
             Vector2 pos = new Vector2(
                 GameConfig.TileUnitWidth * xIndex + (GameConfig.TileUnitWidth / 2),
                 GameConfig.TileUnitHeight * yIndex + (GameConfig.TileUnitHeight / 2)
@@ -71,6 +71,8 @@ namespace MisteryDungeon.MysteryDungeon {
             );
             go.AddComponent(SpriteRenderer.Factory(go, tileSprite.Texture, Vector2.One * 0.5f, DrawLayer.Background, GameConfig.TilePixelWidth, GameConfig.TilePixelWidth));
             SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+            if (horizontalFlip) sr.Sprite.FlipX = true;
+            if (verticalFlip) sr.Sprite.FlipY = true;
             sr.TextureOffset = new Vector2(tileSprite.OffsetX, tileSprite.OffsetY);
             go.transform.Scale = new Vector2(GameConfig.TileUnitWidth / sr.Width, GameConfig.TileUnitHeight / sr.Height);
             if ( (cell.X == 0 || cell.X == GameConfig.MapRows - 1 ||
@@ -137,15 +139,24 @@ namespace MisteryDungeon.MysteryDungeon {
                 ((float)obj.Y / GameConfig.TilePixelWidth) * GameConfig.TileUnitHeight - (GameConfig.TileUnitHeight / 2)
             );
             GameObject go = new GameObject("Object_" + roomId + "_" + obj.Id, pos);
+            go.transform.Rotation = RandomGenerator.GetRandomInt(0, 361);
             go.Tag = (int)GameObjectTag.Obstacle;
-            SpriteRenderer sr = SpriteRenderer.Factory(go, "crate", Vector2.One * 0.5f, DrawLayer.Middleground);
+            string spriteName = "";
+            int r = RandomGenerator.GetRandomInt(0, 4);
+            if (r == 0) spriteName = "skull";
+            else if (r == 1) spriteName = "pot";
+            else if (r == 2) spriteName = "shell";
+            else if (r == 3) spriteName = "bones";
+            SpriteRenderer sr = SpriteRenderer.Factory(go, spriteName, Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(GameConfig.TileUnitWidth / sr.Width, GameConfig.TileUnitHeight / sr.Height);
             go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
             go.AddComponent<Obstacle>(obj.Id, roomId);
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Obstacle;
-            go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
+            Collider c = ColliderFactory.CreateHalfUnscaledBoxFor(go);
+            go.AddComponent(c);
+            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
         

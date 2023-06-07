@@ -8,7 +8,10 @@ namespace MisteryDungeon {
         protected override void LoadAssets() {
             FontMgr.AddFont("std_font", "Assets/text_sheet.png", 15, 32, 20, 20);
             GfxMgr.AddTexture("red_button", "Assets/red_button.png");
-            GfxMgr.AddTexture("crate", "Assets/crate.png");
+            GfxMgr.AddTexture("skull", "Assets/skull.png");
+            GfxMgr.AddTexture("pot", "Assets/pot.png");
+            GfxMgr.AddTexture("shell", "Assets/shell.png");
+            GfxMgr.AddTexture("bones", "Assets/bones.png");
             GfxMgr.AddTexture("door", "Assets/crate.png");
             GfxMgr.AddTexture("loading", "Assets/loading.png");
             GfxMgr.AddTexture("gate", "Assets/lamp_gate.png");
