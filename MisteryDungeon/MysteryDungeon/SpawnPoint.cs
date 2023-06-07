@@ -14,16 +14,18 @@ namespace MisteryDungeon.MysteryDungeon {
         private float enemyHealth;
         private float enemySpeed;
         private float enemyDamage;
+        private float deathTimer;
 
         public SpawnPoint(GameObject owner, int poolSize, EnemyType enemyType, float spawnTimer,
-            float readyTimer, float enemyHealth, float enemySpeed, float enemyDamage) : base(owner) {
+            float readyTimer, float enemyHealth, float enemySpeed, float enemyDamage, float deathTimer) : base(owner) {
             currentReadyTimer = readyTimer;
             this.spawnTimer = spawnTimer;
-            currentSpawnTimer = spawnTimer;
+            currentSpawnTimer = 0;
             enemiesPool = new Enemy[poolSize];
             this.enemyHealth = enemyHealth;
             this.enemySpeed = enemySpeed;
             this.enemyDamage = enemyDamage;
+            this.deathTimer = deathTimer;
             for (int i = 0; i < enemiesPool.Length; i++) {
                 switch (enemyType) {
                     case (int)EnemyType.Blob:
@@ -35,6 +37,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private Enemy CreateBlob(int index) {
             GameObject go = new GameObject("Enemy_Blob_" + index, Vector2.Zero, false);
+            go.IsActive = false;
             go.Tag = (int)GameObjectTag.Enemy;
             Sheet sheet = new Sheet(GfxMgr.GetTexture("greenBlob"), 4, 2);
             SpriteRenderer sr = SpriteRenderer.Factory(go, "greenBlob", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
@@ -44,11 +47,10 @@ namespace MisteryDungeon.MysteryDungeon {
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
-            go.IsActive = false;
             go.transform.Scale = new Vector2((GameConfig.TileUnitWidth / sr.Width), (GameConfig.TileUnitHeight / sr.Height));
             go.AddComponent<HealthModule>(enemyHealth, enemyHealth, new Vector2(-0.45f, -0.4f));
             CreateBlobAnimations(go, sheet);
-            return go.AddComponent<Enemy>(enemySpeed, enemyDamage);
+            return go.AddComponent<Enemy>(enemySpeed, enemyDamage, deathTimer);
         }
 
         private static void CreateBlobAnimations(GameObject go, Sheet sheet) {
@@ -69,7 +71,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 return enemiesPool[i];
             }
             return null;
-        }
+        } 
 
         public override void Update() {
             currentReadyTimer -= Game.DeltaTime;

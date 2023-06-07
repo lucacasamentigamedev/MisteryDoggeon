@@ -10,14 +10,12 @@ namespace MisteryDungeon.MysteryDungeon {
         private bool hordeActive;
         public static int EnemiesActive { get; set; }
         public static int SpawnPointsActive { get; set; }
-        public static float DeathTimer { get; set; }
 
-        public HordeMgr(GameObject owner, float deathTimer) : base(owner) {
+        public HordeMgr(GameObject owner) : base(owner) {
             spawnPoints = new List<SpawnPoint>();
             hordeActive = false;
             EnemiesActive = 0;
             SpawnPointsActive = 0;
-            DeathTimer = deathTimer;
         }
 
         public void AddSpawnPoint(SpawnPoint spawnPoint) {

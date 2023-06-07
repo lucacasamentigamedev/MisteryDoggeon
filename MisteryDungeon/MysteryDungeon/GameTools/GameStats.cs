@@ -13,7 +13,11 @@ namespace MisteryDungeon.MysteryDungeon {
             get { return actualRoom;  }
             set { actualRoom = value; }
         }
-        public static bool HordeDefeated { get; set; }
+        private static bool hordeDefeated = false;
+        public static bool HordeDefeated {
+            get { return hordeDefeated; }
+            set { hordeDefeated = value; }
+        }
         public static bool BossDefeated { get; set; }
         public static float maxPlayerHealth = 15;
         private static float playerHealth = 15;

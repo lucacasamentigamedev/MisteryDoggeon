@@ -53,8 +53,9 @@ namespace MisteryDungeon.MysteryDungeon {
             switch (collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Enemy:
                     //TODO: suono nemico muore
-                    DestroyBullet();
                     Enemy enemy = collisionInfo.Collider.gameObject.GetComponent<Enemy>();
+                    if (enemy.Dead) break;
+                    DestroyBullet();
                     enemy.TakeDamage(Damage);
                     break;
                 case (int)GameObjectTag.SpawnPoint:
@@ -74,8 +75,9 @@ namespace MisteryDungeon.MysteryDungeon {
                     break;
                 case (int)GameObjectTag.Boss:
                     //TODO: suono nemico muore
-                    DestroyBullet();
                     BossController boss = collisionInfo.Collider.gameObject.GetComponent<BossController>();
+                    if (boss.Dead) break;
+                    DestroyBullet();
                     boss.TakeDamage(Damage);
                     break;
             }

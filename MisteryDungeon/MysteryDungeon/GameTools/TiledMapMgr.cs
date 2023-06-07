@@ -255,10 +255,11 @@ namespace MisteryDungeon.MysteryDungeon {
             float enemyHealth = float.Parse(getPropertyValueByName("enemyHealth", obj.Properties));
             float enemySpeed = float.Parse(getPropertyValueByName("enemySpeed", obj.Properties));
             float enemyDamage = float.Parse(getPropertyValueByName("enemyDamage", obj.Properties));
+            float deathTimer = float.Parse(getPropertyValueByName("deathTimer", obj.Properties));
             GameObject go = new GameObject("Object_" + roomId + "_" + obj.Id, pos);
             go.Tag = (int)GameObjectTag.SpawnPoint;
             SpawnPoint sp = go.AddComponent<SpawnPoint>(enemiesNumber, enemyType,
-                spawnTimer,readyTimer, enemyHealth, enemySpeed, enemyDamage);
+                spawnTimer,readyTimer, enemyHealth, enemySpeed, enemyDamage, deathTimer);
             GameObject.Find("HordeMgr").GetComponent<HordeMgr>().AddSpawnPoint(sp);
             SpriteRenderer sr = SpriteRenderer.Factory(go, "spawnPoint", Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
@@ -267,7 +268,7 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.Type = RigidbodyType.SpawnPoint;
             go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
             if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
-            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(roomId, obj.Id, obj.Visible);
+            go.IsActive = false;
             go.AddComponent<HealthModule>(spawnPointHealth, spawnPointHealth, new Vector2(-0.5f, -0.5f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }

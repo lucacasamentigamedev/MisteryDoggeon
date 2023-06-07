@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="53">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="60">
  <tileset firstgid="1" source="MapTileset.tsx"/>
- <layer id="1" name="Background" width="15" height="15">
+ <layer id="1" name="Background" width="15" height="15" visible="0">
   <data encoding="csv">
 107,207,207,207,207,207,207,207,207,207,207,207,207,207,108,
 192,169,169,217,217,169,169,169,169,169,169,217,169,217,190,
@@ -34,54 +34,6 @@
   </object>
   <object id="38" name="gate" gid="2" x="16" y="128" width="16" height="16"/>
   <object id="39" name="gate" gid="2" x="208" y="128" width="16" height="16" visible="0"/>
-  <object id="40" name="spawnPoint" gid="329" x="32" y="64" width="16" height="16" visible="0">
-   <properties>
-    <property name="enemiesNumber" type="int" value="3"/>
-    <property name="enemyDamage" type="float" value="5"/>
-    <property name="enemyHealth" type="float" value="5"/>
-    <property name="enemySpeed" type="float" value="2"/>
-    <property name="enemyType" type="int" value="0"/>
-    <property name="readyTimer" type="float" value="1"/>
-    <property name="spawnPointHealth" type="float" value="5"/>
-    <property name="spawnTimer" type="float" value="1"/>
-   </properties>
-  </object>
-  <object id="41" name="spawnPoint" gid="329" x="64" y="48" width="16" height="16" visible="0">
-   <properties>
-    <property name="enemiesNumber" type="int" value="3"/>
-    <property name="enemyDamage" type="float" value="5"/>
-    <property name="enemyHealth" type="float" value="5"/>
-    <property name="enemySpeed" type="float" value="1"/>
-    <property name="enemyType" type="int" value="0"/>
-    <property name="readyTimer" type="float" value="1"/>
-    <property name="spawnPointHealth" type="float" value="20"/>
-    <property name="spawnTimer" type="float" value="3"/>
-   </properties>
-  </object>
-  <object id="42" name="spawnPoint" gid="329" x="16" y="224" width="16" height="16" visible="0">
-   <properties>
-    <property name="enemiesNumber" type="int" value="3"/>
-    <property name="enemyDamage" type="float" value="5"/>
-    <property name="enemyHealth" type="float" value="5"/>
-    <property name="enemySpeed" type="float" value="1.7"/>
-    <property name="enemyType" type="int" value="0"/>
-    <property name="readyTimer" type="float" value="1"/>
-    <property name="spawnPointHealth" type="float" value="15"/>
-    <property name="spawnTimer" type="float" value="3"/>
-   </properties>
-  </object>
-  <object id="43" name="spawnPoint" gid="329" x="192" y="224" width="16" height="16" visible="0">
-   <properties>
-    <property name="enemiesNumber" type="int" value="3"/>
-    <property name="enemyDamage" type="float" value="5"/>
-    <property name="enemyHealth" type="float" value="5"/>
-    <property name="enemySpeed" type="float" value="1.5"/>
-    <property name="enemyType" type="int" value="0"/>
-    <property name="readyTimer" type="float" value="1"/>
-    <property name="spawnPointHealth" type="float" value="10"/>
-    <property name="spawnTimer" type="float" value="2"/>
-   </properties>
-  </object>
   <object id="44" name="spines" gid="290" x="80" y="96" width="16" height="16"/>
   <object id="45" name="spines" gid="290" x="64" y="192" width="16" height="16"/>
   <object id="46" name="spines" gid="290" x="128" y="144" width="16" height="16"/>
@@ -99,18 +51,62 @@
     <property name="fromRoom" type="int" value="3"/>
    </properties>
   </object>
-  <object id="52" name="spawnPoint" gid="329" x="207" y="32" width="17" height="16" visible="0">
+  <object id="52" name="spawnPoint" gid="329" x="207" y="32" width="17" height="16">
    <properties>
-    <property name="enemiesNumber" type="int" value="4"/>
+    <property name="deathTimer" type="float" value="2"/>
+    <property name="enemiesNumber" type="int" value="3"/>
     <property name="enemyDamage" type="float" value="5"/>
     <property name="enemyHealth" type="float" value="5"/>
-    <property name="enemySpeed" type="float" value="1.3"/>
+    <property name="enemySpeed" type="float" value="2"/>
     <property name="enemyType" type="int" value="0"/>
     <property name="readyTimer" type="float" value="1"/>
     <property name="spawnPointHealth" type="float" value="10"/>
-    <property name="spawnTimer" type="float" value="2.5"/>
+    <property name="spawnTimer" type="float" value="2"/>
    </properties>
   </object>
+  <object id="53" name="spawnPoint" gid="329" x="48" y="48" width="17" height="16">
+   <properties>
+    <property name="deathTimer" type="float" value="2"/>
+    <property name="enemiesNumber" type="int" value="3"/>
+    <property name="enemyDamage" type="float" value="5"/>
+    <property name="enemyHealth" type="float" value="5"/>
+    <property name="enemySpeed" type="float" value="2"/>
+    <property name="enemyType" type="int" value="0"/>
+    <property name="readyTimer" type="float" value="1"/>
+    <property name="spawnPointHealth" type="float" value="10"/>
+    <property name="spawnTimer" type="float" value="2"/>
+   </properties>
+  </object>
+  <object id="54" name="spawnPoint" gid="329" x="16" y="192" width="16" height="16">
+   <properties>
+    <property name="deathTimer" type="float" value="2"/>
+    <property name="enemiesNumber" type="int" value="10"/>
+    <property name="enemyDamage" type="float" value="5"/>
+    <property name="enemyHealth" type="float" value="5"/>
+    <property name="enemySpeed" type="float" value="1"/>
+    <property name="enemyType" type="int" value="0"/>
+    <property name="readyTimer" type="float" value="1"/>
+    <property name="spawnPointHealth" type="float" value="10"/>
+    <property name="spawnTimer" type="float" value="1.3"/>
+   </properties>
+  </object>
+  <object id="55" name="spawnPoint" gid="329" x="96" y="224" width="17" height="16">
+   <properties>
+    <property name="deathTimer" type="float" value="2"/>
+    <property name="enemiesNumber" type="int" value="5"/>
+    <property name="enemyDamage" type="float" value="5"/>
+    <property name="enemyHealth" type="float" value="5"/>
+    <property name="enemySpeed" type="float" value="1.2"/>
+    <property name="enemyType" type="int" value="0"/>
+    <property name="readyTimer" type="float" value="1"/>
+    <property name="spawnPointHealth" type="float" value="10"/>
+    <property name="spawnTimer" type="float" value="1"/>
+   </properties>
+  </object>
+  <object id="56" name="spines" gid="290" x="208" y="224" width="16" height="16"/>
+  <object id="57" name="spines" gid="290" x="176" y="80" width="16" height="16"/>
+  <object id="58" name="spines" gid="290" x="32" y="144" width="16" height="16"/>
+  <object id="59" name="spines" gid="290" x="192" y="160" width="16" height="16"/>
  </objectgroup>
  <layer id="5" name="Collisions" width="15" height="15" opacity="0.5">
   <data encoding="csv">
@@ -118,16 +114,16 @@
 237,0,1,0,0,0,0,0,0,0,0,0,1,1,237,
 237,0,1,1,1,1,0,0,0,237,0,0,0,0,237,
 237,0,1,0,0,1,1,1,1,1,1,1,0,0,237,
-237,0,1,1,0,0,0,0,0,0,0,0,0,0,237,
+237,0,1,1,0,0,0,0,0,0,0,237,0,0,237,
 237,237,0,1,1,237,1,1,1,1,1,0,0,0,237,
 237,0,0,1,0,0,0,0,0,0,0,0,0,0,237,
 1,237,0,1,0,0,0,0,0,0,0,0,0,1,1,
-237,0,0,1,0,0,0,0,237,0,0,0,0,1,237,
-237,0,1,1,0,0,0,0,0,0,0,0,0,0,237,
+237,0,237,1,0,0,0,0,237,0,0,0,0,1,237,
+237,0,1,1,0,0,0,0,0,0,0,0,237,0,237,
 237,0,1,0,0,0,0,1,1,1,1,0,0,0,237,
 237,0,1,1,237,1,1,1,1,1,237,1,0,0,237,
 237,0,0,1,1,1,0,0,0,0,0,0,1,0,237,
-237,0,0,0,0,0,0,0,0,0,1,1,1,0,237,
+237,0,0,0,0,0,0,0,0,0,1,1,1,237,237,
 237,237,237,237,237,237,237,237,237,237,237,237,237,237,237
 </data>
  </layer>

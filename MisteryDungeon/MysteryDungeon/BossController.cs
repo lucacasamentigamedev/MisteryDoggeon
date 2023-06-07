@@ -9,6 +9,9 @@ namespace MisteryDungeon.MysteryDungeon {
         private float speed;
         private bool active;
         private bool dead;
+        public bool Dead {
+            get { return dead; }
+        }
 
         private SheetAnimator animator;
         private Transform targetTransform;
@@ -39,9 +42,6 @@ namespace MisteryDungeon.MysteryDungeon {
                 rigidBody.Velocity = Vector2.Zero;
                 animator.ChangeClip("death");
                 dead = true;
-                RoomObjectsMgr.SetRoomObjectActiveness(3, 39, false, true);
-                GameObject.Find("Object_3_39").IsActive = false;
-                GameStats.BossDefeated = true;
                 shootModule.Enabled = false;
             } else {
                 //TODO: suono danno al boss
@@ -52,6 +52,9 @@ namespace MisteryDungeon.MysteryDungeon {
             if (dead) {
                 currentDeathTimer -= Game.DeltaTime;
                 if (currentDeathTimer > 0) return;
+                RoomObjectsMgr.SetRoomObjectActiveness(3, 39, false, true);
+                GameObject.Find("Object_3_39").IsActive = false;
+                GameStats.BossDefeated = true;
                 gameObject.IsActive = false;
                 return;
             }

@@ -45,7 +45,7 @@ namespace MisteryDungeon {
         }
         public void CreateHordeMgr() {
             GameObject go = new GameObject("HordeMgr", Vector2.Zero);
-            go.AddComponent<HordeMgr>(2f);
+            go.AddComponent<HordeMgr>();
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
         }
 
