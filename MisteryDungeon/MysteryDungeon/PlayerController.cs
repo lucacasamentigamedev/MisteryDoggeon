@@ -45,7 +45,7 @@ namespace MisteryDungeon.MysteryDungeon {
             }
             if(isMoving) {
                 Vector2 direction = (path[0] - transform.Position);
-                SetCLip(GetCLipAnimationWalkingName(rigidbody.Velocity));
+                SetCLip(GetCLipAnimationName(rigidbody.Velocity, true));
                 if (path.Count == 1) {
                     rigidbody.Velocity = direction.Normalized() * moveSpeed;
                 } else if (path.Count > 1) {
@@ -112,7 +112,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         private void StopMovement(Vector2 direction) {
-            SetCLip(GetCLipAnimationIdleName(direction));
+            SetCLip(GetCLipAnimationName(direction, false));
             rigidbody.Velocity = Vector2.Zero;
             isMoving = false;
         }
@@ -182,27 +182,16 @@ namespace MisteryDungeon.MysteryDungeon {
             if(animator.CurrentClip.AnimationName != clipName) animator.ChangeClip(clipName);
         }
 
-        public string GetCLipAnimationWalkingName(Vector2 direction) {
+        public string GetCLipAnimationName(Vector2 direction, bool walk) {
+            if (direction == Vector2.Zero) return animator.CurrentClip.AnimationName;
             bool considerX = false;
             bool considerY = false;
             if(Math.Abs(direction.X) > Math.Abs(direction.Y)) considerX = true;
             else considerY = true;
-            if (considerX && direction.X < 0) return "walkingLeft";
-            else if (considerX && direction.X > 0) return "walkingRight";
-            else if (considerY && direction.Y > 0) return "walkingDown";
-            else return "walkingUp";
-        }
-
-        public string GetCLipAnimationIdleName(Vector2 direction) {
-            if(direction == Vector2.Zero) return animator.CurrentClip.AnimationName;
-            bool considerX = false;
-            bool considerY = false;
-            if (Math.Abs(direction.X) > Math.Abs(direction.Y)) considerX = true;
-            else considerY = true;
-            if (considerX && direction.X < 0) return "idleLeft";
-            else if (considerX && direction.X > 0) return "idleRight";
-            else if (considerY && direction.Y > 0) return "idleDown";
-            else return "idleUp";
+            if (considerX && direction.X < 0) return walk ? "walkingLeft" : "idleLeft";
+            else if (considerX && direction.X > 0) return walk ? "walkingRight" : "idleRight";
+            else if (considerY && direction.Y > 0) return walk ? "walkingDown" : "idleDown";
+            else return walk ? "walkingUp" : "idleUp";
         }
     }
 }
