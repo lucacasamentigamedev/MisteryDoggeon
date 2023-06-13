@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using OpenTK;
 using System.Xml.Linq;
+using System.Runtime.InteropServices;
 
 namespace Aiv.Tiled
 {
@@ -18,6 +19,7 @@ namespace Aiv.Tiled
         public double Rotation { get; private set; }
         public Tile? Tile { get; private set; }
         public bool Visible { get; private set; }
+        public string Class { get; private set; }
 
         public List<Vector2> Points;
 
@@ -34,6 +36,7 @@ namespace Aiv.Tiled
             Type = (string)_element.Attribute("type") ?? String.Empty;
             Visible = (bool?)_element.Attribute("visible") ?? true;
             Rotation = (double?)_element.Attribute("rotation") ?? 0.0;
+            Class = (string)_element.Attribute("class") ?? String.Empty;
             Tile = null;
 
             // Assess object type and assign appropriate content

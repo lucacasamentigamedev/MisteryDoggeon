@@ -43,8 +43,8 @@ namespace MisteryDungeon.MysteryDungeon {
                 }
             }
             Vector2 cellPos = new Vector2(
-                (int)Math.Ceiling(xPos / GameConfig.TilePixelWidth),
-                (int)Math.Ceiling(yPos / GameConfig.TilePixelHeight) - 1
+                (int)Math.Ceiling(xPos / TiledMapMgr.TilePixelWidth),
+                (int)Math.Ceiling(yPos / TiledMapMgr.TilePixelHeight) - 1
             );
             MovementGridMgr.ChangeGridTileType(cellPos, roomId, gridType);
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto " + gridType + " nella cella " + cellPos.ToString()));

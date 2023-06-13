@@ -18,6 +18,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("spines", "Assets/spines.png");
             GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
             GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
+            GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
         }
 
         public override void InitializeScene() {
@@ -32,7 +33,7 @@ namespace MisteryDungeon {
                 false,  //print pathfinding logs
                 false,  //print puzzle logs
                 false,  //print object creations logs
-                false    //print enemy horde logs
+                false   //print enemy horde logs
             );
         }
 

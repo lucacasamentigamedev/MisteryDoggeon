@@ -4,6 +4,7 @@ using OpenTK;
 namespace MisteryDungeon.MysteryDungeon {
 
     public enum BulletType { Arrow, Globe, Last }
+    public enum WeaponType { Bow, Blaster, Last }
 
     internal class BulletMgr : UserComponent {
 
@@ -53,7 +54,7 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.AddCollisionType((uint)RigidbodyType.Wall);
             go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
             if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
-            go.transform.Scale = new Vector2(GameConfig.TileUnitWidth / sr.Width / 2, GameConfig.TileUnitHeight / sr.Height / 2);
+            go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width / 2, TiledMapMgr.TileUnitHeight / sr.Height / 2);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
             return go.AddComponent<Bullet>(5, BulletType.Globe, 5);
         }

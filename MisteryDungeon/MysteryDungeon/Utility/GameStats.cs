@@ -5,7 +5,6 @@ namespace MisteryDungeon.MysteryDungeon {
         public static bool PuzzleResolved { get; set; }
         public static bool PlayerCanShoot { get; set; }
         public static Weapon ActiveWeapon { get; set; }
-        public static bool BowPicked { get; set; }
         public static List<int> collectedKeys = new List<int>();
         public static int PreviousRoom { get; set; }
         private static int actualRoom = -1;
@@ -13,11 +12,7 @@ namespace MisteryDungeon.MysteryDungeon {
             get { return actualRoom;  }
             set { actualRoom = value; }
         }
-        private static bool hordeDefeated = false;
-        public static bool HordeDefeated {
-            get { return hordeDefeated; }
-            set { hordeDefeated = value; }
-        }
+        public static bool HordeDefeated { get; set; }
         public static bool BossDefeated { get; set; }
         public static float maxPlayerHealth = 15;
         private static float playerHealth = 15;
@@ -25,5 +20,6 @@ namespace MisteryDungeon.MysteryDungeon {
             get { return playerHealth; }
             set { playerHealth = value; }
         }
+        public static bool FirstDoorPassed { get; set; }
     }
 }

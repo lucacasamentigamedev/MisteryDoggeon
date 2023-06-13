@@ -125,25 +125,26 @@
     <Compile Include="MysteryDungeon\Rooms\Room_3.cs" />
     <Compile Include="MysteryDungeon\SpawnPoint.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
-    <Compile Include="MysteryDungeon\GameTools\GameConfig.cs" />
+    <Compile Include="MysteryDungeon\Utility\GameConfig.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Key.cs" />
-    <Compile Include="MysteryDungeon\GameTools\MovementGridMgr.cs" />
-    <Compile Include="MysteryDungeon\GameTools\RoomObjectsMgr.cs" />
-    <Compile Include="MysteryDungeon\GameTools\GameStats.cs" />
+    <Compile Include="MysteryDungeon\Utility\MovementGridMgr.cs" />
+    <Compile Include="MysteryDungeon\Utility\RoomObjectsMgr.cs" />
+    <Compile Include="MysteryDungeon\Utility\GameStats.cs" />
     <Compile Include="MysteryDungeon\PlatformButton.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Door.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Gate.cs" />
     <Compile Include="MysteryDungeon\PlayerController.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Obstacle.cs" />
-    <Compile Include="MysteryDungeon\GameTools\LogMgr.cs" />
+    <Compile Include="MysteryDungeon\Utility\LogMgr.cs" />
     <Compile Include="MysteryDungeon\Mgr\PuzzleMgr.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_2.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />
     <Compile Include="MysteryDungeon\Mgr\HordeMgr.cs" />
-    <Compile Include="MysteryDungeon\GameTools\TiledMapMgr.cs" />
+    <Compile Include="MysteryDungeon\Utility\TiledMapMgr.cs" />
     <Compile Include="MysteryDungeon\ShootModule.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Weapon.cs" />
+    <Compile Include="MysteryDungeon\Utility\TiledObjectFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -236,18 +237,12 @@
     <Content Include="Assets\text_sheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Tiled\ObjectsTileset.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\Tiled\MapTileset.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Assets\Tiled\MapTileset.tsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="Assets\Tiled\ObjectsTileset.tsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </TypeScriptCompile>
   </ItemGroup>

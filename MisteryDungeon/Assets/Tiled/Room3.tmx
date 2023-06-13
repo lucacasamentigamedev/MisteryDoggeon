@@ -21,19 +21,19 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
-  <object id="36" name="door" gid="2" x="224" y="128" width="16" height="16">
+  <object id="36" name="door" class="Door" gid="2" x="224" y="128" width="16" height="16">
    <properties>
     <property name="lockedBy" type="int" value="-1"/>
     <property name="roomToGo" type="int" value="2"/>
    </properties>
   </object>
-  <object id="37" name="player" gid="326" x="192" y="128" width="16" height="16">
+  <object id="37" name="player" class="PlayerController" gid="326" x="192" y="128" width="16" height="16">
    <properties>
     <property name="fromRoom" type="int" value="2"/>
    </properties>
   </object>
-  <object id="39" name="gate" gid="2" x="208" y="128" width="16" height="16"/>
-  <object id="51" name="boss" gid="457" x="112" y="128" width="16" height="16">
+  <object id="39" name="gate" class="Gate" gid="2" x="208" y="128" width="16" height="16"/>
+  <object id="51" name="boss" class="BossController" gid="457" x="112" y="128" width="16" height="16">
    <properties>
     <property name="bulletType" type="int" value="1"/>
     <property name="deathTimer" type="float" value="2"/>
@@ -45,27 +45,27 @@
     <property name="speed" type="float" value="2.2"/>
    </properties>
   </object>
-  <object id="52" name="spines" gid="290" x="48" y="64" width="16" height="16"/>
-  <object id="53" name="spines" gid="290" x="128" y="80" width="16" height="16"/>
-  <object id="54" name="spines" gid="290" x="160" y="128" width="16" height="16"/>
-  <object id="55" name="spines" gid="290" x="192" y="48" width="16" height="16"/>
-  <object id="56" name="spines" gid="290" x="48" y="144" width="16" height="16"/>
-  <object id="57" name="spines" gid="290" x="80" y="208" width="16" height="16"/>
-  <object id="58" name="spines" gid="290" x="112" y="176" width="16" height="16"/>
-  <object id="59" name="spines" gid="290" x="208" y="224" width="16" height="16"/>
-  <object id="70" name="spines" gid="290" x="128" y="48" width="16" height="16"/>
-  <object id="71" name="spines" gid="290" x="112" y="48" width="16" height="16"/>
-  <object id="72" name="spines" gid="290" x="112" y="32" width="16" height="16"/>
-  <object id="73" name="spines" gid="290" x="64" y="96" width="16" height="16"/>
-  <object id="74" name="spines" gid="290" x="16" y="208" width="16" height="16"/>
-  <object id="75" name="spines" gid="290" x="16" y="224" width="16" height="16"/>
-  <object id="76" name="spines" gid="290" x="32" y="208" width="16" height="16"/>
-  <object id="77" name="spines" gid="290" x="32" y="224" width="16" height="16"/>
-  <object id="78" name="spines" gid="290" x="208" y="160" width="16" height="16"/>
-  <object id="79" name="spines" gid="290" x="192" y="160" width="16" height="16"/>
-  <object id="80" name="spines" gid="290" x="144" y="224" width="16" height="16"/>
-  <object id="82" name="spines" gid="290" x="16" y="32" width="16" height="16"/>
-  <object id="83" name="spines" gid="290" x="16" y="112" width="16" height="16"/>
+  <object id="52" name="spines" class="Spines" gid="290" x="48" y="64" width="16" height="16"/>
+  <object id="53" name="spines" class="Spines" gid="290" x="128" y="80" width="16" height="16"/>
+  <object id="54" name="spines" class="Spines" gid="290" x="160" y="128" width="16" height="16"/>
+  <object id="55" name="spines" class="Spines" gid="290" x="192" y="48" width="16" height="16"/>
+  <object id="56" name="spines" class="Spines" gid="290" x="48" y="144" width="16" height="16"/>
+  <object id="57" name="spines" class="Spines" gid="290" x="80" y="208" width="16" height="16"/>
+  <object id="58" name="spines" class="Spines" gid="290" x="112" y="176" width="16" height="16"/>
+  <object id="59" name="spines" class="Spines" gid="290" x="208" y="224" width="16" height="16"/>
+  <object id="70" name="spines" class="Spines" gid="290" x="128" y="48" width="16" height="16"/>
+  <object id="71" name="spines" class="Spines" gid="290" x="112" y="48" width="16" height="16"/>
+  <object id="72" name="spines" class="Spines" gid="290" x="112" y="32" width="16" height="16"/>
+  <object id="73" name="spines" class="Spines" gid="290" x="64" y="96" width="16" height="16"/>
+  <object id="74" name="spines" class="Spines" gid="290" x="16" y="208" width="16" height="16"/>
+  <object id="75" name="spines" class="Spines" gid="290" x="16" y="224" width="16" height="16"/>
+  <object id="76" name="spines" class="Spines" gid="290" x="32" y="208" width="16" height="16"/>
+  <object id="77" name="spines" class="Spines" gid="290" x="32" y="224" width="16" height="16"/>
+  <object id="78" name="spines" class="Spines" gid="290" x="208" y="160" width="16" height="16"/>
+  <object id="79" name="spines" class="Spines" gid="290" x="192" y="160" width="16" height="16"/>
+  <object id="80" name="spines" class="Spines" gid="290" x="144" y="224" width="16" height="16"/>
+  <object id="82" name="spines" class="Spines" gid="290" x="16" y="32" width="16" height="16"/>
+  <object id="83" name="spines" class="Spines" gid="290" x="16" y="112" width="16" height="16"/>
  </objectgroup>
  <layer id="5" name="Collisions" width="15" height="15" opacity="0.5">
   <data encoding="csv">

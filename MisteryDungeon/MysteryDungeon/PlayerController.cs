@@ -23,14 +23,13 @@ namespace MisteryDungeon.MysteryDungeon {
         private int mapColumns;
         private int mapRows;
 
-
         public PlayerController(GameObject owner, MovementGrid grid, float moveSpeed) : base(owner) {
             this.grid = grid;
             this.moveSpeed = moveSpeed;
-            tileUnitWidth = GameConfig.TileUnitWidth;
-            tileUnitHeight = GameConfig.TileUnitHeight;
-            mapColumns = GameConfig.MapColumns;
-            mapRows = GameConfig.MapRows;
+            tileUnitWidth = TiledMapMgr.TileUnitWidth;
+            tileUnitHeight = TiledMapMgr.TileUnitHeight;
+            mapColumns = TiledMapMgr.MapColumns;
+            mapRows = TiledMapMgr.MapRows;
             isMoving = false;
         }
 
@@ -123,7 +122,7 @@ namespace MisteryDungeon.MysteryDungeon {
                     Door door = collisionInfo.Collider.gameObject.GetComponent<Door>();
                     if (door.LockedBy >= 0 && !GameStats.collectedKeys.Contains(door.LockedBy)) return;
                     //TODO: suono porta
-                    if (!GameConfig.FirstDoorPassed) GameConfig.FirstDoorPassed = true;
+                    if (!GameStats.FirstDoorPassed) GameStats.FirstDoorPassed = true;
                     int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
                     Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
                     Game.SetLoadingScene();
@@ -143,7 +142,7 @@ namespace MisteryDungeon.MysteryDungeon {
                     if(!GameStats.PlayerCanShoot) GameStats.PlayerCanShoot = true;
                     switch(weapon.BulletType) {
                         case BulletType.Arrow:
-                            GameStats.BowPicked = true;
+                            GameStats.ActiveWeapon = weapon;
                             break;
                     }
                     weapon.gameObject.IsActive = false;

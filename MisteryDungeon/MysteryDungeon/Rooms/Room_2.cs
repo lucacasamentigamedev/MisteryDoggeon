@@ -19,6 +19,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("spawnPoint", "Assets/spawn_point.png");
             GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
             GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
+            GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
         }
 
         public override void InitializeScene() {

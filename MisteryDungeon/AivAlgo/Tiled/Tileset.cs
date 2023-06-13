@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aiv.Fast2D.Component;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace Aiv.Tiled
             var image = _element.Element("image");
             var source = (string)image.Attribute("source");
 
-            Source = new Aiv.Fast2D.Texture(Path.Combine(_sourceDirectory, source));
+            Source = GfxMgr.GetTexture(source);
 
             Name = (string)_element.Attribute("name");
             TileWidth = (int)_element.Attribute("tilewidth");

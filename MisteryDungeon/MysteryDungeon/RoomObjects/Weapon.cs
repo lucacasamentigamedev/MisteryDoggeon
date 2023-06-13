@@ -4,27 +4,17 @@ using OpenTK;
 namespace MisteryDungeon.MysteryDungeon {
     public class Weapon : UserComponent {
 
-        private float reloadTime;
-        public float ReloadTime {
-            get { return reloadTime; }
-            set { reloadTime = value; }
-        }
-        private BulletType bulletType;
-        public BulletType BulletType {
-            get { return bulletType; }
-            set { bulletType = value; }
-        }
+        public WeaponType WeaponType { get; set; }
+        public BulletType BulletType { get; set; }
+        public float ReloadTime { get; set; }
 
-        private Vector2 offsetShoot;
-        public Vector2 OffsetShoot {
-            get { return offsetShoot; }
-            set { offsetShoot = value; }
-        }
+        public Vector2 OffsetShoot { get; set; }
 
-        public Weapon(GameObject owner, BulletType bulletType, float reloadTime, Vector2 offsetShoot) : base(owner) {
-            this.reloadTime = reloadTime;
-            this.bulletType = bulletType;
-            this.offsetShoot = offsetShoot;
+        public Weapon(GameObject owner, WeaponType weaponType, BulletType bulletType, float reloadTime, Vector2 offsetShoot) : base(owner) {
+            WeaponType = weaponType;
+            ReloadTime = reloadTime;
+            BulletType = bulletType;
+            OffsetShoot = offsetShoot;
         }
     }
 }

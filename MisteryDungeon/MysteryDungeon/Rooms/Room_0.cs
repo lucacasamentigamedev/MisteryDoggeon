@@ -21,6 +21,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("arrow", "Assets/arrow.png");
             GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
             GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
+            GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
         }
 
         public override void InitializeScene() {
@@ -28,7 +29,6 @@ namespace MisteryDungeon {
             CreateLogMgr();
             CreatePuzzleMgr();
             CreateMap();
-
             /******************FIXME: cheat da togliere**************/
             /*RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
             GameObject g = GameObject.Find("Object_0_27");
@@ -43,8 +43,8 @@ namespace MisteryDungeon {
         public void CreateLogMgr() {
             GameObject go = new GameObject("LogMgr", Vector2.Zero);
             go.AddComponent<LogMgr>(
-                false,  //print pathfinding logs
-                false,   //print puzzle logs
+                true,   //print pathfinding logs
+                false,  //print puzzle logs
                 false,  //print object creations logs
                 false   //print enemy horde logs
             );
