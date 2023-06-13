@@ -31,6 +31,8 @@ namespace MisteryDungeon.MysteryDungeon {
             Input.AddUserButton("Shoot", new ButtonMatch[] {
                 new MouseButtonMatch(MouseButton.RightMouse)
             });
+            AudioMgr.AddVolume((int)AudioLayer.music, 0.55f);
+            AudioMgr.AddVolume((int)AudioLayer.sfx, 0.4f);
             Game.Init("Mystery Dungeon", 720, 720, new Room_0(), 720, 10, 500);
         }
     }

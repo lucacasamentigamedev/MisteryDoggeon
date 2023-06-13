@@ -169,52 +169,64 @@
     <Folder Include="bin\Debug\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\green_button.png">
+    <Content Include="Assets\Sounds\SFX\clock_tick.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\platform_button.png">
+    <Content Include="Assets\Sounds\SFX\room_left.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Objects\platform_button.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Sounds\background.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\arrow.png">
+    <Content Include="Assets\Textures\arrow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\crate.png">
+    <Content Include="Assets\Textures\Objects\crate.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\bow.png">
+    <Content Include="Assets\Textures\Objects\bow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\blob.gif">
+    <Content Include="Assets\Textures\blob.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\bones.png">
+    <Content Include="Assets\Textures\Objects\bones.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\mushroom.png">
+    <Content Include="Assets\Textures\Objects\mushroom.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\pot.png">
+    <Content Include="Assets\Textures\Objects\pot.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\shell.png">
+    <Content Include="Assets\Textures\Objects\shell.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\skull.png">
+    <Content Include="Assets\Textures\Objects\skull.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\key.png">
+    <Content Include="Assets\Textures\Objects\key.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\loading.png">
+    <Content Include="Assets\Textures\loading.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\lamp_gate.png">
+    <Content Include="Assets\Textures\Objects\lamp_gate.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\red_globe.png">
+    <Content Include="Assets\Textures\red_globe.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\ding.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\arrow_shot.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\woop.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Sounds\SFX\object_broke.wav">
@@ -226,7 +238,7 @@
     <Content Include="Assets\Sounds\SFX\sequence_right.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Sounds\SFX\sequence_completed.ogg">
+    <Content Include="Assets\Sounds\SFX\mission_completed.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Sounds\SFX\sequence_wrong.wav">
@@ -235,22 +247,16 @@
     <Content Include="Assets\Sounds\SFX\path_unreachable.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Sounds\SFX\arrow_shooted.wav">
+    <Content Include="Assets\Textures\Objects\spawn_point.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Sounds\SFX\arrow_shooted.ogg">
+    <Content Include="Assets\Textures\healthbar_foreground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\spawn_point.png">
+    <Content Include="Assets\Textures\healthbar_background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\healthbar_foreground.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\healthbar_background.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\spines.png">
+    <Content Include="Assets\Textures\Objects\spines.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Spritesheets\green_blob.png">
@@ -262,13 +268,13 @@
     <Content Include="Assets\Spritesheets\player.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\red_button.png">
+    <Content Include="Assets\Textures\Objects\red_button.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\default_bullet.png">
+    <Content Include="Assets\Textures\default_bullet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\text_sheet.png">
+    <Content Include="Assets\Textures\text_sheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Tiled\MapTileset.png">

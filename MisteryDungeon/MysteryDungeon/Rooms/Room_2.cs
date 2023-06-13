@@ -6,20 +6,26 @@ using OpenTK;
 namespace MisteryDungeon {
     public class Room_2 : Scene {
         protected override void LoadAssets() {
-            FontMgr.AddFont("std_font", "Assets/text_sheet.png", 15, 32, 20, 20);
-            GfxMgr.AddTexture("skull", "Assets/skull.png");
-            GfxMgr.AddTexture("door", "Assets/crate.png");
+            FontMgr.AddFont("std_font", "Assets/Textures/text_sheet.png", 15, 32, 20, 20);
+            GfxMgr.AddTexture("skull", "Assets/Textures/Objects/skull.png");
+            GfxMgr.AddTexture("door", "Assets/Textures/Objects/crate.png");
             GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
-            GfxMgr.AddTexture("loading", "Assets/loading.png");
-            GfxMgr.AddTexture("arrow", "Assets/arrow.png");
-            GfxMgr.AddTexture("redGlobe", "Assets/red_globe.png");
-            GfxMgr.AddTexture("gate", "Assets/mushroom.png");
-            GfxMgr.AddTexture("greenBlob", "Assets/Spritesheets/green_blob.png");
-            GfxMgr.AddTexture("spines", "Assets/spines.png");
-            GfxMgr.AddTexture("spawnPoint", "Assets/spawn_point.png");
-            GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
-            GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
+            GfxMgr.AddTexture("loading", "Assets/Textures/loading.png");
+            GfxMgr.AddTexture("redGlobe", "Assets/Textures/red_globe.png");
+            GfxMgr.AddTexture("arrow", "Assets/Textures/arrow.png");
+            GfxMgr.AddTexture("gate", "Assets/Textures/Objects/mushroom.png");
+            GfxMgr.AddTexture("greenBlob", "Assets/Textures/Spritesheets/green_blob.png");
+            GfxMgr.AddTexture("spawnPoint", "Assets/Textures/Objects/spawn_point.png");
+            GfxMgr.AddTexture("spines", "Assets/Textures/Objects/spines.png");
+            GfxMgr.AddTexture("healthBarBackground", "Assets/Textures/healthbar_background.png");
+            GfxMgr.AddTexture("healthBarForeground", "Assets/Textures/healthbar_foreground.png");
             GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
+            //Sounds
+            AudioMgr.AddClip("arrowShot", "Assets/Sounds/SFX/arrow_shot.ogg");
+            AudioMgr.AddClip("background", "Assets/Sounds/background.wav");
+            AudioMgr.AddClip("pathUnreachable", "Assets/Sounds/SFX/path_unreachable.wav");
+            AudioMgr.AddClip("roomLeft", "Assets/Sounds/SFX/room_left.ogg");
+            AudioMgr.AddClip("hordeDefeated", "Assets/Sounds/SFX/mission_completed.ogg");
         }
 
         public override void InitializeScene() {

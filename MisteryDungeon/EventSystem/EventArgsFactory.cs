@@ -69,5 +69,35 @@ namespace Aiv.Fast2D.Component {
         public static EventArgs ObjectPickedFactory() {
             return new EventArgs();
         }
+
+        public static void PuzzleReadyParser() { }
+
+        public static EventArgs PuzzleReadyFactory() {
+            return new EventArgs();
+        }
+
+        public static void ClockTickParser() { }
+
+        public static EventArgs ClockTickFactory() {
+            return new EventArgs();
+        }
+        
+        public static void ArrowShotParser() { }
+
+        public static EventArgs ArrowShotFactory() {
+            return new EventArgs();
+        }
+
+        public static void ObjectBrokeParser() { }
+
+        public static EventArgs ObjectBrokeFactory() {
+            return new EventArgs();
+        }
+        
+        public static void RoomLeftParser() { }
+
+        public static EventArgs RoomLeftFactory() {
+            return new EventArgs();
+        }
     }
 }

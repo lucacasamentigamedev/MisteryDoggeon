@@ -35,7 +35,7 @@ namespace Aiv.Fast2D.Component {
         }
 
         public static void AddVolume (int index, float volume = 1) {
-            volumes.Add(index, 0);
+            if (!volumes.ContainsKey(index)) volumes.Add(index, 0);
             SetVolume(index, volume);
         }
 

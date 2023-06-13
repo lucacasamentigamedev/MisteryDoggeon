@@ -119,9 +119,9 @@ namespace MisteryDungeon.MysteryDungeon {
         public override void OnCollide(Collision collisionInfo) {
             switch(collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Door:
+                    EventManager.CastEvent(EventList.RoomLeft, EventArgsFactory.RoomLeftFactory());
                     Door door = collisionInfo.Collider.gameObject.GetComponent<Door>();
                     if (door.LockedBy >= 0 && !GameStats.collectedKeys.Contains(door.LockedBy)) return;
-                    //TODO: suono porta
                     if (!GameStats.FirstDoorPassed) GameStats.FirstDoorPassed = true;
                     int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
                     Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();

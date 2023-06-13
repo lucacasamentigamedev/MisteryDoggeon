@@ -26,7 +26,7 @@
     <property name="bulletType" type="int" value="0"/>
     <property name="offsetShootX" type="float" value="0.5"/>
     <property name="offsetShootY" type="float" value="0.5"/>
-    <property name="reloadTime" type="float" value="0.3"/>
+    <property name="reloadTime" type="float" value="0.45"/>
     <property name="weaponImage" value="bow"/>
     <property name="weaponType" type="int" value="0"/>
    </properties>

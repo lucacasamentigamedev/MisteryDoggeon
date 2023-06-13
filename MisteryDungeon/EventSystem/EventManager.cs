@@ -17,8 +17,11 @@ namespace Aiv.Fast2D.Component {
         SequenceRight,
         SequenceCompleted,
         SequenceWrong,
-        ArrowShooted,
-        PathUnreachable
+        ArrowShot,
+        PathUnreachable,
+        PuzzleReady,
+        ClockTick,
+        RoomLeft
     }
 
     public static class EventManager {

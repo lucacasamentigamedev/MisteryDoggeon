@@ -40,7 +40,10 @@ namespace MisteryDungeon.MysteryDungeon {
             if (GameStats.PuzzleResolved) return;
             if (!puzzleReady) currentWaitingResetPuzzleTimer -= Game.DeltaTime;
             if (currentWaitingResetPuzzleTimer > 0) return;
-            if(!puzzleReady) EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Puzzle pronto"));
+            if (!puzzleReady) {
+                EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Puzzle pronto"));
+                EventManager.CastEvent(EventList.PuzzleReady, EventArgsFactory.PuzzleReadyFactory());
+            };
             puzzleReady = true;
             if (!puzzleActive) return;
             int actualRemainingSecs = (int)currentPuzzleTimer;
@@ -111,7 +114,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private void TickCountdown(int actualRemainingSecs) {
             lastRemainingSecs = actualRemainingSecs;
-            //TODO: suono conteggio
+            EventManager.CastEvent(EventList.ClockTick, EventArgsFactory.ClockTickFactory());
             EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Secondi rimanenti = " + lastRemainingSecs));
         }
     }

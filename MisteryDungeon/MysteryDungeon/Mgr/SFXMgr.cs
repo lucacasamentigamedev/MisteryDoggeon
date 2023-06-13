@@ -4,13 +4,16 @@ using System;
 namespace Aiv.Fast2D.Component {
 
     public enum SFXList {
-        objectBroke,
-        objectPicked,
-        sequenceRight,
-        sequenceWrong,
-        sequenceCompleted,
-        arrowShooted,
-        pathUnreachable,
+        ObjectBroke,
+        ObjectPicked,
+        SequenceRight,
+        SequenceWrong,
+        SequenceCompleted,
+        ArrowShot,
+        PathUnreachable,
+        PuzzleReady,
+        ClockTick,
+        RoomLeft,
         last
     }
 
@@ -27,8 +30,11 @@ namespace Aiv.Fast2D.Component {
             mySFX[2] = AudioMgr.GetClip("sequenceRight");
             mySFX[3] = AudioMgr.GetClip("sequenceWrong");
             mySFX[4] = AudioMgr.GetClip("sequenceCompleted");
-            mySFX[5] = AudioMgr.GetClip("arrowShooted");
+            mySFX[5] = AudioMgr.GetClip("arrowShot");
             mySFX[6] = AudioMgr.GetClip("pathUnreachable");
+            mySFX[7] = AudioMgr.GetClip("puzzleReady");
+            mySFX[8] = AudioMgr.GetClip("clockTick");
+            mySFX[9] = AudioMgr.GetClip("roomLeft");
         }
 
         public override void Awake() {
@@ -41,8 +47,11 @@ namespace Aiv.Fast2D.Component {
             EventManager.AddListener(EventList.SequenceRight, OnSequenceRight);
             EventManager.AddListener(EventList.SequenceCompleted, OnSequenceCompleted);
             EventManager.AddListener(EventList.SequenceWrong, OnSequenceWrong);
-            EventManager.AddListener(EventList.ArrowShooted, OnArrowShooted);
+            EventManager.AddListener(EventList.ArrowShot, OnArrowShot);
             EventManager.AddListener(EventList.PathUnreachable, OnPathUnreachable);
+            EventManager.AddListener(EventList.PuzzleReady, OnPuzzleReady);
+            EventManager.AddListener(EventList.ClockTick, OnClockTick);
+            EventManager.AddListener(EventList.RoomLeft, OnRoomLeft);
         }
 
         public override void OnDestroy() {
@@ -51,32 +60,47 @@ namespace Aiv.Fast2D.Component {
             EventManager.RemoveListener(EventList.SequenceRight, OnSequenceRight);
             EventManager.RemoveListener(EventList.SequenceCompleted, OnSequenceCompleted);
             EventManager.RemoveListener(EventList.SequenceWrong, OnSequenceWrong);
-            EventManager.RemoveListener(EventList.ArrowShooted, OnArrowShooted);
+            EventManager.RemoveListener(EventList.ArrowShot, OnArrowShot);
             EventManager.RemoveListener(EventList.PathUnreachable, OnPathUnreachable);
+            EventManager.RemoveListener(EventList.PuzzleReady, OnPuzzleReady);
+            EventManager.RemoveListener(EventList.ClockTick, OnClockTick);
+            EventManager.RemoveListener(EventList.RoomLeft, OnRoomLeft);
         }
 
         public void OnObjectBroke(EventArgs message) {
-            PlaySFX(SFXList.objectBroke);
+            PlaySFX(SFXList.ObjectBroke);
         }
 
         public void OnObjectPicked(EventArgs message) {
-            PlaySFX(SFXList.objectPicked);
+            PlaySFX(SFXList.ObjectPicked);
         }
 
         public void OnSequenceRight(EventArgs message) {
-            PlaySFX(SFXList.sequenceRight);
+            PlaySFX(SFXList.SequenceRight);
         }
         public void OnSequenceCompleted(EventArgs message) {
-            PlaySFX(SFXList.sequenceCompleted);
+            PlaySFX(SFXList.SequenceCompleted);
         }
         public void OnSequenceWrong(EventArgs message) {
-            PlaySFX(SFXList.sequenceWrong);
+            PlaySFX(SFXList.SequenceWrong);
         }
-        public void OnArrowShooted(EventArgs message) {
-            PlaySFX(SFXList.arrowShooted);
+        public void OnArrowShot(EventArgs message) {
+            PlaySFX(SFXList.ArrowShot);
         }
         public void OnPathUnreachable(EventArgs message) {
-            PlaySFX(SFXList.pathUnreachable);
+            PlaySFX(SFXList.PathUnreachable);
+        }
+        
+        public void OnPuzzleReady(EventArgs message) {
+            PlaySFX(SFXList.PuzzleReady);
+        }
+        
+        public void OnClockTick(EventArgs message) {
+            PlaySFX(SFXList.ClockTick);
+        }
+        
+        public void OnRoomLeft(EventArgs message) {
+            PlaySFX(SFXList.RoomLeft);
         }
 
         private void PlaySFX(SFXList sfx) {

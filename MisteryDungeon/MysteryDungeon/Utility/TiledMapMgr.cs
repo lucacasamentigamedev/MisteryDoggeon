@@ -134,7 +134,8 @@ namespace MisteryDungeon.MysteryDungeon {
         private static void CreateSFXMgr() {
             GameObject gameObject = new GameObject("SFXManager", Vector2.Zero);
             gameObject.AddComponent<SFXMgr>();
-            gameObject.AddComponent<AudioSourceComponent>().MyType = (int)AudioLayer.sfx;
+            AudioSourceComponent asc = gameObject.AddComponent<AudioSourceComponent>();
+            asc.MyType = (int)AudioLayer.sfx;
         }
 
         private static void CreateBackgroundMusic() {

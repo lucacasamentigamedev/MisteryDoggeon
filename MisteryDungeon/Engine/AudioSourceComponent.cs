@@ -74,7 +74,7 @@ namespace Aiv.Fast2D.Component {
         }
 
         public void PlayOneShot (AudioClip clipToPlay) {
-            AudioMgr.PlayOneShot(clipToPlay, MyVolume);
+            AudioMgr.PlayOneShot(clipToPlay, MyVolume * AudioMgr.GetVolume(MyType));
         }
 
     }
