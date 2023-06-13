@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MisteryDungeon.MysteryDungeon;
+using System;
 
 namespace Aiv.Fast2D.Component {
     public static class EventArgsFactory {
@@ -21,13 +22,13 @@ namespace Aiv.Fast2D.Component {
 
         public static void SpawnPointDestroyedParser() {}
 
-        public static EventArgs ButtonPressedFactory(int sequenceId) {
-            return new SingleIntEventArg(sequenceId);
+        public static EventArgs PlatformButtonPressedFactory(PlatformButton platformButton) {
+            return new PlatformButtonEventArgs(platformButton);
         }
 
-        public static void ButtonPressedParser(EventArgs message, out int sequenceId) {
-            SingleIntEventArg parsedMessage = (SingleIntEventArg)message;
-            sequenceId = parsedMessage.IntParameter;
+        public static void PlatformButtonPressedParser(EventArgs message, out PlatformButton platformButton) {
+            PlatformButtonEventArgs parsedMessage = (PlatformButtonEventArgs)message;
+            platformButton = parsedMessage.PlatformButton;
         }
 
         public static EventArgs LOG_Factory(string message) {
@@ -37,6 +38,36 @@ namespace Aiv.Fast2D.Component {
         public static void LOG_Parser(EventArgs message, out string m) {
             SingleStringEventArg parsedMessage = (SingleStringEventArg)message;
             m = parsedMessage.StringParameter;
+        }
+
+        public static void SequenceWrongParser() { }
+
+        public static EventArgs SequenceWrongFactory() {
+            return new EventArgs();
+        }
+
+        public static void SequenceRightParser() { }
+
+        public static EventArgs SequenceRightFactory() {
+            return new EventArgs();
+        }
+
+        public static void SequenceCompletedParser() { }
+
+        public static EventArgs SequenceCompletedFactory() {
+            return new EventArgs();
+        }
+
+        public static void PathUnreachableParser() { }
+
+        public static EventArgs PathUnreachableFactory() {
+            return new EventArgs();
+        }
+
+        public static void ObjectPickedParser() { }
+
+        public static EventArgs ObjectPickedFactory() {
+            return new EventArgs();
         }
     }
 }

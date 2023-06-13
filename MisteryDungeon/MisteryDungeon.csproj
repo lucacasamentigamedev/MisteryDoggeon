@@ -123,6 +123,7 @@
     <Compile Include="MysteryDungeon\Enemy.cs" />
     <Compile Include="MysteryDungeon\HealthModule.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_3.cs" />
+    <Compile Include="MysteryDungeon\Mgr\SFXMgr.cs" />
     <Compile Include="MysteryDungeon\SpawnPoint.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
     <Compile Include="MysteryDungeon\Utility\GameConfig.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="MysteryDungeon\Utility\MovementGridMgr.cs" />
     <Compile Include="MysteryDungeon\Utility\RoomObjectsMgr.cs" />
     <Compile Include="MysteryDungeon\Utility\GameStats.cs" />
-    <Compile Include="MysteryDungeon\PlatformButton.cs" />
+    <Compile Include="MysteryDungeon\RoomObjects\PlatformButton.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Door.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Gate.cs" />
     <Compile Include="MysteryDungeon\PlayerController.cs" />
@@ -168,6 +169,15 @@
     <Folder Include="bin\Debug\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\green_button.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\platform_button.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\background.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\arrow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -205,6 +215,30 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\red_globe.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\object_broke.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\object_picked.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\sequence_right.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\sequence_completed.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\sequence_wrong.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\path_unreachable.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\arrow_shooted.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\arrow_shooted.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\spawn_point.png">

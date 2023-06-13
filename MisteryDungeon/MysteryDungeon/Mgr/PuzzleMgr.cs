@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 using OpenTK;
 using System;
+using System.Collections.Generic;
 
 namespace MisteryDungeon.MysteryDungeon {
 
@@ -18,15 +19,21 @@ namespace MisteryDungeon.MysteryDungeon {
         public int TotalButtons { get; set; }
         private Vector2[] objectsToActiveAfterPuzzleResolved;
         private Vector2[] objectsToDisactiveAfterPuzzleResolved;
+        private List<PlatformButton> buttons;
 
         public PuzzleMgr(GameObject owner, float puzzleTimer, float waitingResetPuzzleTimer,
             Vector2[] objectsToActiveAfterPuzzleResolved, Vector2[] objectsToDisactiveAfterPuzzleResolved) : base(owner) {
+            buttons = new List<PlatformButton>();
             this.puzzleTimer = puzzleTimer;
             this.waitingResetPuzzleTimer = waitingResetPuzzleTimer;
             ResetPuzzle();
             this.objectsToActiveAfterPuzzleResolved = objectsToActiveAfterPuzzleResolved;
             this.objectsToDisactiveAfterPuzzleResolved = objectsToDisactiveAfterPuzzleResolved;
             TotalButtons = 0;
+        }
+
+        public void AddPlatformButton(PlatformButton pb) {
+            buttons.Add(pb);
         }
 
         public override void Update() {
@@ -45,6 +52,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void ResetPuzzle() {
+            EventManager.CastEvent(EventList.SequenceWrong, EventArgsFactory.SequenceWrongFactory());
             EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Reset puzzle"));
             puzzleActive = false;
             currentPuzzleTimer = puzzleTimer+0.99f; //metto +0.99 così riesco effettivamente a fare un conteggio
@@ -54,37 +62,41 @@ namespace MisteryDungeon.MysteryDungeon {
             puzzleReady = false;
             currentWaitingResetPuzzleTimer = waitingResetPuzzleTimer;
             lastRemainingSecs = 0;
+            if (buttons.Count <= 0) return;
+            foreach(PlatformButton button in buttons) {
+                button.ChangeButtonState(false);
+            }
         }
 
         public override void Start() {
-            EventManager.AddListener(EventList.ButtonPressed, OnButtonPressed);
+            EventManager.AddListener(EventList.PlatformButtonPressed, OnButtonPressed);
         }
 
         public override void OnDestroy() {
-            EventManager.RemoveListener(EventList.ButtonPressed, OnButtonPressed);
+            EventManager.RemoveListener(EventList.PlatformButtonPressed, OnButtonPressed);
         }
 
         public void OnButtonPressed(EventArgs message) {
             if (GameStats.PuzzleResolved || !puzzleReady) return;
+            EventArgsFactory.PlatformButtonPressedParser(message, out PlatformButton platformButton);
+            if (platformButton.Pressed) return;
             //test console.write
             if (!puzzleActive) EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Attivo il puzzle"));
             puzzleActive = true;
-            EventArgsFactory.ButtonPressedParser(message, out int sequenceId);
-            if (sequenceId == lastButtonPressed) return;
-            if (sequenceId != buttonToPress) {
+            if (platformButton.SequenceId == lastButtonPressed) return;
+            if (platformButton.SequenceId != buttonToPress) {
                 EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Sequenza puzzle sbagliata"));
-                //TODO: rumore di sequenza sbagliata
                 ResetPuzzle();
                 return;
             };
-            lastButtonPressed = sequenceId;
+            EventManager.CastEvent(EventList.SequenceRight, EventArgsFactory.SequenceRightFactory());
+            platformButton.ChangeButtonState(true);
+            lastButtonPressed = platformButton.SequenceId;
             buttonToPress++;
             EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Premuto pulsante giusto " + buttonToPress + "/" + TotalButtons));
             if(buttonToPress == TotalButtons) {
+                EventManager.CastEvent(EventList.SequenceCompleted, EventArgsFactory.SequenceCompletedFactory());
                 EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Puzzle risolto"));
-                //TODO: rumore puzzle completato
-                //TODO: sbloccare gate
-                //TODO: spawn pistola
                 GameStats.PuzzleResolved = true;
                 foreach (Vector2 v in objectsToActiveAfterPuzzleResolved) {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;

@@ -79,7 +79,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
             //click on wall or obstacle
             if (path.Count <= 0) {
-                //TODO: suono di percorso che non c'è
+                EventManager.CastEvent(EventList.PathUnreachable, EventArgsFactory.PathUnreachableFactory());
                 StopMovement(Vector2.Zero);
                 return;
             };
@@ -129,11 +129,12 @@ namespace MisteryDungeon.MysteryDungeon {
                     Game.TriggerChangeScene(nextScene);
                     break;
                 case (int)GameObjectTag.PlatformButton:
-                    int seqId = collisionInfo.Collider.gameObject.GetComponent<PlatformButton>().SequenceId;
-                    EventManager.CastEvent(EventList.ButtonPressed, EventArgsFactory.ButtonPressedFactory(seqId));
+                    EventManager.CastEvent(EventList.PlatformButtonPressed, EventArgsFactory.
+                        PlatformButtonPressedFactory(collisionInfo.Collider.gameObject.GetComponent<PlatformButton>()));
                     break;
                 case (int)GameObjectTag.Weapon:
-                    //TODO: suono weapon raccolta
+                    EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.
+                        ObjectPickedFactory());
                     Weapon weapon = collisionInfo.Collider.gameObject.GetComponent<Weapon>();
                     GameStats.ActiveWeapon = weapon;
                     ShootModule sm = GetComponent<ShootModule>();
@@ -148,7 +149,8 @@ namespace MisteryDungeon.MysteryDungeon {
                     weapon.gameObject.IsActive = false;
                     break;
                 case (int)GameObjectTag.Key:
-                    //TODO: suono chiave raccolta
+                    EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.
+                        ObjectPickedFactory());
                     Key key = collisionInfo.Collider.gameObject.GetComponent<Key>();
                     GameStats.collectedKeys.Add(key.ID);
                     key.gameObject.IsActive = false;

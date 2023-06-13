@@ -36,7 +36,7 @@ namespace MisteryDungeon.MysteryDungeon {
         private static void LoadTiledObjectFactories() {
             tiledObjectsFactories = new Dictionary<string, Action<Aiv.Tiled.Object>>();
             tiledObjectsFactories["Obstacle"] = TiledObjectFactory.CreateObstacle;
-            tiledObjectsFactories["Spine"] = TiledObjectFactory.CreateSpines;
+            tiledObjectsFactories["Spines"] = TiledObjectFactory.CreateSpines;
             tiledObjectsFactories["PlatformButton"] = TiledObjectFactory.CreatePlatformButton;
             tiledObjectsFactories["Gate"] = TiledObjectFactory.CreateGate;
             tiledObjectsFactories["Door"] = TiledObjectFactory.CreateDoor;
@@ -58,8 +58,10 @@ namespace MisteryDungeon.MysteryDungeon {
             MapColumns = maps[id].Height;
             CreatePathfindingMap(maps[id].Layers);
             CreateBackground(maps[id].Layers);
-            CreateTiledObjects(maps[id].ObjectGroups);
+            CreateObjectTiles(maps[id].ObjectGroups);
             CreateBulletMgr();
+            CreateSFXMgr();
+            CreateBackgroundMusic();
             GameStats.PreviousRoom = GameStats.ActualRoom;
             GameStats.ActualRoom = RoomId;
         }
@@ -82,13 +84,13 @@ namespace MisteryDungeon.MysteryDungeon {
                 if (layer.Name != "Background") continue;
                 for (int i = 0; i < layer.Tiles.GetLength(0); i++) {
                     for (int j = 0; j < layer.Tiles.GetLength(1); j++) {
-                        CreateTile(new TileSprite(maps[RoomId].Tilesets, layer.Tiles[i, j]), i, j, layer.Tiles[i, j].HorizontalFlip, layer.Tiles[i, j].VerticalFlip);
+                        CreateBackgroundTile(new TileSprite(maps[RoomId].Tilesets, layer.Tiles[i, j]), i, j, layer.Tiles[i, j].HorizontalFlip, layer.Tiles[i, j].VerticalFlip);
                     }
                 }
             }
         }
 
-        private static void CreateTile(TileSprite tileSprite, int xIndex, int yIndex, bool horizontalFlip, bool verticalFlip) {
+        private static void CreateBackgroundTile(TileSprite tileSprite, int xIndex, int yIndex, bool horizontalFlip, bool verticalFlip) {
             Vector2 pos = new Vector2(
                 TileUnitWidth * xIndex + (TileUnitWidth / 2),
                 TileUnitHeight * yIndex + (TileUnitHeight / 2)
@@ -116,7 +118,7 @@ namespace MisteryDungeon.MysteryDungeon {
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
-        private static void CreateTiledObjects(List<ObjectGroup> groups) {
+        private static void CreateObjectTiles(List<ObjectGroup> groups) {
             foreach (ObjectGroup objectGroup in groups) {
                 for (int i = 0; i < objectGroup.Objects.Count; i++) {
                     tiledObjectsFactories[objectGroup.Objects[i].Class].Invoke(objectGroup.Objects[i]);
@@ -124,9 +126,23 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        public static void CreateBulletMgr() {
+        private static void CreateBulletMgr() {
             GameObject bulletMgr = new GameObject("BulletMgr", Vector2.Zero);
             bulletMgr.AddComponent<BulletMgr>(5);
+        }
+
+        private static void CreateSFXMgr() {
+            GameObject gameObject = new GameObject("SFXManager", Vector2.Zero);
+            gameObject.AddComponent<SFXMgr>();
+            gameObject.AddComponent<AudioSourceComponent>().MyType = (int)AudioLayer.sfx;
+        }
+
+        private static void CreateBackgroundMusic() {
+            GameObject gameLogic = new GameObject("BackgroundMusic", Vector2.Zero);
+            AudioSourceComponent audioSource = gameLogic.AddComponent<AudioSourceComponent>();
+            audioSource.SetClip(AudioMgr.GetClip("background"));
+            audioSource.Loop = true;
+            audioSource.Play();
         }
 
         public static Map GetMap(int RoomId) {

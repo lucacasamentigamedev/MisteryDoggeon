@@ -23,7 +23,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             SpriteRenderer sr = SpriteRenderer.Factory(go, spriteName, Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width, TiledMapMgr.TileUnitHeight / sr.Height);
-            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(TiledMapMgr.RoomId, obj.Id, obj.Visible);
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             go.AddComponent<Obstacle>(obj.Id, TiledMapMgr.RoomId);
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Obstacle;
@@ -42,7 +42,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             SpriteRenderer sr = SpriteRenderer.Factory(go, "spines", Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width, TiledMapMgr.TileUnitHeight / sr.Height);
-            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(TiledMapMgr.RoomId, obj.Id, obj.Visible);
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             go.AddComponent<Spines>(obj.Id);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
@@ -56,11 +56,11 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             GameObject go = new GameObject("Object_" + TiledMapMgr.RoomId + "_" + obj.Id, pos);
             GameObject.Find("PuzzleMgr").GetComponent<PuzzleMgr>().TotalButtons++;
             go.Tag = (int)GameObjectTag.PlatformButton;
-            SpriteRenderer sr = SpriteRenderer.Factory(go, "red_button", Vector2.One * 0.5f, DrawLayer.Middleground);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "platformButton", Vector2.One * 0.5f,DrawLayer.Middleground,TiledMapMgr.TilePixelWidth, TiledMapMgr.TilePixelHeight);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width, TiledMapMgr.TileUnitHeight / sr.Height);
-            go.AddComponent<PlatformButton>(obj.Id, sequenceId);
-            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(TiledMapMgr.RoomId, obj.Id, obj.Visible);
+            GameObject.Find("PuzzleMgr").GetComponent<PuzzleMgr>().AddPlatformButton(go.AddComponent<PlatformButton>(obj.Id, sequenceId));
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.PlatformButton;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
@@ -78,7 +78,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width, TiledMapMgr.TileUnitHeight / sr.Height);
             go.AddComponent<Gate>(obj.Id);
-            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(TiledMapMgr.RoomId, obj.Id, obj.Visible);
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
@@ -100,7 +100,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             rb.Type = RigidbodyType.Door;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
-            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(TiledMapMgr.RoomId, obj.Id, obj.Visible);
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
@@ -121,7 +121,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             rb.Type = RigidbodyType.Key;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
-            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(TiledMapMgr.RoomId, obj.Id, obj.Visible);
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
@@ -180,7 +180,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             float offsetShootX = float.Parse(getPropertyValueByName("offsetShootX", obj.Properties));
             float offsetShootY = float.Parse(getPropertyValueByName("offsetShootY", obj.Properties));
             go.AddComponent<Weapon>((WeaponType)weaponType, bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY));
-            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(TiledMapMgr.RoomId, obj.Id, obj.Visible);
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 

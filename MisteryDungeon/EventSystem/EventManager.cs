@@ -8,10 +8,17 @@ namespace Aiv.Fast2D.Component {
         LOG_GameObjectCreation,
         LOG_Puzzle,
         LOG_EnemyHorde,
-        ButtonPressed,
         EnemySpawned,
         EnemyDestroyed,
-        SpawnPointDestroyed
+        SpawnPointDestroyed,
+        ObjectBroke,
+        ObjectPicked,
+        PlatformButtonPressed,
+        SequenceRight,
+        SequenceCompleted,
+        SequenceWrong,
+        ArrowShooted,
+        PathUnreachable
     }
 
     public static class EventManager {
@@ -68,6 +75,17 @@ namespace Aiv.Fast2D.Component {
 
         public SpawnPointCreatedEventArgs(SpawnPoint spawnPoint) {
             this.spawnPoint = spawnPoint;
+        }
+    }
+
+    public class PlatformButtonEventArgs : EventArgs {
+        private PlatformButton platformButton;
+        public PlatformButton PlatformButton {
+            get { return platformButton; }
+        }
+
+        public PlatformButtonEventArgs(PlatformButton platformButton) {
+            this.platformButton = platformButton;
         }
     }
 }

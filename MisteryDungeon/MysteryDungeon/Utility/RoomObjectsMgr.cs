@@ -17,7 +17,8 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        public static bool AddRoomObjectActiveness(int roomId, int objectId, bool isActive) {
+        public static bool AddRoomObjectActiveness(int objectId, bool isActive) {
+            int roomId = TiledMapMgr.RoomId;
             if (!roomObjects[roomId].ContainsKey(objectId)) {
                 roomObjects[roomId].Add(objectId, isActive);
                 return isActive;

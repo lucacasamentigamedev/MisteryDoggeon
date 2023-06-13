@@ -17,6 +17,12 @@ namespace MisteryDungeon.MysteryDungeon {
         EnemyBullet
     }
 
+    public enum AudioLayer {
+        music,
+        sfx,
+        last
+    }
+
     class Program {
         static void Main(string[] args) {
             Input.AddUserButton("Move", new ButtonMatch[] {

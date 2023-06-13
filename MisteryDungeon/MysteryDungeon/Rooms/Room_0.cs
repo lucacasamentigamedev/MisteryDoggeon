@@ -1,4 +1,5 @@
-﻿using Aiv.Fast2D.Component;
+﻿using Aiv.Audio;
+using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
 using OpenTK;
@@ -22,6 +23,16 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
             GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
             GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
+            GfxMgr.AddTexture("platformButton", "Assets/platform_button.png");
+            //Sounds
+            AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
+            AudioMgr.AddClip("objectPicked", "Assets/Sounds/SFX/object_picked.wav");
+            AudioMgr.AddClip("sequenceRight", "Assets/Sounds/SFX/sequence_right.wav");
+            AudioMgr.AddClip("sequenceWrong", "Assets/Sounds/SFX/sequence_wrong.wav");
+            AudioMgr.AddClip("sequenceCompleted", "Assets/Sounds/SFX/sequence_completed.ogg");
+            AudioMgr.AddClip("arrowShooted", "Assets/Sounds/SFX/arrow_shooted.ogg");
+            AudioMgr.AddClip("background", "Assets/Sounds/background.wav");
+            AudioMgr.AddClip("pathUnreachable", "Assets/Sounds/SFX/path_unreachable.wav");
         }
 
         public override void InitializeScene() {
@@ -43,7 +54,7 @@ namespace MisteryDungeon {
         public void CreateLogMgr() {
             GameObject go = new GameObject("LogMgr", Vector2.Zero);
             go.AddComponent<LogMgr>(
-                true,   //print pathfinding logs
+                false,   //print pathfinding logs
                 false,  //print puzzle logs
                 false,  //print object creations logs
                 false   //print enemy horde logs

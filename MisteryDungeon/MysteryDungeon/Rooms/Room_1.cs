@@ -20,6 +20,12 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("healthBarBackground", "Assets/healthbar_background.png");
             GfxMgr.AddTexture("healthBarForeground", "Assets/healthbar_foreground.png");
             GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
+            //Sounds
+            AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
+            AudioMgr.AddClip("objectPicked", "Assets/Sounds/SFX/object_picked.wav");
+            AudioMgr.AddClip("arrowShooted", "Assets/Sounds/SFX/arrow_shooted.ogg");
+            AudioMgr.AddClip("background", "Assets/Sounds/background.wav");
+            AudioMgr.AddClip("pathUnreachable", "Assets/Sounds/SFX/path_unreachable.wav");
         }
 
         public override void InitializeScene() {
