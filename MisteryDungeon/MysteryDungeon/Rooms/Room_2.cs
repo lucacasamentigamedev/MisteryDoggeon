@@ -47,7 +47,6 @@ namespace MisteryDungeon {
             CreateLogMgr();
             CreateHordeMgr();
             CreateMap();
-
             /******************FIXME: cheat da togliere**************/
             //RoomObjectsMgr.SetRoomObjectActiveness(2, 39, false, true);
             //GameObject g = GameObject.Find("Object_2_39");

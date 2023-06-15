@@ -14,8 +14,8 @@ namespace MisteryDungeon.MysteryDungeon {
         }
         public static bool HordeDefeated { get; set; }
         public static bool BossDefeated { get; set; }
-        public static float maxPlayerHealth = 15;
-        private static float playerHealth = 15;
+        public static float maxPlayerHealth = 20;
+        private static float playerHealth = 20;
         public static float PlayerHealth {
             get { return playerHealth; }
             set { playerHealth = value; }

@@ -50,13 +50,13 @@ namespace MisteryDungeon {
             CreateLogMgr();
             CreatePuzzleMgr();
             CreateMap();
-            /******************FIXME: cheat da togliere**************/
-            RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
+            /******************FIXME: cheat per andare dritto in stanza 2 con anche la chiave per il boss**************/
+            /*RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
             GameObject g = GameObject.Find("Object_0_27");
             if (g != null) g.IsActive = false;
             g = GameObject.Find("Object_0_22");
             if (g != null) g.IsActive = true;
-            GameStats.collectedKeys.Add(25);
+            GameStats.collectedKeys.Add(25);*/
             //GameStats.ActiveWeapon = GameObject.Find("Object_0_22").GetComponent<Weapon>();
             /*****************************************************/
         }
