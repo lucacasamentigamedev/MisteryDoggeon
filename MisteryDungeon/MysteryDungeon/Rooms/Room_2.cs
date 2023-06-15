@@ -9,7 +9,7 @@ namespace MisteryDungeon {
             FontMgr.AddFont("std_font", "Assets/Textures/text_sheet.png", 15, 32, 20, 20);
             GfxMgr.AddTexture("skull", "Assets/Textures/Objects/skull.png");
             GfxMgr.AddTexture("door", "Assets/Textures/Objects/crate.png");
-            GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
+            GfxMgr.AddTexture("player", "Assets/Textures/Spritesheets/player.png");
             GfxMgr.AddTexture("loading", "Assets/Textures/loading.png");
             GfxMgr.AddTexture("redGlobe", "Assets/Textures/red_globe.png");
             GfxMgr.AddTexture("arrow", "Assets/Textures/arrow.png");
@@ -21,6 +21,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("healthBarForeground", "Assets/Textures/healthbar_foreground.png");
             GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
             //Sounds
+            AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
             AudioMgr.AddClip("arrowShot", "Assets/Sounds/SFX/arrow_shot.ogg");
             AudioMgr.AddClip("background1", "Assets/Sounds/Background/background1.ogg");
             AudioMgr.AddClip("background2", "Assets/Sounds/Background/background2.ogg");
@@ -35,6 +36,10 @@ namespace MisteryDungeon {
             AudioMgr.AddClip("pathUnreachable", "Assets/Sounds/SFX/path_unreachable.wav");
             AudioMgr.AddClip("roomLeft", "Assets/Sounds/SFX/room_left.ogg");
             AudioMgr.AddClip("hordeDefeated", "Assets/Sounds/SFX/mission_completed.ogg");
+            AudioMgr.AddClip("playerTakesDamage", "Assets/Sounds/SFX/player_takes_damage.wav");
+            AudioMgr.AddClip("playerDead", "Assets/Sounds/SFX/player_dead.wav");
+            AudioMgr.AddClip("enemyTakesDamage", "Assets/Sounds/SFX/enemy_takes_damage.wav");
+            AudioMgr.AddClip("enemyDead", "Assets/Sounds/SFX/enemy_dead.wav");
         }
 
         public override void InitializeScene() {
@@ -61,7 +66,10 @@ namespace MisteryDungeon {
         }
         public void CreateHordeMgr() {
             GameObject go = new GameObject("HordeMgr", Vector2.Zero);
-            go.AddComponent<HordeMgr>();
+            go.AddComponent<HordeMgr>(
+                new Vector2[] { new Vector2(2, 39) },
+                new Vector2[] { new Vector2(2, 38), new Vector2(2, 39) }
+            );
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
         }
 

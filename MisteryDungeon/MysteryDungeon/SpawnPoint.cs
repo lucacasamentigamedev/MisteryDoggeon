@@ -1,4 +1,5 @@
 ﻿using Aiv.Fast2D.Component;
+using MisteryDungeon.MysteryDungeon.Utility;
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -7,7 +8,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
     public class SpawnPoint : UserComponent {
 
-        private Enemy[] enemiesPool;
+        private LittleBlobController[] enemiesPool;
         private float spawnTimer;
         private float currentSpawnTimer;
         private float currentReadyTimer;
@@ -21,7 +22,7 @@ namespace MisteryDungeon.MysteryDungeon {
             currentReadyTimer = readyTimer;
             this.spawnTimer = spawnTimer;
             currentSpawnTimer = 0;
-            enemiesPool = new Enemy[poolSize];
+            enemiesPool = new LittleBlobController[poolSize];
             this.enemyHealth = enemyHealth;
             this.enemySpeed = enemySpeed;
             this.enemyDamage = enemyDamage;
@@ -35,7 +36,7 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        private Enemy CreateBlob(int index) {
+        private LittleBlobController CreateBlob(int index) {
             GameObject go = new GameObject("Enemy_Blob_" + index, Vector2.Zero, false);
             go.IsActive = false;
             go.Tag = (int)GameObjectTag.Enemy;
@@ -50,7 +51,7 @@ namespace MisteryDungeon.MysteryDungeon {
             go.transform.Scale = new Vector2((TiledMapMgr.TileUnitWidth / sr.Width), (TiledMapMgr.TileUnitHeight / sr.Height));
             go.AddComponent<HealthModule>(enemyHealth, enemyHealth, new Vector2(-0.5f, -0.4f));
             CreateBlobAnimations(go, sheet);
-            return go.AddComponent<Enemy>(enemySpeed, enemyDamage, deathTimer);
+            return go.AddComponent<LittleBlobController>(enemySpeed, enemyDamage, deathTimer);
         }
 
         private static void CreateBlobAnimations(GameObject go, Sheet sheet) {
@@ -65,7 +66,7 @@ namespace MisteryDungeon.MysteryDungeon {
             animator.AddClip(death);
         }
 
-        public Enemy GetEnemy() {
+        public LittleBlobController GetEnemy() {
             for (int i = 0; i < enemiesPool.Length; i++) {
                 if (enemiesPool[i].gameObject.IsActive) continue;
                 return enemiesPool[i];
@@ -78,7 +79,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if (currentReadyTimer > 0) return;
             currentSpawnTimer -= Game.DeltaTime;
             if (currentSpawnTimer > 0) return;
-            Enemy enemy = GetEnemy();
+            LittleBlobController enemy = GetEnemy();
             if (enemy != null) {
                 enemy.Spawn(transform.Position);
                 currentSpawnTimer = spawnTimer;
@@ -94,7 +95,6 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void DestroySpawnPoint() {
-            //TODO: suono distruzione spawn point
             EventManager.CastEvent(EventList.SpawnPointDestroyed, EventArgsFactory.SpawnPointDestroyedFactory());
             EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Spaw point distrutto"));
             gameObject.IsActive = false;

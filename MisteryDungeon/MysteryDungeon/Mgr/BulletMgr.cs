@@ -8,9 +8,18 @@ namespace MisteryDungeon.MysteryDungeon {
 
     internal class BulletMgr : UserComponent {
 
+        private float arrowDamage;
+        private float arrowSpeed;
+        private float globeDamage;
+        private float globeSpeed;
         private Bullet[,] bulletsPool;
 
-        public BulletMgr(GameObject owner, int poolSize) : base(owner) {
+        public BulletMgr(GameObject owner, int poolSize,float arrowDamage,
+            float arrowSpeed, float globeDamage, float globeSpeed) : base(owner) {
+            this.arrowDamage = arrowDamage;
+            this.globeDamage = globeDamage;
+            this.arrowSpeed = arrowSpeed;
+            this.globeSpeed = globeSpeed;
             bulletsPool = new Bullet[(int)BulletType.Last, poolSize];
             for (int i = 0; i < bulletsPool.GetLength(0); i++) {
                 for (int j = 0; j < bulletsPool.GetLength(1); j++) {
@@ -40,7 +49,7 @@ namespace MisteryDungeon.MysteryDungeon {
             go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
             if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
-            return go.AddComponent<Bullet>(5, BulletType.Arrow, 5);
+            return go.AddComponent<Bullet>(arrowDamage, BulletType.Arrow, arrowSpeed);
         }
         
         private Bullet CreateGlobe(int index) {
@@ -56,7 +65,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width / 2, TiledMapMgr.TileUnitHeight / sr.Height / 2);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
-            return go.AddComponent<Bullet>(5, BulletType.Globe, 5);
+            return go.AddComponent<Bullet>(globeDamage, BulletType.Globe, globeSpeed);
         }
 
         public Bullet GetBullet(BulletType bulletType) {

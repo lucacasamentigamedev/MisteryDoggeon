@@ -9,7 +9,7 @@ namespace MisteryDungeon {
             FontMgr.AddFont("std_font", "Assets/Textures/text_sheet.png", 15, 32, 20, 20);
             GfxMgr.AddTexture("skull", "Assets/Textures/Objects/skull.png");
             GfxMgr.AddTexture("door", "Assets/Textures/Objects/crate.png");
-            GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
+            GfxMgr.AddTexture("player", "Assets/Textures/Spritesheets/player.png");
             GfxMgr.AddTexture("loading", "Assets/Textures/loading.png");
             GfxMgr.AddTexture("redGlobe", "Assets/Textures/red_globe.png");
             GfxMgr.AddTexture("arrow", "Assets/Textures/arrow.png");
@@ -34,6 +34,10 @@ namespace MisteryDungeon {
             AudioMgr.AddClip("pathUnreachable", "Assets/Sounds/SFX/path_unreachable.wav");
             AudioMgr.AddClip("roomLeft", "Assets/Sounds/SFX/room_left.ogg");
             AudioMgr.AddClip("bossDefeated", "Assets/Sounds/SFX/mission_completed.ogg");
+            AudioMgr.AddClip("playerTakesDamage", "Assets/Sounds/SFX/player_takes_damage.wav");
+            AudioMgr.AddClip("playerDead", "Assets/Sounds/SFX/player_dead.wav");
+            AudioMgr.AddClip("enemyTakesDamage", "Assets/Sounds/SFX/enemy_takes_damage.wav");
+            AudioMgr.AddClip("enemyDead", "Assets/Sounds/SFX/enemy_dead.wav");
         }
 
         public override void InitializeScene() {

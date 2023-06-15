@@ -1,5 +1,6 @@
 ﻿using Aiv.Fast2D.Component;
 using MisteryDungeon.AivAlgo.Pathfinding;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 
@@ -10,12 +11,17 @@ namespace MisteryDungeon.MysteryDungeon {
         private bool hordeActive;
         public static int EnemiesActive { get; set; }
         public static int SpawnPointsActive { get; set; }
+        private Vector2[] objectsToActiveOnHordeStart;
+        private Vector2[] objectsToDisActiveOnHordeDefeated;
 
-        public HordeMgr(GameObject owner) : base(owner) {
+        public HordeMgr(GameObject owner, Vector2[] objectsToActiveOnHordeStart,
+            Vector2[] objectsToDisActiveOnHordeDefeated) : base(owner) {
             spawnPoints = new List<SpawnPoint>();
             hordeActive = false;
             EnemiesActive = 0;
             SpawnPointsActive = 0;
+            this.objectsToActiveOnHordeStart = objectsToActiveOnHordeStart;
+            this.objectsToDisActiveOnHordeDefeated = objectsToDisActiveOnHordeDefeated;
         }
 
         public void AddSpawnPoint(SpawnPoint spawnPoint) {
@@ -60,20 +66,23 @@ namespace MisteryDungeon.MysteryDungeon {
         private void CheckHordeDefeated() {
             if (EnemiesActive <= 0 && SpawnPointsActive <= 0) {
                 //orda sconfitta tolgo i gate
+                EventManager.CastEvent(EventList.HordeDefeated, EventArgsFactory.HordeDefeatedFactory());
                 EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Orda sconfitta"));
                 GameStats.HordeDefeated = true;
-                GameObject.Find("Object_2_39").IsActive = false;
-                RoomObjectsMgr.SetRoomObjectActiveness(2, 39, false, true, MovementGrid.EGridTile.Floor);
-                GameObject.Find("Object_2_38").IsActive = false;
-                RoomObjectsMgr.SetRoomObjectActiveness(2, 38, false, true, MovementGrid.EGridTile.Floor);
+                foreach (Vector2 v in objectsToDisActiveOnHordeDefeated){
+                    GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
+                    RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
+                }
             }
         }
 
         public void CheckHordeActivation() {
             if (GameStats.HordeDefeated || GameStats.ActiveWeapon == null || hordeActive) return;
             //attivo gate
-            GameObject.Find("Object_2_39").IsActive = true;
-            RoomObjectsMgr.SetRoomObjectActiveness(2, 39, true, true, MovementGrid.EGridTile.Wall);
+            foreach (Vector2 v in objectsToActiveOnHordeStart) {
+                GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
+                RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true, true, MovementGrid.EGridTile.Wall);
+            }
             //attivo spawn point
             foreach (SpawnPoint spawnPoint in spawnPoints) {
                 spawnPoint.gameObject.IsActive = true;

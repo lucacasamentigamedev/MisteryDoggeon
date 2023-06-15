@@ -1,5 +1,4 @@
-﻿using Aiv;
-using Aiv.Fast2D.Component;
+﻿using Aiv.Fast2D.Component;
 using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 using System;
@@ -18,6 +17,7 @@ namespace MisteryDungeon.MysteryDungeon {
         //ref
         private Rigidbody rigidbody;
         private SheetAnimator animator;
+        private HealthModule healthModule;
 
         //working var
         private float moveSpeed;
@@ -38,6 +38,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public override void Awake() {
             rigidbody = GetComponent<Rigidbody>();
             animator = GetComponent<SheetAnimator>();
+            healthModule = GetComponent<HealthModule>();
         }
 
         public override void Update() {
@@ -147,23 +148,29 @@ namespace MisteryDungeon.MysteryDungeon {
                     key.gameObject.IsActive = false;
                     break;
                 case (int)GameObjectTag.Enemy:
-                    //TODO: suono danno al player
-                    Enemy enemy = collisionInfo.Collider.gameObject.GetComponent<Enemy>();
-                    enemy.DestroyEnemy();
+                    LittleBlobController enemy = collisionInfo.Collider.gameObject.GetComponent<LittleBlobController>();
+                    if (enemy.Dead) break;
+                    enemy.TakeDamage(enemy.GetComponent<HealthModule>().Health);
                     TakeDamage(enemy.Damage);
                     break;
                 case (int)GameObjectTag.EnemyBullet:
-                    //TODO: suono danno al player
                     Bullet bullet = collisionInfo.Collider.gameObject.GetComponent<Bullet>();
                     bullet.DestroyBullet();
                     TakeDamage(bullet.Damage);
+                    break;
+                case (int)GameObjectTag.Boss:
+                    BossController boss = collisionInfo.Collider.gameObject.GetComponent<BossController>();
+                    if (boss.Dead) break;
+                    TakeDamage(healthModule.Health);
                     break;
             }
         }
 
         public void TakeDamage(float damage) {
-            if (GetComponent<HealthModule>().TakeDamage(damage)) {
+            EventManager.CastEvent(EventList.PlayerTakesDamage, EventArgsFactory.PlayerTakesDamageFactory());
+            if (healthModule.TakeDamage(damage)) {
                 //Finisce il gioco
+                EventManager.CastEvent(EventList.PlayerDead, EventArgsFactory.PlayerDeadFactory());
                 //TODO: schermata di fine gioco
             } else {
                 GameStats.PlayerHealth -= damage;

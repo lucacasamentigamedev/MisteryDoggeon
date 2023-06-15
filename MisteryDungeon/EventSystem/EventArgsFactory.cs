@@ -99,5 +99,41 @@ namespace Aiv.Fast2D.Component {
         public static EventArgs RoomLeftFactory() {
             return new EventArgs();
         }
+
+        public static void PlayerTakesDamageParser() { }
+
+        public static EventArgs PlayerTakesDamageFactory() {
+            return new EventArgs();
+        }
+
+        public static void PlayerDeadParser() { }
+
+        public static EventArgs PlayerDeadFactory() {
+            return new EventArgs();
+        }
+
+        public static void EnemyTakesDamageParser() { }
+
+        public static EventArgs EnemyTakesDamageFactory() {
+            return new EventArgs();
+        }
+        
+        public static void EnemyDeadParser() { }
+
+        public static EventArgs EnemyDeadFactory() {
+            return new EventArgs();
+        }
+        
+        public static void BossDefeatedParser() { }
+
+        public static EventArgs BossDefeatedFactory() {
+            return new EventArgs();
+        }
+        
+        public static void HordeDefeatedParser() { }
+
+        public static EventArgs HordeDefeatedFactory() {
+            return new EventArgs();
+        }
     }
 }

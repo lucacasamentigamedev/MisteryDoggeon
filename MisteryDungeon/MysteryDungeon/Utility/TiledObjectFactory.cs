@@ -248,7 +248,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             SpriteRenderer sr = SpriteRenderer.Factory(go, "redBlob", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((TiledMapMgr.TileUnitWidth / sr.Width) * 2, (TiledMapMgr.TileUnitHeight / sr.Height) * 2);
-            go.AddComponent<BossController>(readyTimer, speed, deathTimer);
+            go.AddComponent<BossController>(readyTimer, speed, deathTimer, new Vector2[] { new Vector2(3, 39) });
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Boss;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));

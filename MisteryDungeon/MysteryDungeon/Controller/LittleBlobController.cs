@@ -1,8 +1,9 @@
 ﻿using Aiv.Fast2D.Component;
+using Aiv.Tiled;
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
-    public class Enemy : UserComponent {
+    public class LittleBlobController : UserComponent {
 
         private float damage;
         public float Damage {
@@ -16,11 +17,11 @@ namespace MisteryDungeon.MysteryDungeon {
         }
         private float deathTimer;
 
-        protected Rigidbody rigidbody;
-        protected Transform targetTransform;
+        private Rigidbody rigidbody;
+        private Transform targetTransform;
         private SheetAnimator animator;
 
-        public Enemy(GameObject owner, float speed, float damage, float deathTimer) : base(owner) {
+        public LittleBlobController(GameObject owner, float speed, float damage, float deathTimer) : base(owner) {
             this.speed = speed;
             this.damage = damage;
             dead = false;
@@ -61,15 +62,17 @@ namespace MisteryDungeon.MysteryDungeon {
             if (dead) return;
             HealthModule hm = GetComponent<HealthModule>();
             if (hm.TakeDamage(damage)) {
+                EventManager.CastEvent(EventList.EnemyDead, EventArgsFactory.EnemyDeadFactory());
                 rigidbody.Velocity = Vector2.Zero;
                 animator.ChangeClip("death");
                 dead = true;
+            } else {
+                EventManager.CastEvent(EventList.EnemyTakesDamage, EventArgsFactory.EnemyTakesDamageFactory());
+                EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Enemy colpito, vita rimanente " + hm.Health));
             }
-            else EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Enemy colpito, vita rimanente " + hm.Health));
         }
 
         public void DestroyEnemy() {
-            //TODO: suono distruzione nemico
             EventManager.CastEvent(EventList.EnemyDestroyed, EventArgsFactory.EnemyDestroyedFactory());
             EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Enemy distrutto"));
             gameObject.IsActive = false;

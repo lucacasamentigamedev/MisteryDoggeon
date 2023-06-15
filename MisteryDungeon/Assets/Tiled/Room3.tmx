@@ -41,8 +41,8 @@
     <property name="offsetShootX" type="float" value="0.5"/>
     <property name="offsetShootY" type="float" value="0.5"/>
     <property name="readyTimer" type="float" value="2"/>
-    <property name="reloadTime" type="float" value="0.5"/>
-    <property name="speed" type="float" value="2.2"/>
+    <property name="reloadTime" type="float" value="0.65"/>
+    <property name="speed" type="float" value="2.5"/>
    </properties>
   </object>
   <object id="52" name="spines" class="Spines" gid="290" x="48" y="64" width="16" height="16"/>

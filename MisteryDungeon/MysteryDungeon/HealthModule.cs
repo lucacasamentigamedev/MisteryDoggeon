@@ -5,17 +5,19 @@ namespace MisteryDungeon.MysteryDungeon {
     public class HealthModule : UserComponent {
 
         private const float UIScale = 0.35f;
-        private Vector2 UIOffset;
         private float maxHealth;
+        private float currentHealth;
+        private Vector2 UIOffset;
+
         private Transform energyBackgroundUI;
         private GameObject energyBackgroundGameObject;
         private Transform energyUI;
         private GameObject energyGameObject;
 
-        private float currentHealth;
         public float Health {
             get { return currentHealth; }
         }
+
         public float HealthPercentage {
             get { return currentHealth / maxHealth; }
         }

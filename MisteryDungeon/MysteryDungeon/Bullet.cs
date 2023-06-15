@@ -52,8 +52,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public override void OnCollide(Collision collisionInfo) {
             switch (collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Enemy:
-                    //TODO: suono nemico muore
-                    Enemy enemy = collisionInfo.Collider.gameObject.GetComponent<Enemy>();
+                    LittleBlobController enemy = collisionInfo.Collider.gameObject.GetComponent<LittleBlobController>();
                     if (enemy.Dead) break;
                     DestroyBullet();
                     enemy.TakeDamage(Damage);
@@ -75,7 +74,6 @@ namespace MisteryDungeon.MysteryDungeon {
                     DestroyBullet();
                     break;
                 case (int)GameObjectTag.Boss:
-                    //TODO: suono nemico muore
                     BossController boss = collisionInfo.Collider.gameObject.GetComponent<BossController>();
                     if (boss.Dead) break;
                     DestroyBullet();

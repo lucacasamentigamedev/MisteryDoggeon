@@ -12,7 +12,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("shell", "Assets/Textures/Objects/shell.png");
             GfxMgr.AddTexture("bones", "Assets/Textures/Objects/bones.png");
             GfxMgr.AddTexture("door", "Assets/Textures/Objects/crate.png");
-            GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
+            GfxMgr.AddTexture("player", "Assets/Textures/Spritesheets/player.png");
             GfxMgr.AddTexture("loading", "Assets/Textures/loading.png");
             GfxMgr.AddTexture("redGlobe", "Assets/Textures/red_globe.png");
             GfxMgr.AddTexture("arrow", "Assets/Textures/arrow.png");

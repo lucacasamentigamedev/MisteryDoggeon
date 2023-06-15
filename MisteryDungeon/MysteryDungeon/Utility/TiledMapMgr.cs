@@ -130,7 +130,13 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private static void CreateBulletMgr() {
             GameObject bulletMgr = new GameObject("BulletMgr", Vector2.Zero);
-            bulletMgr.AddComponent<BulletMgr>(5);
+            bulletMgr.AddComponent<BulletMgr>(
+                10, // bullet pool size
+                5,  // arrow damage
+                5,  // arrow speed
+                5,  // globe damage
+                5   // globe speed
+            );
         }
 
         private static void CreateSFXMgr() {

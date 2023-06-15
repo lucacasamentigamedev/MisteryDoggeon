@@ -4,10 +4,13 @@ using System;
 namespace Aiv.Fast2D.Component {
 
     public enum EventList {
+        // LogMgr events
         LOG_Pathfinding,
         LOG_GameObjectCreation,
         LOG_Puzzle,
         LOG_EnemyHorde,
+        LOG_Boss,
+        // Game events
         EnemySpawned,
         EnemyDestroyed,
         SpawnPointDestroyed,
@@ -21,7 +24,13 @@ namespace Aiv.Fast2D.Component {
         PathUnreachable,
         PuzzleReady,
         ClockTick,
-        RoomLeft
+        RoomLeft,
+        PlayerTakesDamage,
+        PlayerDead,
+        EnemyTakesDamage,
+        EnemyDead,
+        BossDefeated,
+        HordeDefeated
     }
 
     public static class EventManager {

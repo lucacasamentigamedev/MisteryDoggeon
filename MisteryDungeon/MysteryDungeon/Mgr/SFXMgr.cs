@@ -14,6 +14,12 @@ namespace Aiv.Fast2D.Component {
         PuzzleReady,
         ClockTick,
         RoomLeft,
+        PlayerTakesDamage,
+        PlayerDead,
+        EnemyTakesDamage,
+        EnemyDead,
+        BossDefeated,
+        HordeDefeated,
         last
     }
 
@@ -35,6 +41,12 @@ namespace Aiv.Fast2D.Component {
             mySFX[7] = AudioMgr.GetClip("puzzleReady");
             mySFX[8] = AudioMgr.GetClip("clockTick");
             mySFX[9] = AudioMgr.GetClip("roomLeft");
+            mySFX[10] = AudioMgr.GetClip("playerTakesDamage");
+            mySFX[11] = AudioMgr.GetClip("playerDead");
+            mySFX[12] = AudioMgr.GetClip("enemyTakesDamage");
+            mySFX[13] = AudioMgr.GetClip("enemyDead");
+            mySFX[14] = AudioMgr.GetClip("bossDefeated");
+            mySFX[15] = AudioMgr.GetClip("hordeDefeated");
         }
 
         public override void Awake() {
@@ -52,6 +64,12 @@ namespace Aiv.Fast2D.Component {
             EventManager.AddListener(EventList.PuzzleReady, OnPuzzleReady);
             EventManager.AddListener(EventList.ClockTick, OnClockTick);
             EventManager.AddListener(EventList.RoomLeft, OnRoomLeft);
+            EventManager.AddListener(EventList.PlayerTakesDamage, OnPlayerTakesDamage);
+            EventManager.AddListener(EventList.PlayerDead, OnPlayerDead);
+            EventManager.AddListener(EventList.EnemyTakesDamage, OnEnemyTakesDamage);
+            EventManager.AddListener(EventList.EnemyDead, OnEnemyDead);
+            EventManager.AddListener(EventList.BossDefeated, OnBossDead);
+            EventManager.AddListener(EventList.HordeDefeated, OnHordeDefeated);
         }
 
         public override void OnDestroy() {
@@ -65,6 +83,12 @@ namespace Aiv.Fast2D.Component {
             EventManager.RemoveListener(EventList.PuzzleReady, OnPuzzleReady);
             EventManager.RemoveListener(EventList.ClockTick, OnClockTick);
             EventManager.RemoveListener(EventList.RoomLeft, OnRoomLeft);
+            EventManager.RemoveListener(EventList.PlayerTakesDamage, OnPlayerTakesDamage);
+            EventManager.RemoveListener(EventList.PlayerDead, OnPlayerDead);
+            EventManager.RemoveListener(EventList.EnemyTakesDamage, OnEnemyTakesDamage);
+            EventManager.RemoveListener(EventList.EnemyDead, OnEnemyDead);
+            EventManager.RemoveListener(EventList.BossDefeated, OnBossDead);
+            EventManager.RemoveListener(EventList.HordeDefeated, OnHordeDefeated);
         }
 
         public void OnObjectBroke(EventArgs message) {
@@ -101,6 +125,30 @@ namespace Aiv.Fast2D.Component {
         
         public void OnRoomLeft(EventArgs message) {
             PlaySFX(SFXList.RoomLeft);
+        }
+        
+        public void OnPlayerTakesDamage(EventArgs message) {
+            PlaySFX(SFXList.PlayerTakesDamage);
+        }
+        
+        public void OnPlayerDead(EventArgs message) {
+            PlaySFX(SFXList.PlayerDead);
+        }
+        
+        public void OnEnemyTakesDamage(EventArgs message) {
+            PlaySFX(SFXList.EnemyTakesDamage);
+        }
+
+        public void OnEnemyDead(EventArgs message) {
+            PlaySFX(SFXList.EnemyDead);
+        }
+
+        public void OnBossDead(EventArgs message) {
+            PlaySFX(SFXList.BossDefeated);
+        }
+        
+        public void OnHordeDefeated(EventArgs message) {
+            PlaySFX(SFXList.HordeDefeated);
         }
 
         private void PlaySFX(SFXList sfx) {

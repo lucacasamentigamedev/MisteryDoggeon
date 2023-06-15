@@ -14,7 +14,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("door", "Assets/Textures/Objects/crate.png");
             GfxMgr.AddTexture("loading", "Assets/Textures/loading.png");
             GfxMgr.AddTexture("gate", "Assets/Textures/Objects/mushroom.png");
-            GfxMgr.AddTexture("player", "Assets/Spritesheets/player.png");
+            GfxMgr.AddTexture("player", "Assets/Textures/Spritesheets/player.png");
             GfxMgr.AddTexture("bow", "Assets/Textures/Objects/bow.png");
             GfxMgr.AddTexture("redGlobe", "Assets/Textures/red_globe.png");
             GfxMgr.AddTexture("arrow", "Assets/Textures/arrow.png");
@@ -51,13 +51,13 @@ namespace MisteryDungeon {
             CreatePuzzleMgr();
             CreateMap();
             /******************FIXME: cheat da togliere**************/
-            /*RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
+            RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
             GameObject g = GameObject.Find("Object_0_27");
             if (g != null) g.IsActive = false;
             g = GameObject.Find("Object_0_22");
             if (g != null) g.IsActive = true;
-            GameStats.HordeDefeated = true;
-            GameStats.collectedKeys.Add(25);*/
+            GameStats.collectedKeys.Add(25);
+            //GameStats.ActiveWeapon = GameObject.Find("Object_0_22").GetComponent<Weapon>();
             /*****************************************************/
         }
 

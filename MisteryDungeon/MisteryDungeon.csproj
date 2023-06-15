@@ -117,15 +117,16 @@
     <Compile Include="Engine\UserComponent.cs" />
     <Compile Include="EventSystem\EventArgsFactory.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
-    <Compile Include="MysteryDungeon\BossController.cs" />
+    <Compile Include="MysteryDungeon\Controller\BossController.cs" />
     <Compile Include="MysteryDungeon\Bullet.cs" />
     <Compile Include="MysteryDungeon\Mgr\BulletMgr.cs" />
-    <Compile Include="MysteryDungeon\Enemy.cs" />
+    <Compile Include="MysteryDungeon\Controller\LittleBlobController.cs" />
     <Compile Include="MysteryDungeon\HealthModule.cs" />
     <Compile Include="MysteryDungeon\Rooms\Room_3.cs" />
     <Compile Include="MysteryDungeon\Mgr\SFXMgr.cs" />
     <Compile Include="MysteryDungeon\SpawnPoint.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
+    <Compile Include="MysteryDungeon\Utility\Color.cs" />
     <Compile Include="MysteryDungeon\Utility\GameConfig.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Key.cs" />
     <Compile Include="MysteryDungeon\Utility\MovementGridMgr.cs" />
@@ -134,7 +135,7 @@
     <Compile Include="MysteryDungeon\RoomObjects\PlatformButton.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Door.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Gate.cs" />
-    <Compile Include="MysteryDungeon\PlayerController.cs" />
+    <Compile Include="MysteryDungeon\Controller\PlayerController.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Obstacle.cs" />
     <Compile Include="MysteryDungeon\Utility\LogMgr.cs" />
     <Compile Include="MysteryDungeon\Mgr\PuzzleMgr.cs" />
@@ -199,7 +200,19 @@
     <Content Include="Assets\Sounds\Background\background10.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Sounds\SFX\player_dead.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\enemy_takes_damage.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Sounds\SFX\clock_tick.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\enemy_dead.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\SFX\player_takes_damage.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Sounds\SFX\room_left.ogg">
@@ -286,13 +299,13 @@
     <Content Include="Assets\Textures\Objects\spines.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Spritesheets\green_blob.png">
+    <Content Include="Assets\Textures\Spritesheets\green_blob.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Spritesheets\red_blob.png">
+    <Content Include="Assets\Textures\Spritesheets\red_blob.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Spritesheets\player.png">
+    <Content Include="Assets\Textures\Spritesheets\player.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Objects\red_button.png">
