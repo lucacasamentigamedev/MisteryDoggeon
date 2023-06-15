@@ -151,7 +151,9 @@ namespace Aiv
                     if (closedList.Contains(current.State)) continue;
                     closedList.Add(current.State);
 
-                    if (current.State.Equals(to)) return MakeResult(current, iterations);
+                    if (current.State.Equals(to)) {
+                        return MakeResult(current, iterations);
+                    };
 
                     foreach (var action in current.State.GetActions()) {
                         openList.Enqueue(new SearchNode<T>(action.NewState, current, current.Cost + action.Cost, action.NewState.ComputeHeuristic(to)));

@@ -1,4 +1,5 @@
-﻿using Aiv.Fast2D.Component;
+﻿using Aiv;
+using Aiv.Fast2D.Component;
 using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 using System;
@@ -10,6 +11,7 @@ namespace MisteryDungeon.MysteryDungeon {
         //pathfinding
         private MovementGrid grid;
         private List<Vector2> path = new List<Vector2>();
+        private SearchTree.AStarSearchProgress<MovementGrid.GridMovementState> searchProgress = null;
 
         //ref
         private Rigidbody rigidbody;
@@ -39,10 +41,31 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public override void Update() {
-            if(Input.GetUserButtonDown("Move") && !isMoving) {
+            if (Input.GetUserButtonDown("Move") && !isMoving) {
                 PerformPathfinding();
             }
-            if(isMoving) {
+            if (searchProgress != null && !isMoving) {
+                var result = searchProgress.Step(30);
+                if (result.HasValue) {
+                    path.Clear();
+                    foreach (var step in result.Value.Steps) {
+                        path.Add(new Vector2(
+                            ((Game.Win.OrthoWidth * step.X) / mapRows) + (tileUnitWidth / 2),
+                            ((Game.Win.OrthoHeight * step.Y) / mapColumns) + (tileUnitHeight / 2)
+                        ));
+                    }
+                    searchProgress = null;
+                    EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(PrintPath()));
+                    if (path.Count <= 0) {
+                        //click on wall or obstacle
+                        EventManager.CastEvent(EventList.PathUnreachable, EventArgsFactory.PathUnreachableFactory());
+                        StopMovement(Vector2.Zero);
+                    } else {
+                        isMoving = true;
+                    };
+                }
+            } else {
+                if (path.Count <= 0) return;
                 Vector2 direction = (path[0] - transform.Position);
                 SetCLip(GetCLipAnimationName(rigidbody.Velocity, true));
                 if (path.Count == 1) {
@@ -62,38 +85,17 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void PerformPathfinding() {
-            //starting cell
             Vector2 startingCell = new Vector2(
                 (int)Math.Ceiling(transform.Position.X / tileUnitWidth) - 1,
                 (int)Math.Ceiling(transform.Position.Y / tileUnitHeight) - 1
             );
-
-            //ending cell
             Vector2 targetCell = new Vector2(
                 (int)Math.Ceiling(Game.Win.MousePosition.X / tileUnitWidth) - 1,
                 (int)Math.Ceiling(Game.Win.MousePosition.Y / tileUnitHeight) - 1
             );
-
-            path = grid.FindPath(startingCell, targetCell);
-            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(PrintPath()));
-
-            //click on wall or obstacle
-            if (path.Count <= 0) {
-                EventManager.CastEvent(EventList.PathUnreachable, EventArgsFactory.PathUnreachableFactory());
-                StopMovement(Vector2.Zero);
-                return;
-            };
-
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Cella inizio = " + startingCell.ToString()));
-            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Cella fine = " + path[path.Count - 1].ToString()));
-            //convert map position into unit position
-            for (int i = 0; i < path.Count; i++) {
-                path[i] = new Vector2(
-                    ((Game.Win.OrthoWidth * path[i].X) / mapRows) + (tileUnitWidth / 2),
-                    ((Game.Win.OrthoHeight * path[i].Y) / mapColumns) + (tileUnitHeight / 2)
-                );
-            }
-            isMoving = true;
+            EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Cella fine = " + targetCell.ToString()));
+            searchProgress = grid.FindPathProgressive(startingCell, targetCell);
         }
 
         public string PrintPath() {
