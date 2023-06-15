@@ -21,7 +21,16 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
             //Sounds
             AudioMgr.AddClip("arrowShot", "Assets/Sounds/SFX/arrow_shot.ogg");
-            AudioMgr.AddClip("background", "Assets/Sounds/background.wav");
+            AudioMgr.AddClip("background1", "Assets/Sounds/Background/background1.ogg");
+            AudioMgr.AddClip("background2", "Assets/Sounds/Background/background2.ogg");
+            AudioMgr.AddClip("background3", "Assets/Sounds/Background/background3.ogg");
+            AudioMgr.AddClip("background4", "Assets/Sounds/Background/background4.ogg");
+            AudioMgr.AddClip("background5", "Assets/Sounds/Background/background5.ogg");
+            AudioMgr.AddClip("background6", "Assets/Sounds/Background/background6.ogg");
+            AudioMgr.AddClip("background7", "Assets/Sounds/Background/background7.ogg");
+            AudioMgr.AddClip("background8", "Assets/Sounds/Background/background8.ogg");
+            AudioMgr.AddClip("background9", "Assets/Sounds/Background/background9.ogg");
+            AudioMgr.AddClip("background10", "Assets/Sounds/Background/background10.ogg");
             AudioMgr.AddClip("pathUnreachable", "Assets/Sounds/SFX/path_unreachable.wav");
             AudioMgr.AddClip("roomLeft", "Assets/Sounds/SFX/room_left.ogg");
             AudioMgr.AddClip("bossDefeated", "Assets/Sounds/SFX/mission_completed.ogg");

@@ -20,6 +20,8 @@ namespace MisteryDungeon.MysteryDungeon {
         public static float TilePixelHeight { get; set; }
         public static int MapRows { get; set; }
         public static int MapColumns { get; set; }
+        private static int backgroundClipId = -1;
+        public static int BackgroundClipId { get; set; }
 
         static TiledMapMgr() {
             CreateMapArray();
@@ -141,7 +143,12 @@ namespace MisteryDungeon.MysteryDungeon {
         private static void CreateBackgroundMusic() {
             GameObject gameLogic = new GameObject("BackgroundMusic", Vector2.Zero);
             AudioSourceComponent audioSource = gameLogic.AddComponent<AudioSourceComponent>();
-            audioSource.SetClip(AudioMgr.GetClip("background"));
+            int backgroundClipId = BackgroundClipId;
+            while(backgroundClipId == BackgroundClipId) {
+                backgroundClipId = RandomGenerator.GetRandomInt(1, GameConfig.BackgroundMusicNumber + 1);
+            }
+            BackgroundClipId = backgroundClipId;
+            audioSource.SetClip(AudioMgr.GetClip("background"+ backgroundClipId));
             audioSource.Loop = true;
             audioSource.Play();
         }

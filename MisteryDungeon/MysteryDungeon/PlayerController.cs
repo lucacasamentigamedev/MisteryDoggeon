@@ -4,6 +4,7 @@ using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 using System;
 using System.Collections.Generic;
+using static Aiv.SearchTree;
 
 namespace MisteryDungeon.MysteryDungeon {
     public class PlayerController : UserComponent {
@@ -11,7 +12,8 @@ namespace MisteryDungeon.MysteryDungeon {
         //pathfinding
         private MovementGrid grid;
         private List<Vector2> path = new List<Vector2>();
-        private SearchTree.AStarSearchProgress<MovementGrid.GridMovementState> searchProgress = null;
+        private AStarSearchProgress<MovementGrid.GridMovementState> searchProgress = null;
+        private Result<MovementGrid.GridMovementState>? partial;
 
         //ref
         private Rigidbody rigidbody;
@@ -20,19 +22,17 @@ namespace MisteryDungeon.MysteryDungeon {
         //working var
         private float moveSpeed;
         private bool isMoving;
-        private float tileUnitWidth;
-        private float tileUnitHeight;
-        private int mapColumns;
-        private int mapRows;
+        private string moveAction;
+        bool considerX;
+        bool considerY;
+        Vector2 startingCell;
+        Vector2 targetCell;
+        Vector2 direction;
 
-        public PlayerController(GameObject owner, MovementGrid grid, float moveSpeed) : base(owner) {
+        public PlayerController(GameObject owner, MovementGrid grid, float moveSpeed, string moveAction) : base(owner) {
             this.grid = grid;
             this.moveSpeed = moveSpeed;
-            tileUnitWidth = TiledMapMgr.TileUnitWidth;
-            tileUnitHeight = TiledMapMgr.TileUnitHeight;
-            mapColumns = TiledMapMgr.MapColumns;
-            mapRows = TiledMapMgr.MapRows;
-            isMoving = false;
+            this.moveAction = moveAction;
         }
 
         public override void Awake() {
@@ -41,75 +41,64 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public override void Update() {
-            if (Input.GetUserButtonDown("Move") && !isMoving) {
-                PerformPathfinding();
-            }
-            if (searchProgress != null && !isMoving) {
-                var result = searchProgress.Step(30);
-                if (result.HasValue) {
-                    path.Clear();
-                    foreach (var step in result.Value.Steps) {
-                        path.Add(new Vector2(
-                            ((Game.Win.OrthoWidth * step.X) / mapRows) + (tileUnitWidth / 2),
-                            ((Game.Win.OrthoHeight * step.Y) / mapColumns) + (tileUnitHeight / 2)
-                        ));
-                    }
-                    searchProgress = null;
-                    EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(PrintPath()));
-                    if (path.Count <= 0) {
-                        //click on wall or obstacle
-                        EventManager.CastEvent(EventList.PathUnreachable, EventArgsFactory.PathUnreachableFactory());
-                        StopMovement(Vector2.Zero);
-                    } else {
-                        isMoving = true;
-                    };
-                }
-            } else {
-                if (path.Count <= 0) return;
-                Vector2 direction = (path[0] - transform.Position);
-                SetCLip(GetCLipAnimationName(rigidbody.Velocity, true));
-                if (path.Count == 1) {
-                    rigidbody.Velocity = direction.Normalized() * moveSpeed;
-                } else if (path.Count > 1) {
-                    if ((path[0] - transform.Position).Length < 0.1f) {
-                        path.RemoveAt(0);
-                    }
-                    rigidbody.Velocity = (path[0] - transform.Position).Normalized() * moveSpeed;
-                } else {
-                    StopMovement(rigidbody.Velocity);
-                }
-                if ((path[0] - transform.Position).Length <= 0.1f) {
-                    StopMovement(rigidbody.Velocity);
-                }
-            }
+            if (Input.GetUserButtonDown(moveAction) && !isMoving) PerformPathfinding();
+            if (searchProgress != null && !isMoving) PerformStep();
+            else PerformMovement();
         }
 
         public void PerformPathfinding() {
-            Vector2 startingCell = new Vector2(
-                (int)Math.Ceiling(transform.Position.X / tileUnitWidth) - 1,
-                (int)Math.Ceiling(transform.Position.Y / tileUnitHeight) - 1
+            startingCell = new Vector2(
+                (int)Math.Ceiling(transform.Position.X / TiledMapMgr.TileUnitWidth) - 1,
+                (int)Math.Ceiling(transform.Position.Y / TiledMapMgr.TileUnitHeight) - 1
             );
-            Vector2 targetCell = new Vector2(
-                (int)Math.Ceiling(Game.Win.MousePosition.X / tileUnitWidth) - 1,
-                (int)Math.Ceiling(Game.Win.MousePosition.Y / tileUnitHeight) - 1
+            targetCell = new Vector2(
+                (int)Math.Ceiling(Game.Win.MousePosition.X / TiledMapMgr.TileUnitWidth) - 1,
+                (int)Math.Ceiling(Game.Win.MousePosition.Y / TiledMapMgr.TileUnitHeight) - 1
             );
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Cella inizio = " + startingCell.ToString()));
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Cella fine = " + targetCell.ToString()));
             searchProgress = grid.FindPathProgressive(startingCell, targetCell);
         }
 
-        public string PrintPath() {
-            string final = "";
-            if(path.Count > 0) {
-                final += "Percorso: ";
-                foreach (var point in path) {
-                    final += "(" + point.X + "," + point.Y + ") ";
+        public void PerformStep() {
+            partial = searchProgress.Step(30);
+            if (partial.HasValue) {
+                path.Clear();
+                foreach (var step in partial.Value.Steps) {
+                    path.Add(new Vector2(
+                        ((Game.Win.OrthoWidth * step.X) / TiledMapMgr.MapRows) + (TiledMapMgr.TileUnitWidth / 2),
+                        ((Game.Win.OrthoHeight * step.Y) / TiledMapMgr.MapColumns) + (TiledMapMgr.TileUnitHeight / 2)
+                    ));
                 }
-                final += "\n";
-            } else {
-                final += "Nessun percorso disponibile\n";
+                searchProgress = null;
+                EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(MovementGridMgr.PrintPathfindingPath(path)));
+                if (path.Count <= 0) {
+                    //click on wall or obstacle
+                    EventManager.CastEvent(EventList.PathUnreachable, EventArgsFactory.PathUnreachableFactory());
+                    StopMovement(Vector2.Zero);
+                } else {
+                    isMoving = true;
+                };
             }
-            return final;
+        }
+
+        public void PerformMovement() {
+            if (path.Count <= 0) return;
+            direction = (path[0] - transform.Position);
+            SetCLip(GetCLipAnimationName(rigidbody.Velocity, true));
+            if (path.Count == 1) {
+                rigidbody.Velocity = direction.Normalized() * moveSpeed;
+            } else if (path.Count > 1) {
+                if ((path[0] - transform.Position).Length < 0.1f) {
+                    path.RemoveAt(0);
+                }
+                rigidbody.Velocity = (path[0] - transform.Position).Normalized() * moveSpeed;
+            } else {
+                StopMovement(rigidbody.Velocity);
+            }
+            if ((path[0] - transform.Position).Length <= 0.1f) {
+                StopMovement(rigidbody.Velocity);
+            }
         }
 
         private void StopMovement(Vector2 direction) {
@@ -187,8 +176,8 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public string GetCLipAnimationName(Vector2 direction, bool walk) {
             if (direction == Vector2.Zero) return animator.CurrentClip.AnimationName;
-            bool considerX = false;
-            bool considerY = false;
+            considerX = false;
+            considerY = false;
             if(Math.Abs(direction.X) > Math.Abs(direction.Y)) considerX = true;
             else considerY = true;
             if (considerX && direction.X < 0) return walk ? "walkingLeft" : "idleLeft";

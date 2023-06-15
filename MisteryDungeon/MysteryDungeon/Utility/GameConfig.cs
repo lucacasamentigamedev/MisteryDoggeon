@@ -7,5 +7,9 @@
         public static int RoomsNumber {
             get { return roomsNumber; }
         }
+        private static int backgroundMusicNumber = 10;
+        public static int BackgroundMusicNumber {
+            get { return backgroundMusicNumber; }
+        }
     }
 }

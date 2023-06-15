@@ -202,7 +202,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             SpriteRenderer sr = SpriteRenderer.Factory(go, "player", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width, TiledMapMgr.TileUnitHeight / sr.Height);
-            go.AddComponent<PlayerController>(MovementGridMgr.GetRoomGrid(TiledMapMgr.RoomId), 5f);
+            go.AddComponent<PlayerController>(MovementGridMgr.GetRoomGrid(TiledMapMgr.RoomId), 5f, "Move");
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Player;
             rb.AddCollisionType((uint)RigidbodyType.Door);

@@ -1,6 +1,8 @@
 ﻿using Aiv.Fast2D.Component;
 using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
+using System.Collections.Generic;
+using System.IO;
 using static MisteryDungeon.AivAlgo.Pathfinding.MovementGrid;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -34,7 +36,7 @@ namespace MisteryDungeon.MysteryDungeon {
             final += "\n";
             final += "Mappa pathfinding\n";
             final += "\n";
-            MovementGrid grid = MovementGridMgr.GetRoomGrid(roomId);
+            MovementGrid grid = GetRoomGrid(roomId);
             for (int x = 0; x < grid.Map.GetLength(0); ++x) {
                 for (int y = 0; y < grid.Map.GetLength(1); ++y) {
                     final += (int)grid.Map[y, x] + " ";
@@ -42,6 +44,20 @@ namespace MisteryDungeon.MysteryDungeon {
                 final += "\n";
             }
             final += "\n";
+            return final;
+        }
+
+        public static string PrintPathfindingPath(List<Vector2> path) {
+            string final = "";
+            if (path.Count > 0) {
+                final += "Percorso: ";
+                foreach (var point in path) {
+                    final += "(" + point.X + "," + point.Y + ") ";
+                }
+                final += "\n";
+            } else {
+                final += "Nessun percorso disponibile\n";
+            }
             return final;
         }
 
