@@ -1,6 +1,8 @@
 ﻿using Aiv.Fast2D.Component;
+using Aiv.Fast2D.Component.UI;
 using Aiv.Tiled;
 using MisteryDungeon.AivAlgo.Pathfinding;
+using MisteryDungeon.MysteryDungeon.Mgr;
 using MisteryDungeon.MysteryDungeon.Utility.Tiled;
 using OpenTK;
 using System;
@@ -20,64 +22,64 @@ namespace MisteryDungeon.MysteryDungeon {
         public static float TilePixelHeight { get; set; }
         public static int MapRows { get; set; }
         public static int MapColumns { get; set; }
-        private static int backgroundClipId = -1;
         public static int BackgroundClipId { get; set; }
 
         static TiledMapMgr() {
-            CreateMapArray();
             LoadTiledObjectFactories();
-        }
-
-        private static void CreateMapArray() {
-            maps = new Map[GameConfig.RoomsNumber];
-            for (int i = 0; i < maps.Length; i++) {
-                maps[i] = null;
-            }
         }
 
         private static void LoadTiledObjectFactories() {
             tiledObjectsFactories = new Dictionary<string, Action<Aiv.Tiled.Object>>();
-            tiledObjectsFactories["Obstacle"] = TiledObjectFactory.CreateObstacle;
-            tiledObjectsFactories["Spines"] = TiledObjectFactory.CreateSpines;
-            tiledObjectsFactories["PlatformButton"] = TiledObjectFactory.CreatePlatformButton;
-            tiledObjectsFactories["Gate"] = TiledObjectFactory.CreateGate;
-            tiledObjectsFactories["Door"] = TiledObjectFactory.CreateDoor;
-            tiledObjectsFactories["Key"] = TiledObjectFactory.CreateKey;
-            tiledObjectsFactories["SpawnPoint"] = TiledObjectFactory.CreateSpawnPoint;
-            tiledObjectsFactories["Weapon"] = TiledObjectFactory.CreateWeapon;
-            tiledObjectsFactories["BossController"] = TiledObjectFactory.CreateBoss;
-            tiledObjectsFactories["PlayerController"] = TiledObjectFactory.CreatePlayer;
+            tiledObjectsFactories["Obstacle"] = TiledObjectFactoryMgr.CreateObstacle;
+            tiledObjectsFactories["Spines"] = TiledObjectFactoryMgr.CreateSpines;
+            tiledObjectsFactories["PlatformButton"] = TiledObjectFactoryMgr.CreatePlatformButton;
+            tiledObjectsFactories["Gate"] = TiledObjectFactoryMgr.CreateGate;
+            tiledObjectsFactories["Door"] = TiledObjectFactoryMgr.CreateDoor;
+            tiledObjectsFactories["Key"] = TiledObjectFactoryMgr.CreateKey;
+            tiledObjectsFactories["SpawnPoint"] = TiledObjectFactoryMgr.CreateSpawnPoint;
+            tiledObjectsFactories["Weapon"] = TiledObjectFactoryMgr.CreateWeapon;
+            tiledObjectsFactories["BossController"] = TiledObjectFactoryMgr.CreateBoss;
+            tiledObjectsFactories["PlayerController"] = TiledObjectFactoryMgr.CreatePlayer;
+            tiledObjectsFactories["MemoryCard"] = TiledObjectFactoryMgr.CreateMemoryCard;
         }
 
         public static void CreateMap(int id) {
             RoomId = id;
-            if (maps[RoomId] == null) maps[id] = new Map("Assets/Tiled/Room" + RoomId + ".tmx");
-            TileUnitWidth = (float)Game.Win.OrthoWidth / maps[id].Width;
-            TileUnitHeight = (float)Game.Win.OrthoHeight / maps[id].Height;
-            TilePixelWidth = maps[id].TileWidth;
-            TilePixelHeight = maps[id].TileHeight;
-            MapRows = maps[id].Width;
-            MapColumns = maps[id].Height;
-            CreatePathfindingMap(maps[id].Layers);
+            LoadTiledMap();
+            CreatePathfindingMap(maps[id].Layers, "Collisions");
             CreateBackground(maps[id].Layers);
             CreateObjectTiles(maps[id].ObjectGroups);
             CreateBulletMgr();
             CreateSFXMgr();
             CreateBackgroundMusic();
-            GameStats.PreviousRoom = GameStats.ActualRoom;
-            GameStats.ActualRoom = RoomId;
+            CreatePauseUI();
+            CreateLoadingUI();
+            GameStatsMgr.PreviousRoom = GameStatsMgr.ActualRoom;
+            GameStatsMgr.ActualRoom = RoomId;
         }
 
-        private static void CreatePathfindingMap(List<Layer> layers) {
-            foreach (Layer layer in layers) {
-                if (layer.Name != "Collisions") continue;
-                if (MovementGridMgr.GetRoomGrid(RoomId) != null) {
-                    EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Mappa stanza " + RoomId + " esistente, uso quella"));
-                    return;
-                }
+        private static void LoadTiledMap() {
+            if (maps[RoomId] == null) {
+                maps[RoomId] = new Map("Assets/Tiled/Room" + RoomId + ".tmx");
+            }
+            TileUnitWidth = (float)Game.Win.OrthoWidth / maps[RoomId].Width;
+            TileUnitHeight = (float)Game.Win.OrthoHeight / maps[RoomId].Height;
+            TilePixelWidth = maps[RoomId].TileWidth;
+            TilePixelHeight = maps[RoomId].TileHeight;
+            MapRows = maps[RoomId].Width;
+            MapColumns = maps[RoomId].Height;
+        }
+
+        private static void CreatePathfindingMap(List<Layer> layers, string collisionLayerName) {
+            if (MovementGridMgr.GetRoomGrid(RoomId) != null) {
+                EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Mappa pathfinding stanza " + RoomId + " esistente, uso quella"));
+            } else {
                 EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Mappa stanza " + RoomId + " non presente, la creo ex novo"));
-                MovementGridMgr.SetRoomGrid(RoomId, new MovementGrid(MapRows, MapColumns, layer));
-                EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(MovementGridMgr.PrintMovementGrid(RoomId)));
+                foreach (Layer layer in layers) {
+                    if (layer.Name != collisionLayerName) continue;
+                    MovementGridMgr.SetRoomGrid(RoomId, new MovementGrid(MapRows, MapColumns, layer));
+                    EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(MovementGridMgr.PrintMovementGrid(RoomId)));
+                }
             }
         }
 
@@ -149,9 +151,10 @@ namespace MisteryDungeon.MysteryDungeon {
         private static void CreateBackgroundMusic() {
             GameObject gameLogic = new GameObject("BackgroundMusic", Vector2.Zero);
             AudioSourceComponent audioSource = gameLogic.AddComponent<AudioSourceComponent>();
+            gameLogic.AddComponent<BackgroundMusicLogic>();
             int backgroundClipId = BackgroundClipId;
             while(backgroundClipId == BackgroundClipId) {
-                backgroundClipId = RandomGenerator.GetRandomInt(1, GameConfig.BackgroundMusicNumber + 1);
+                backgroundClipId = RandomGenerator.GetRandomInt(1, GameConfigMgr.BackgroundMusicNumber + 1);
             }
             BackgroundClipId = backgroundClipId;
             audioSource.SetClip(AudioMgr.GetClip("background"+ backgroundClipId));
@@ -159,8 +162,46 @@ namespace MisteryDungeon.MysteryDungeon {
             audioSource.Play();
         }
 
+        private static void CreatePauseUI() {
+            Font stdFont = FontMgr.GetFont("stdFont");
+            GameObject pauseBackground = new GameObject("PauseBackground", Vector2.Zero);
+            pauseBackground.transform.Scale = new Vector2(3, 3);
+            pauseBackground.AddComponent(SpriteRenderer.Factory(pauseBackground, "blackScreen", Vector2.Zero, DrawLayer.GUI));
+            SpriteRenderer sr = pauseBackground.GetComponent<SpriteRenderer>();
+            sr.Sprite.SetMultiplyTint(0, 0, 0, 0.7f);
+            sr.Camera = CameraMgr.GetCamera("GUI");
+            GameObject pauseWrite = new GameObject("PauseWrite", new Vector2(Game.Win.OrthoWidth * 0.5f - Game.PixelsToUnit(stdFont.CharacterWidth) * 2.5f * 2, Game.Win.OrthoHeight * 0.5f));
+            TextBox tb = pauseWrite.AddComponent<TextBox>(stdFont, 5, Vector2.One * 2);
+            tb.SetText("Pause");
+            tb.Camera = CameraMgr.GetCamera("GUI");
+            GameObject pauseLogic = new GameObject("PauseLogic", Vector2.Zero);
+            pauseLogic.AddComponent<PauseLogic>(new string[] { "PauseBackground", "PauseWrite" }, "Pause");
+        }
+
+        public static void CreateLoadingUI() {
+            GameObject load = new GameObject("Loading", new Vector2(Game.Win.OrthoWidth / 2, Game.Win.OrthoHeight / 2));
+            SpriteRenderer sr = SpriteRenderer.Factory(load, "loading", Vector2.One * 0.5f, DrawLayer.GUI);
+            sr.Enabled = false;
+            load.transform.Scale = new Vector2(Game.Win.OrthoWidth / sr.Width / 1.5f, Game.Win.OrthoHeight / sr.Width / 1.5f);
+            load.AddComponent(sr);
+            load.AddComponent<LoadingLogic>();
+        }
+
+        public static void SetMap(Map map, int index) {
+            maps[index] = map;
+        }
+
         public static Map GetMap(int RoomId) {
             return maps[RoomId];
         }
+
+        public static void ResetMaps() {
+            maps = new Map[GameConfigMgr.RoomsNumber];
+            for (int i = 0; i < maps.Length; i++) {
+                maps[i] = null;
+            }
+        }
+
+        public static void LoadMaps() { }
     }
 }

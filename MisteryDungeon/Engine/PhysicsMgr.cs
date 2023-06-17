@@ -14,7 +14,8 @@ namespace Aiv.Fast2D.Component {
         SpawnPoint = 256,
         Wall = 512,
         Boss = 1024,
-        EnemyBullet = 2048
+        EnemyBullet = 2048,
+        MemoryCard = 4096
     }
 
     public static class PhysicsMgr {

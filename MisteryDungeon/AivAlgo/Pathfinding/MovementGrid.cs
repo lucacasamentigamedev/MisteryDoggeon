@@ -47,40 +47,54 @@ namespace MisteryDungeon.AivAlgo.Pathfinding {
             }
         }
 
-        public EGridTile[,] Map;
+        public EGridTile[,] map;
+
+        public int[][] Map {
+            get {
+                int[][] row = new int[map.GetLength(0)][];
+                for (int i = 0; i < row.Length; i++) {
+                    int[] column = new int[map.GetLength(1)];
+                    for (int j = 0; j < column.Length; j++) {
+                        column[j] = (int)map[j, i];
+                    }
+                    row[i] = column;
+                }
+                return row;
+            }
+        }
 
         public MovementGrid(int width, int height) {
             System.Random rnd = new System.Random();
-            Map = new EGridTile[width, height];
-            for (int x = 0; x < Map.GetLength(0); ++x) {
-                for (int y = 0; y < Map.GetLength(1); ++y) {
-                    Map[x, y] = rnd.NextDouble() < 0.8 ? EGridTile.Floor : EGridTile.Wall;
+            map = new EGridTile[width, height];
+            for (int x = 0; x < map.GetLength(0); ++x) {
+                for (int y = 0; y < map.GetLength(1); ++y) {
+                    map[x, y] = rnd.NextDouble() < 0.8 ? EGridTile.Floor : EGridTile.Wall;
                 }
             }
         }
         
         public MovementGrid(int width, int height, Layer collisionLayer) {
-            Map = new EGridTile[width, height];
-            for (int x = 0; x < Map.GetLength(0); ++x) {
-                for (int y = 0; y < Map.GetLength(1); ++y) {
+            map = new EGridTile[width, height];
+            for (int x = 0; x < map.GetLength(0); ++x) {
+                for (int y = 0; y < map.GetLength(1); ++y) {
                     //237 is the gid of collision tile
-                    Map[x, y] = collisionLayer.Tiles[x, y].Gid == 237 ? EGridTile.Wall : EGridTile.Floor;
+                    map[x, y] = collisionLayer.Tiles[x, y].Gid == 237 ? EGridTile.Wall : EGridTile.Floor;
                 }
             }
         }
 
         public SearchTree.AStarSearchProgress<GridMovementState> FindPathProgressive(Vector2 from, Vector2 to) {
             return SearchTree.MakeAStarSerachProgress(
-                new GridMovementState { X = (int)(from.X), Y = (int)(from.Y), map = Map },
-                new GridMovementState { X = (int)(to.X), Y = (int)(to.Y), map = Map });
+                new GridMovementState { X = (int)(from.X), Y = (int)(from.Y), map = map },
+                new GridMovementState { X = (int)(to.X), Y = (int)(to.Y), map = map });
         }
 
         public List<Vector2> FindPath(Vector2 from, Vector2 to) {
             List<Vector2> result = new List<Vector2>();
 
             var path = SearchTree.AStarSearch(
-                new GridMovementState { X = (int)(from.X), Y = (int)(from.Y), map = Map },
-                new GridMovementState { X = (int)(to.X), Y = (int)(to.Y), map = Map });
+                new GridMovementState { X = (int)(from.X), Y = (int)(from.Y), map = map },
+                new GridMovementState { X = (int)(to.X), Y = (int)(to.Y), map = map });
 
             foreach (var step in path.Steps) {
                 result.Add(new Vector2(step.X, step.Y));
@@ -90,7 +104,7 @@ namespace MisteryDungeon.AivAlgo.Pathfinding {
         }
 
         public EGridTile GetGridType(Vector2 cell) {
-            return Map[(int)cell.X, (int)cell.Y];
+            return map[(int)cell.X, (int)cell.Y];
         }
     }
 }

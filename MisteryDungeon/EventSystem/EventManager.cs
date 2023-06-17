@@ -10,6 +10,7 @@ namespace Aiv.Fast2D.Component {
         LOG_Puzzle,
         LOG_EnemyHorde,
         LOG_Boss,
+        LOG_MemoryCard,
         // Game events
         EnemySpawned,
         EnemyDestroyed,
@@ -30,7 +31,14 @@ namespace Aiv.Fast2D.Component {
         EnemyTakesDamage,
         EnemyDead,
         BossDefeated,
-        HordeDefeated
+        HordeDefeated,
+        GamePause,
+        GamePlay,
+        NewGame,
+        SaveGame,
+        LoadGame,
+        StartLoading,
+        EndLoading
     }
 
     public static class EventManager {

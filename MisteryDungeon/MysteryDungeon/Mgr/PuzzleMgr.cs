@@ -37,7 +37,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public override void Update() {
-            if (GameStats.PuzzleResolved) return;
+            if (GameStatsMgr.PuzzleResolved) return;
             if (!puzzleReady) currentWaitingResetPuzzleTimer -= Game.DeltaTime;
             if (currentWaitingResetPuzzleTimer > 0) return;
             if (!puzzleReady) {
@@ -80,7 +80,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void OnButtonPressed(EventArgs message) {
-            if (GameStats.PuzzleResolved || !puzzleReady) return;
+            if (GameStatsMgr.PuzzleResolved || !puzzleReady) return;
             EventArgsFactory.PlatformButtonPressedParser(message, out PlatformButton platformButton);
             if (platformButton.Pressed) return;
             //test console.write
@@ -100,7 +100,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if(buttonToPress == TotalButtons) {
                 EventManager.CastEvent(EventList.SequenceCompleted, EventArgsFactory.SequenceCompletedFactory());
                 EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Puzzle risolto"));
-                GameStats.PuzzleResolved = true;
+                GameStatsMgr.PuzzleResolved = true;
                 foreach (Vector2 v in objectsToActiveAfterPuzzleResolved) {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
                     RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);

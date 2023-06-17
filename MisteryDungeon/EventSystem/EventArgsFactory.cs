@@ -135,5 +135,47 @@ namespace Aiv.Fast2D.Component {
         public static EventArgs HordeDefeatedFactory() {
             return new EventArgs();
         }
+
+        public static void GamePlayParser() { }
+
+        public static EventArgs GamePlayFactory() {
+            return new EventArgs();
+        }
+
+        public static void GamePauseParser() { }
+
+        public static EventArgs GamePauseFactory() {
+            return new EventArgs();
+        }
+
+        public static void NewGameParser() { }
+
+        public static EventArgs NewGameFactory() {
+            return new EventArgs();
+        }
+
+        public static void LoadGameParser() { }
+
+        public static EventArgs LoadGameFactory() {
+            return new EventArgs();
+        }
+
+        public static void SaveGameParser() { }
+
+        public static EventArgs SaveGameFactory() {
+            return new EventArgs();
+        }
+
+        public static void StartLoadingParser() { }
+
+        public static EventArgs StartLoadingFactory() {
+            return new EventArgs();
+        }
+
+        public static void EndLoadingParser() { }
+
+        public static EventArgs EndLoadingFactory() {
+            return new EventArgs();
+        }
     }
 }

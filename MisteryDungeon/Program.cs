@@ -1,4 +1,6 @@
-﻿using Aiv.Fast2D.Component;
+﻿using Aiv.Fast2D;
+using Aiv.Fast2D.Component;
+using MisteryDungeon.Scenes;
 
 namespace MisteryDungeon.MysteryDungeon {
 
@@ -14,7 +16,8 @@ namespace MisteryDungeon.MysteryDungeon {
         SpawnPoint,
         Wall,
         Boss,
-        EnemyBullet
+        EnemyBullet,
+        MemoryCard
     }
 
     public enum AudioLayer {
@@ -31,9 +34,26 @@ namespace MisteryDungeon.MysteryDungeon {
             Input.AddUserButton("Shoot", new ButtonMatch[] {
                 new MouseButtonMatch(MouseButton.RightMouse)
             });
+            Input.AddUserButton("Pause", new ButtonMatch[] {
+                new KeyButtonMatch(KeyCode.Esc)
+            });
+            Input.AddUserButton("UI_Confirm", new ButtonMatch[] {
+                new KeyButtonMatch(KeyCode.Return),
+                new KeyButtonMatch(KeyCode.Y)
+            });
+            Input.AddUserButton("UI_Cancel", new ButtonMatch[] {
+                new KeyButtonMatch(KeyCode.Esc),
+                new KeyButtonMatch(KeyCode.N)
+            });
+            Input.AddUserButton("UI_1", new ButtonMatch[] {
+                new KeyButtonMatch(KeyCode.Num1)
+            });
+            Input.AddUserButton("UI_2", new ButtonMatch[] {
+                new KeyButtonMatch(KeyCode.Num2)
+            });
             AudioMgr.AddVolume((int)AudioLayer.music, 0.7f); 
             AudioMgr.AddVolume((int)AudioLayer.sfx, 0.5f);
-            Game.Init("Mystery Dungeon", 720, 720, new Room_0(), 720, 10, 500);
+            Game.Init("Mystery Dungeon", 720, 720, new MenuScene(), 720, 10, 500);
         }
     }
 }

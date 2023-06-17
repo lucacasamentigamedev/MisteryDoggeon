@@ -5,7 +5,7 @@ using OpenTK;
 using System.Collections.Generic;
 
 namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
-    static class TiledObjectFactory {
+    static class TiledObjectFactoryMgr {
         public static void CreateObstacle(Object obj) {
             Vector2 pos = new Vector2(
                 ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
@@ -29,7 +29,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             rb.Type = RigidbodyType.Obstacle;
             Collider c = ColliderFactory.CreateHalfUnscaledBoxFor(go);
             go.AddComponent(c);
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
@@ -64,7 +64,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.PlatformButton;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
@@ -99,13 +99,13 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Door;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         public static void CreateKey(Object obj) {
-            if (GameStats.collectedKeys.Contains(obj.Id)) return;
+            if (GameStatsMgr.CollectedKeys.Contains(obj.Id)) return;
             Vector2 pos = new Vector2(
                 ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitHeight - (TiledMapMgr.TileUnitHeight / 2)
@@ -120,13 +120,13 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Key;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         public static void CreateSpawnPoint(Object obj) {
-            if (GameStats.HordeDefeated) return;
+            if (GameStatsMgr.HordeDefeated) return;
             Vector2 pos = new Vector2(
                 ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitHeight - (TiledMapMgr.TileUnitHeight / 2)
@@ -151,7 +151,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.SpawnPoint;
             go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             go.IsActive = false;
             go.AddComponent<HealthModule>(spawnPointHealth, spawnPointHealth, new Vector2(-0.5f, -0.5f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
@@ -160,8 +160,8 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
         public static void CreateWeapon(Object obj) {
             int weaponType = int.Parse(getPropertyValueByName("weaponType", obj.Properties));
             string weaponImage = getPropertyValueByName("weaponImage", obj.Properties);
-            if (weaponType == (int)WeaponType.Bow && GameStats.ActiveWeapon !=
-                null && (int)GameStats.ActiveWeapon.WeaponType == weaponType) return;
+            if (weaponType == (int)WeaponType.Bow && GameStatsMgr.ActiveWeapon !=
+                null && (int)GameStatsMgr.ActiveWeapon.WeaponType == weaponType) return;
             Vector2 pos = new Vector2(
                 ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitHeight - (TiledMapMgr.TileUnitHeight / 2)
@@ -174,7 +174,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Weapon;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             BulletType bulletType = (BulletType)int.Parse(getPropertyValueByName("bulletType", obj.Properties));
             float reloadTime = float.Parse(getPropertyValueByName("reloadTime", obj.Properties));
             float offsetShootX = float.Parse(getPropertyValueByName("offsetShootX", obj.Properties));
@@ -186,7 +186,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
 
         public static void CreatePlayer(Object obj) {
             int fromRoom = int.Parse(getPropertyValueByName("fromRoom", obj.Properties));
-            if (GameStats.ActualRoom != fromRoom) return;
+            if (GameStatsMgr.ActualRoom != fromRoom) return;
 
             Vector2 cellIndex = new Vector2(
                 (float)obj.X / TiledMapMgr.TilePixelWidth,
@@ -202,7 +202,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             SpriteRenderer sr = SpriteRenderer.Factory(go, "player", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width, TiledMapMgr.TileUnitHeight / sr.Height);
-            go.AddComponent<PlayerController>(MovementGridMgr.GetRoomGrid(TiledMapMgr.RoomId), 5f, "Move");
+            go.AddComponent<PlayerController>(MovementGridMgr.GetRoomGrid(TiledMapMgr.RoomId), 5f, "Move", 3f);
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Player;
             rb.AddCollisionType((uint)RigidbodyType.Door);
@@ -211,21 +211,22 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             rb.AddCollisionType((uint)RigidbodyType.Key);
             rb.AddCollisionType((uint)RigidbodyType.Enemy);
             rb.AddCollisionType((uint)RigidbodyType.EnemyBullet);
+            rb.AddCollisionType((uint)RigidbodyType.MemoryCard);
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             CreatePlayerAnimations(go, sheet);
             ShootModule sm = go.AddComponent<ShootModule>("Shoot", false);
-            if (GameStats.PlayerCanShoot) {
-                sm.Enabled = GameStats.PlayerCanShoot;
-                Weapon weapon = GameStats.ActiveWeapon;
+            if (GameStatsMgr.PlayerCanShoot) {
+                sm.Enabled = GameStatsMgr.PlayerCanShoot;
+                Weapon weapon = GameStatsMgr.ActiveWeapon;
                 sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
             }
-            go.AddComponent<HealthModule>(GameStats.PlayerHealth, GameStats.maxPlayerHealth, new Vector2(-0.5f, -0.5f));
+            go.AddComponent<HealthModule>(GameStatsMgr.PlayerHealth, GameStatsMgr.maxPlayerHealth, new Vector2(-0.5f, -0.5f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
         }
 
         public static void CreateBoss(Object obj) {
-            if (GameStats.BossDefeated) return;
+            if (GameStatsMgr.BossDefeated) return;
             Vector2 cellIndex = new Vector2(
                 (float)obj.X / TiledMapMgr.TilePixelWidth,
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) - 1
@@ -252,7 +253,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Boss;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             CreateBossAnimations(go, sheet);
             ShootModule sm = go.AddComponent<ShootModule>("", true);
             Weapon weapon = new Weapon(go, WeaponType.Blaster, (BulletType)bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY));
@@ -302,9 +303,6 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
         }
 
         public static void CreateBossAnimations(GameObject go, Sheet sheet) {
-            SheetClip idle = new SheetClip(
-                sheet, "idle", new int[] { 2 }, true, 10
-            );
             SheetClip walking = new SheetClip(
                 sheet, "walking", new int[] { 0, 1, 2, 3, 4 }, true, 7
             );
@@ -312,9 +310,27 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
                 sheet, "death", new int[] { 5, 6, 7 }, false, 7
             );
             SheetAnimator animator = go.AddComponent<SheetAnimator>(go.GetComponent<SpriteRenderer>());
-            animator.AddClip(idle);
             animator.AddClip(walking);
             animator.AddClip(death);
+        }
+
+        public static void CreateMemoryCard(Object obj) {
+            Vector2 pos = new Vector2(
+                ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
+                ((float)obj.Y / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitHeight - (TiledMapMgr.TileUnitHeight / 2)
+            );
+            GameObject go = new GameObject("Object_" + TiledMapMgr.RoomId + "_" + obj.Id, pos);
+            go.Tag = (int)GameObjectTag.MemoryCard;
+            go.AddComponent<MemoryCard>(obj.Id, TiledMapMgr.RoomId);
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "memoryCard", Vector2.One * 0.5f, DrawLayer.Middleground);
+            go.AddComponent(sr);
+            go.transform.Scale = new Vector2((TiledMapMgr.TileUnitWidth / sr.Width), (TiledMapMgr.TileUnitHeight / sr.Height));
+            Rigidbody rb = go.AddComponent<Rigidbody>();
+            rb.Type = RigidbodyType.MemoryCard;
+            go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         public static string getPropertyValueByName(string name, List<Property> properties) {

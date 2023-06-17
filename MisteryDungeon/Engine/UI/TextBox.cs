@@ -32,14 +32,15 @@ namespace Aiv.Fast2D.Component.UI {
             DrawMgr.AddItem(this);
         }
 
-        public void SetText (string text) {
+        public void SetText(string text) {
             if (text == currentText) return;
             currentText = text;
             int xIndex = 0;
             float yPos = transform.Position.Y;
             int maxIndex = GetMax();
             for (int i = 0; i < maxIndex; i++) {
-                if (currentText[i].Equals(Environment.NewLine)) {
+                var a = currentText[i];
+                if (currentText[i].Equals('\n')) {
                     yPos += sprite.Height;
                     xIndex = 0;
                     continue;

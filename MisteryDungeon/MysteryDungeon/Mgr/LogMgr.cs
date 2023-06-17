@@ -40,12 +40,22 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
+        private static bool debugMemoryCard;
+        public bool DebugMemoryCard {
+            get { return debugMemoryCard; }
+            set {
+                debugMemoryCard = value;
+                if (debugMemoryCard) EventManager.AddListener(EventList.LOG_MemoryCard, OnConsoleLog);
+            }
+        }
+
         public LogMgr(GameObject owner, bool debugPathfinding = true, bool debugPuzzle = true,
-            bool debugGameObjectCreations = true, bool debugEnemyHorde = true) : base(owner) {
+            bool debugGameObjectCreations = true, bool debugEnemyHorde = true, bool debugMemoryCard = true) : base(owner) {
             DebugPathfinding = debugPathfinding;
             DebugPuzzle = debugPuzzle;
             DebugGameObjectCreations = debugGameObjectCreations;
             DebugEnemyHorde = debugEnemyHorde;
+            DebugMemoryCard = debugMemoryCard;
         }
 
         public override void OnDestroy() {
@@ -53,6 +63,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if(DebugPathfinding) EventManager.RemoveListener(EventList.LOG_Pathfinding, OnConsoleLog);
             if(DebugPuzzle) EventManager.RemoveListener(EventList.LOG_Puzzle, OnConsoleLog);
             if(DebugEnemyHorde) EventManager.RemoveListener(EventList.LOG_EnemyHorde, OnConsoleLog);
+            if(DebugMemoryCard) EventManager.RemoveListener(EventList.LOG_MemoryCard, OnConsoleLog);
         }
 
         public void OnConsoleLog(EventArgs message) {

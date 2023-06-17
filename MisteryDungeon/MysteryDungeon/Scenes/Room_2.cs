@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
+using MisteryDungeon.MysteryDungeon.Mgr;
 using OpenTK;
 
 namespace MisteryDungeon {
@@ -20,6 +21,8 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("healthBarBackground", "Assets/Textures/healthbar_background.png");
             GfxMgr.AddTexture("healthBarForeground", "Assets/Textures/healthbar_foreground.png");
             GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
+            GfxMgr.AddTexture("blackScreen", "Assets/Textures/black_screen.png");
+            GfxMgr.AddTexture("memoryCard", "Assets/Textures/Objects/memory_card.png");
             //Sounds
             AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
             AudioMgr.AddClip("arrowShot", "Assets/Sounds/SFX/arrow_shot.ogg");
@@ -45,6 +48,7 @@ namespace MisteryDungeon {
         public override void InitializeScene() {
             base.InitializeScene();
             CreateLogMgr();
+            CreateMemoryCardMgr();
             CreateHordeMgr();
             CreateMap();
             /******************FIXME: cheat da togliere**************/
@@ -60,8 +64,14 @@ namespace MisteryDungeon {
                 false,  //print pathfinding logs
                 false,  //print puzzle logs
                 false,  //print object creations logs
-                false   //print enemy horde logs
+                false,  //print enemy horde logs
+                true    //print memory card logs
             );
+        }
+
+        private static void CreateMemoryCardMgr() {
+            GameObject memoryCardMgr = new GameObject("MemoryCardMgr", Vector2.Zero);
+            memoryCardMgr.AddComponent<MemoryCardMgr>();
         }
         public void CreateHordeMgr() {
             GameObject go = new GameObject("HordeMgr", Vector2.Zero);

@@ -39,6 +39,33 @@
     <Reference Include="aiv-fast2d, Version=1.0.7820.23607, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Aiv.Fast2D.1.0.4\lib\net48\aiv-fast2d.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.7.0.0\lib\net462\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.7.0.0\lib\net462\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.FileExtensions.7.0.0\lib\net462\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Json.7.0.0\lib\net462\Microsoft.Extensions.Configuration.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.7.0.0\lib\net462\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Physical, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Physical.7.0.0\lib\net462\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.7.0.0\lib\net462\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.7.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="NVorbis, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NVorbis.0.9.1\lib\net45\NVorbis.dll</HintPath>
     </Reference>
@@ -46,7 +73,55 @@
       <HintPath>..\packages\OpenTK.3.2\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=7.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.7.0.3\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -117,36 +192,46 @@
     <Compile Include="Engine\UserComponent.cs" />
     <Compile Include="EventSystem\EventArgsFactory.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
+    <Compile Include="MysteryDungeon\BackgroundMusicLogic.cs" />
     <Compile Include="MysteryDungeon\Controller\BossController.cs" />
     <Compile Include="MysteryDungeon\Bullet.cs" />
+    <Compile Include="MysteryDungeon\MenuLogic.cs" />
+    <Compile Include="MysteryDungeon\LoadingLogic.cs" />
+    <Compile Include="MysteryDungeon\Mgr\MemoryCardMgr.cs" />
+    <Compile Include="MysteryDungeon\RoomObjects\MemoryCard.cs" />
+    <Compile Include="MysteryDungeon\Scenes\GameOverScene.cs" />
+    <Compile Include="MysteryDungeon\Scenes\MenuScene.cs" />
     <Compile Include="MysteryDungeon\Mgr\BulletMgr.cs" />
     <Compile Include="MysteryDungeon\Controller\LittleBlobController.cs" />
     <Compile Include="MysteryDungeon\HealthModule.cs" />
-    <Compile Include="MysteryDungeon\Rooms\Room_3.cs" />
+    <Compile Include="MysteryDungeon\PauseLogic.cs" />
+    <Compile Include="MysteryDungeon\Scenes\NewLoadScene.cs" />
+    <Compile Include="MysteryDungeon\Scenes\Room_3.cs" />
     <Compile Include="MysteryDungeon\Mgr\SFXMgr.cs" />
     <Compile Include="MysteryDungeon\SpawnPoint.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
-    <Compile Include="MysteryDungeon\Utility\Color.cs" />
-    <Compile Include="MysteryDungeon\Utility\GameConfig.cs" />
+    <Compile Include="MysteryDungeon\Mgr\GameConfigMgr.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Key.cs" />
-    <Compile Include="MysteryDungeon\Utility\MovementGridMgr.cs" />
-    <Compile Include="MysteryDungeon\Utility\RoomObjectsMgr.cs" />
-    <Compile Include="MysteryDungeon\Utility\GameStats.cs" />
+    <Compile Include="MysteryDungeon\Mgr\MovementGridMgr.cs" />
+    <Compile Include="MysteryDungeon\Mgr\RoomObjectsMgr.cs" />
+    <Compile Include="MysteryDungeon\Mgr\GameStatsMgr.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\PlatformButton.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Door.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Gate.cs" />
     <Compile Include="MysteryDungeon\Controller\PlayerController.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Obstacle.cs" />
-    <Compile Include="MysteryDungeon\Utility\LogMgr.cs" />
+    <Compile Include="MysteryDungeon\Mgr\LogMgr.cs" />
     <Compile Include="MysteryDungeon\Mgr\PuzzleMgr.cs" />
-    <Compile Include="MysteryDungeon\Rooms\Room_2.cs" />
-    <Compile Include="MysteryDungeon\Rooms\Room_1.cs" />
-    <Compile Include="MysteryDungeon\Rooms\Room_0.cs" />
+    <Compile Include="MysteryDungeon\Scenes\Room_2.cs" />
+    <Compile Include="MysteryDungeon\Scenes\Room_1.cs" />
+    <Compile Include="MysteryDungeon\Scenes\Room_0.cs" />
     <Compile Include="MysteryDungeon\Mgr\HordeMgr.cs" />
-    <Compile Include="MysteryDungeon\Utility\TiledMapMgr.cs" />
+    <Compile Include="MysteryDungeon\Mgr\TiledMapMgr.cs" />
     <Compile Include="MysteryDungeon\ShootModule.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Weapon.cs" />
-    <Compile Include="MysteryDungeon\Utility\TiledObjectFactory.cs" />
+    <Compile Include="MysteryDungeon\Mgr\TiledObjectFactoryMgr.cs" />
+    <Compile Include="MysteryDungeon\Utility\JsonFileUtils.cs" />
+    <Compile Include="MysteryDungeon\Utility\TwoDimensionalIntArrayJsonConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -165,6 +250,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Compile Include="MysteryDungeon\RoomObjects\Spines.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
@@ -216,6 +302,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Sounds\SFX\room_left.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\black_screen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\corgi_background.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Objects\memory_card.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Objects\platform_button.png">

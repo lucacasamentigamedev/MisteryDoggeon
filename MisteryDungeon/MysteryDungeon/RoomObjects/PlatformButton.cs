@@ -20,11 +20,11 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void Awake() {
             spriteRenderer = GetComponent<SpriteRenderer>();
-            spriteRenderer.Width = Game.PixelsToUnit((TiledMapMgr.TilePixelWidth * gameObject.transform.Scale.X));
-            spriteRenderer.Height = Game.PixelsToUnit((TiledMapMgr.TilePixelHeight * gameObject.transform.Scale.Y));
+            spriteRenderer.Width = Game.PixelsToUnit(spriteRenderer.Texture.Width / 2);
+            spriteRenderer.Height = Game.PixelsToUnit(spriteRenderer.Texture.Height);
             buttonWidth = Game.UnitToPixels(spriteRenderer.WidthUnscaled);
-            Pressed = GameStats.PuzzleResolved;
-            ChangeButtonState(GameStats.PuzzleResolved);
+            Pressed = GameStatsMgr.PuzzleResolved;
+            ChangeButtonState(GameStatsMgr.PuzzleResolved);
         }
 
         public void ChangeButtonState(bool pressedState) {

@@ -10,12 +10,11 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private static Dictionary<int, bool>[] roomObjects;
 
-        static RoomObjectsMgr() {
-            roomObjects = new Dictionary<int, bool>[GameConfig.RoomsNumber];
-            for (int i = 0; i < GameConfig.RoomsNumber; i++) {
-                roomObjects[i] = new Dictionary<int, bool>();
-            }
+        public static Dictionary<int, bool>[] RoomObjects {
+            get { return roomObjects; }
         }
+
+        static RoomObjectsMgr() {}
 
         public static bool AddRoomObjectActiveness(int objectId, bool isActive) {
             int roomId = TiledMapMgr.RoomId;
@@ -50,5 +49,14 @@ namespace MisteryDungeon.MysteryDungeon {
             MovementGridMgr.ChangeGridTileType(cellPos, roomId, gridType);
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto " + gridType + " nella cella " + cellPos.ToString()));
         }
+
+        public static void ResetRoomObjects() {
+            roomObjects = new Dictionary<int, bool>[GameConfigMgr.RoomsNumber];
+            for (int i = 0; i < GameConfigMgr.RoomsNumber; i++) {
+                roomObjects[i] = new Dictionary<int, bool>();
+            }
+        }
+
+        public static void LoadRoomObjects() { }
     }
 }

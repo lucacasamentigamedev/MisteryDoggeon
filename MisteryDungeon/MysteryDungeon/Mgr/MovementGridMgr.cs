@@ -2,20 +2,25 @@
 using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
 using System.Collections.Generic;
-using System.IO;
 using static MisteryDungeon.AivAlgo.Pathfinding.MovementGrid;
 
 namespace MisteryDungeon.MysteryDungeon {
+
+    public struct MovementGridToSerialize {
+        public MovementGrid[] Grids { get; set; }  
+        public MovementGridToSerialize(MovementGrid[] Grids) {
+            this.Grids = Grids;
+        }
+    }
+
     static class MovementGridMgr {
 
         private static MovementGrid[] grids;
-
-        static MovementGridMgr() {
-            grids = new MovementGrid[GameConfig.RoomsNumber];
-            for (int i = 0; i < grids.Length; i++) {
-                grids[i] = null;
-            }
+        public static MovementGrid[] Grids {
+            get { return grids;}
+            set { grids = value;}
         }
+        static MovementGridMgr() {}
 
         public static MovementGrid GetRoomGrid(int roomId) {
             return grids[roomId];
@@ -27,7 +32,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public static void ChangeGridTileType(Vector2 pos, int roomId, MovementGrid.EGridTile type) {
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory("Setto " + type + " in stanza " + roomId + " in pos " + pos.ToString()));
-            GetRoomGrid(roomId).Map[(int)pos.X, (int)pos.Y] = type;
+            GetRoomGrid(roomId).map[(int)pos.X, (int)pos.Y] = type;
             EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(PrintMovementGrid(roomId)));
         }
 
@@ -37,9 +42,9 @@ namespace MisteryDungeon.MysteryDungeon {
             final += "Mappa pathfinding\n";
             final += "\n";
             MovementGrid grid = GetRoomGrid(roomId);
-            for (int x = 0; x < grid.Map.GetLength(0); ++x) {
-                for (int y = 0; y < grid.Map.GetLength(1); ++y) {
-                    final += (int)grid.Map[y, x] + " ";
+            for (int x = 0; x < grid.map.GetLength(0); ++x) {
+                for (int y = 0; y < grid.map.GetLength(1); ++y) {
+                    final += (int)grid.map[y, x] + " ";
                 }
                 final += "\n";
             }
@@ -64,5 +69,17 @@ namespace MisteryDungeon.MysteryDungeon {
         public static EGridTile GetGridTile(int roomId, Vector2 cell) {
             return GetRoomGrid(roomId).GetGridType(cell);
         }
+
+        public static void ResetMovementsGrids() {
+            grids = new MovementGrid[GameConfigMgr.RoomsNumber];
+            for (int i = 0; i < grids.Length; i++) {
+                grids[i] = null;
+            }
+        }
+
+        public static MovementGridToSerialize GetMovementsGrids() {
+            return new MovementGridToSerialize(Grids);
+        }
+        public static void LoadMovementsGrids() { }
     }
 }

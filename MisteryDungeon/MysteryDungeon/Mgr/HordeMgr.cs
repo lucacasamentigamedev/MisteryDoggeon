@@ -68,7 +68,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 //orda sconfitta tolgo i gate
                 EventManager.CastEvent(EventList.HordeDefeated, EventArgsFactory.HordeDefeatedFactory());
                 EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Orda sconfitta"));
-                GameStats.HordeDefeated = true;
+                GameStatsMgr.HordeDefeated = true;
                 foreach (Vector2 v in objectsToDisActiveOnHordeDefeated){
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
                     RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
@@ -77,7 +77,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void CheckHordeActivation() {
-            if (GameStats.HordeDefeated || GameStats.ActiveWeapon == null || hordeActive) return;
+            if (GameStatsMgr.HordeDefeated || GameStatsMgr.ActiveWeapon == null || hordeActive) return;
             //attivo gate
             foreach (Vector2 v in objectsToActiveOnHordeStart) {
                 GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;

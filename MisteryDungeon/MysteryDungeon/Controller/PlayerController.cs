@@ -1,5 +1,6 @@
 ﻿using Aiv.Fast2D.Component;
 using MisteryDungeon.AivAlgo.Pathfinding;
+using MisteryDungeon.Scenes;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -18,30 +19,42 @@ namespace MisteryDungeon.MysteryDungeon {
         private Rigidbody rigidbody;
         private SheetAnimator animator;
         private HealthModule healthModule;
+        private ShootModule shootModule;
 
         //working var
         private float moveSpeed;
         private bool isMoving;
         private string moveAction;
+        private float currentDeathTimer;
         bool considerX;
         bool considerY;
+        bool dead;
         Vector2 startingCell;
         Vector2 targetCell;
         Vector2 direction;
 
-        public PlayerController(GameObject owner, MovementGrid grid, float moveSpeed, string moveAction) : base(owner) {
+        public PlayerController(GameObject owner, MovementGrid grid,
+            float moveSpeed, string moveAction, float currentDeathTimer) : base(owner) {
             this.grid = grid;
             this.moveSpeed = moveSpeed;
             this.moveAction = moveAction;
+            this.currentDeathTimer = currentDeathTimer;
         }
 
         public override void Awake() {
             rigidbody = GetComponent<Rigidbody>();
             animator = GetComponent<SheetAnimator>();
             healthModule = GetComponent<HealthModule>();
+            shootModule = GetComponent<ShootModule>();
         }
 
         public override void Update() {
+            if (dead) {
+                currentDeathTimer -= Game.DeltaTime;
+                if (currentDeathTimer > 0) return;
+                Game.TriggerChangeScene(new GameOverScene());
+                return;
+            }
             if (Input.GetUserButtonDown(moveAction) && !isMoving) PerformPathfinding();
             if (searchProgress != null && !isMoving) PerformStep();
             else PerformMovement();
@@ -108,16 +121,21 @@ namespace MisteryDungeon.MysteryDungeon {
             isMoving = false;
         }
 
+        public void ClearPath() {
+            rigidbody.Velocity = Vector2.Zero;
+            path.Clear();
+        }
+
         public override void OnCollide(Collision collisionInfo) {
             switch(collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Door:
                     Door door = collisionInfo.Collider.gameObject.GetComponent<Door>();
-                    if (door.LockedBy >= 0 && !GameStats.collectedKeys.Contains(door.LockedBy)) return;
+                    if (door.LockedBy >= 0 && !GameStatsMgr.CollectedKeys.Contains(door.LockedBy)) return;
+                    EventManager.CastEvent(EventList.StartLoading, EventArgsFactory.StartLoadingFactory());
                     EventManager.CastEvent(EventList.RoomLeft, EventArgsFactory.RoomLeftFactory());
-                    if (!GameStats.FirstDoorPassed) GameStats.FirstDoorPassed = true;
+                    if (!GameStatsMgr.FirstDoorPassed) GameStatsMgr.FirstDoorPassed = true;
                     int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
                     Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
-                    Game.SetLoadingScene();
                     Game.TriggerChangeScene(nextScene);
                     break;
                 case (int)GameObjectTag.PlatformButton:
@@ -128,23 +146,22 @@ namespace MisteryDungeon.MysteryDungeon {
                     EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.
                         ObjectPickedFactory());
                     Weapon weapon = collisionInfo.Collider.gameObject.GetComponent<Weapon>();
-                    GameStats.ActiveWeapon = weapon;
+                    GameStatsMgr.ActiveWeapon = weapon;
                     ShootModule sm = GetComponent<ShootModule>();
                     sm.Enabled = true;
                     sm.SetWeapon( weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot );
-                    if(!GameStats.PlayerCanShoot) GameStats.PlayerCanShoot = true;
+                    if(!GameStatsMgr.PlayerCanShoot) GameStatsMgr.PlayerCanShoot = true;
                     switch(weapon.BulletType) {
                         case BulletType.Arrow:
-                            GameStats.ActiveWeapon = weapon;
+                            GameStatsMgr.ActiveWeapon = weapon;
                             break;
                     }
                     weapon.gameObject.IsActive = false;
                     break;
                 case (int)GameObjectTag.Key:
-                    EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.
-                        ObjectPickedFactory());
+                    EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.ObjectPickedFactory());
                     Key key = collisionInfo.Collider.gameObject.GetComponent<Key>();
-                    GameStats.collectedKeys.Add(key.ID);
+                    GameStatsMgr.CollectedKeys.Add(key.ID);
                     key.gameObject.IsActive = false;
                     break;
                 case (int)GameObjectTag.Enemy:
@@ -163,17 +180,25 @@ namespace MisteryDungeon.MysteryDungeon {
                     if (boss.Dead) break;
                     TakeDamage(healthModule.Health);
                     break;
+                case (int)GameObjectTag.MemoryCard:
+                    EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.ObjectPickedFactory());
+                    EventManager.CastEvent(EventList.SaveGame, EventArgsFactory.SaveGameFactory());
+                    collisionInfo.Collider.gameObject.IsActive = false;
+                    break;
             }
         }
 
         public void TakeDamage(float damage) {
+            if (dead) return;
             EventManager.CastEvent(EventList.PlayerTakesDamage, EventArgsFactory.PlayerTakesDamageFactory());
             if (healthModule.TakeDamage(damage)) {
-                //Finisce il gioco
                 EventManager.CastEvent(EventList.PlayerDead, EventArgsFactory.PlayerDeadFactory());
-                //TODO: schermata di fine gioco
+                animator.ChangeClip("death");
+                dead = true;
+                shootModule.Enabled = false;
+                rigidbody.Velocity = Vector2.Zero;
             } else {
-                GameStats.PlayerHealth -= damage;
+                GameStatsMgr.PlayerHealth -= damage;
             }
         }
 
@@ -192,5 +217,6 @@ namespace MisteryDungeon.MysteryDungeon {
             else if (considerY && direction.Y > 0) return walk ? "walkingDown" : "idleDown";
             else return walk ? "walkingUp" : "idleUp";
         }
+
     }
 }

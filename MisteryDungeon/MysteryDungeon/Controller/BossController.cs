@@ -62,7 +62,7 @@ namespace MisteryDungeon.MysteryDungeon {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
                     RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
                 }
-                GameStats.BossDefeated = true;
+                GameStatsMgr.BossDefeated = true;
                 gameObject.IsActive = false;
                 return;
             }
@@ -73,7 +73,6 @@ namespace MisteryDungeon.MysteryDungeon {
             };
             if (!active) {
                 shootModule.Enabled = true;
-                animator.ChangeClip("walking");
             };
             active = true;
             Vector2 direction = targetTransform.Position - transform.Position;

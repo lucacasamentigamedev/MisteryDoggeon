@@ -47,7 +47,7 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.AddCollisionType((uint)RigidbodyType.Wall);
             rb.AddCollisionType((uint)RigidbodyType.Boss);
             go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
             return go.AddComponent<Bullet>(arrowDamage, BulletType.Arrow, arrowSpeed);
         }
@@ -62,7 +62,7 @@ namespace MisteryDungeon.MysteryDungeon {
             rb.AddCollisionType((uint)RigidbodyType.Player);
             rb.AddCollisionType((uint)RigidbodyType.Wall);
             go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
-            if (GameConfig.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width / 2, TiledMapMgr.TileUnitHeight / sr.Height / 2);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
             return go.AddComponent<Bullet>(globeDamage, BulletType.Globe, globeSpeed);
