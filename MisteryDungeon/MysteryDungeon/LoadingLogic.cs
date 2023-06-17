@@ -24,12 +24,10 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
 
         public void OnStartLoading(EventArgs message) {
             sr.Enabled = true;
-            //Game.TimeScale = 0;
         }
 
         public void OnEndLoading(EventArgs message) {
             sr.Enabled = false;
-            //Game.TimeScale = 1;
         }
     }
 }

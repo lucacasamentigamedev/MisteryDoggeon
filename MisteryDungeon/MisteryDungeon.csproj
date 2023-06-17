@@ -195,8 +195,8 @@
     <Compile Include="MysteryDungeon\BackgroundMusicLogic.cs" />
     <Compile Include="MysteryDungeon\Controller\BossController.cs" />
     <Compile Include="MysteryDungeon\Bullet.cs" />
-    <Compile Include="MysteryDungeon\MenuLogic.cs" />
     <Compile Include="MysteryDungeon\LoadingLogic.cs" />
+    <Compile Include="MysteryDungeon\MenuLogic.cs" />
     <Compile Include="MysteryDungeon\Mgr\MemoryCardMgr.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\MemoryCard.cs" />
     <Compile Include="MysteryDungeon\Scenes\GameOverScene.cs" />
@@ -237,6 +237,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Assets\Saves\GameStats.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Saves\MovementGrid.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Saves\RoomObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Saves\Weapon.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Assets\Tiled\Room0.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

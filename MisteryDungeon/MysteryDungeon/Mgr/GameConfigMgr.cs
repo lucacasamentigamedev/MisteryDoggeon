@@ -4,7 +4,7 @@
         public static string gameStatsFileName = "GameStats.json";
         public static string movementGridFileName = "MovementGrid.json";
         public static string roomObjectsFileName = "RoomObjects.json";
-        public static string weaponFileName = "weapon.json";
+        public static string weaponFileName = "Weapon.json";
 
         public static bool debugBoxColliderWireframe = true;
         private static int roomsNumber = 4;

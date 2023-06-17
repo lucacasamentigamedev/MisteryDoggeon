@@ -121,11 +121,6 @@ namespace MisteryDungeon.MysteryDungeon {
             isMoving = false;
         }
 
-        public void ClearPath() {
-            rigidbody.Velocity = Vector2.Zero;
-            path.Clear();
-        }
-
         public override void OnCollide(Collision collisionInfo) {
             switch(collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Door:
@@ -181,11 +176,21 @@ namespace MisteryDungeon.MysteryDungeon {
                     TakeDamage(healthModule.Health);
                     break;
                 case (int)GameObjectTag.MemoryCard:
+                    ClearPathFindingAndStopPlayer();
+                    EventManager.CastEvent(EventList.StartLoading, EventArgsFactory.StartLoadingFactory());
                     EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.ObjectPickedFactory());
                     EventManager.CastEvent(EventList.SaveGame, EventArgsFactory.SaveGameFactory());
                     collisionInfo.Collider.gameObject.IsActive = false;
                     break;
             }
+        }
+
+        private void ClearPathFindingAndStopPlayer() {
+            SetCLip(GetCLipAnimationName(direction, false));
+            rigidbody.Velocity = Vector2.Zero;
+            isMoving = false;
+            searchProgress = null;
+            path.Clear();
         }
 
         public void TakeDamage(float damage) {

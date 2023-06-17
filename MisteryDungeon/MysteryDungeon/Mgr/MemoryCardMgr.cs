@@ -6,7 +6,17 @@ using System.IO;
 namespace MisteryDungeon.MysteryDungeon.Mgr {
     public class MemoryCardMgr : UserComponent {
 
-        public MemoryCardMgr(GameObject owner) : base(owner) {}
+        private string stats;
+        private string movGrid;
+        private string roomObj;
+        private string weapon;
+
+        public MemoryCardMgr(GameObject owner) : base(owner) {
+            stats = Path.Combine("Assets/Saves", GameConfigMgr.gameStatsFileName);
+            movGrid = Path.Combine("Assets/Saves", GameConfigMgr.movementGridFileName);
+            roomObj = Path.Combine("Assets/Saves", GameConfigMgr.roomObjectsFileName);
+            weapon = Path.Combine("Assets/Saves", GameConfigMgr.weaponFileName);
+        }
 
         public override void Start() {
             EventManager.AddListener(EventList.NewGame, OnNewGame);
@@ -26,18 +36,18 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
             MovementGridMgr.ResetMovementsGrids();
             RoomObjectsMgr.ResetRoomObjects();
             TiledMapMgr.ResetMaps();
-            if (File.Exists(GameConfigMgr.gameStatsFileName)) File.Delete(GameConfigMgr.gameStatsFileName);
-            if (File.Exists(GameConfigMgr.movementGridFileName)) File.Delete(GameConfigMgr.movementGridFileName);
-            if (File.Exists(GameConfigMgr.roomObjectsFileName)) File.Delete(GameConfigMgr.roomObjectsFileName);
-            if (File.Exists(GameConfigMgr.weaponFileName)) File.Delete(GameConfigMgr.weaponFileName);
+            File.WriteAllText(stats, string.Empty);
+            File.WriteAllText(movGrid, string.Empty);
+            File.WriteAllText(roomObj, string.Empty);
+            File.WriteAllText(weapon, string.Empty);
         }
 
         public void OnSaveGame(EventArgs message) {
             EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("Save game"));
-            JsonFileUtils.PrettyWrite(GameStatsMgr.GetGameStats(), GameConfigMgr.gameStatsFileName);
-            JsonFileUtils.SaveJaggeredArray(MovementGridMgr.Grids, GameConfigMgr.movementGridFileName);
-            JsonFileUtils.PrettyWrite(RoomObjectsMgr.RoomObjects, GameConfigMgr.roomObjectsFileName);
-            if(GameStatsMgr.ActiveWeapon != null) JsonFileUtils.PrettyWrite(GameStatsMgr.ActiveWeapon.GetSerializedWeapon(), GameConfigMgr.weaponFileName);
+            JsonFileUtils.PrettyWrite(GameStatsMgr.GetGameStats(), stats);
+            JsonFileUtils.SaveJaggeredArray(MovementGridMgr.Grids, movGrid);
+            JsonFileUtils.PrettyWrite(RoomObjectsMgr.RoomObjects, roomObj);
+            if(GameStatsMgr.ActiveWeapon != null) JsonFileUtils.PrettyWrite(GameStatsMgr.ActiveWeapon.GetSerializedWeapon(), weapon);
             EventManager.CastEvent(EventList.EndLoading, EventArgsFactory.EndLoadingFactory());
         }
 
