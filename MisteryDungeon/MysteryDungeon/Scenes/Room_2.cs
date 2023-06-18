@@ -23,6 +23,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
             GfxMgr.AddTexture("blackScreen", "Assets/Textures/black_screen.png");
             GfxMgr.AddTexture("memoryCard", "Assets/Textures/Objects/memory_card.png");
+            GfxMgr.AddTexture("hearth", "Assets/Textures/Objects/hearth.png");
             //Sounds
             AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
             AudioMgr.AddClip("arrowShot", "Assets/Sounds/SFX/arrow_shot.ogg");
@@ -79,7 +80,7 @@ namespace MisteryDungeon {
             go.AddComponent<HordeMgr>(
                 new Vector2[] { new Vector2(2, 39) },
                 new Vector2[] { new Vector2(2, 38), new Vector2(2, 39) },
-                new Vector2[] { new Vector2(2, 65) }
+                new Vector2[] { new Vector2(2, 66) }
             );
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
         }

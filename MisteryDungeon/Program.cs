@@ -17,7 +17,8 @@ namespace MisteryDungeon.MysteryDungeon {
         Wall,
         Boss,
         EnemyBullet,
-        MemoryCard
+        MemoryCard,
+        Hearth
     }
 
     public enum AudioLayer {
@@ -57,8 +58,10 @@ namespace MisteryDungeon.MysteryDungeon {
             Input.AddUserButton("UI_L", new ButtonMatch[] {
                 new KeyButtonMatch(KeyCode.L)
             });
-            AudioMgr.AddVolume((int)AudioLayer.music, 0.7f); 
-            AudioMgr.AddVolume((int)AudioLayer.sfx, 0.5f);
+            //AudioMgr.AddVolume((int)AudioLayer.music, 0.7f); 
+            //AudioMgr.AddVolume((int)AudioLayer.sfx, 0.5f);
+            AudioMgr.AddVolume((int)AudioLayer.music, 0.1f); 
+            AudioMgr.AddVolume((int)AudioLayer.sfx, 0.1f);
             Game.Init("Mystery Dungeon", 720, 720, new MenuScene(), 720, 10, 500);
         }
     }

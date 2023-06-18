@@ -13,19 +13,22 @@ namespace MisteryDungeon.MysteryDungeon {
             get { return dead; }
         }
         private Vector2[] objectsToDisactiveAfterBossDefeated;
+        private Vector2[] objectsToActiveAfterBossDefeated;
         private SheetAnimator animator;
         private Transform targetTransform;
         private Rigidbody rigidBody;
         private ShootModule shootModule;
 
         public BossController(GameObject owner, float readyTimer, float speed,
-            float deathTimer, Vector2[] objectsToDisactiveAfterBossDefeated) : base(owner) {
+            float deathTimer, Vector2[] objectsToDisactiveAfterBossDefeated, Vector2[] objectsToActiveAfterBossDefeated) : base(owner) {
             currentReadyTimer = readyTimer;
             this.speed = speed;
             active = false;
             dead = false;
             currentDeathTimer = deathTimer;
             this.objectsToDisactiveAfterBossDefeated = objectsToDisactiveAfterBossDefeated;
+            this.objectsToActiveAfterBossDefeated = objectsToActiveAfterBossDefeated;
+
         }
         public override void Awake() {
             animator = GetComponent<SheetAnimator>();
@@ -61,6 +64,10 @@ namespace MisteryDungeon.MysteryDungeon {
                 foreach (Vector2 v in objectsToDisactiveAfterBossDefeated) {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
                     RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
+                }
+                foreach (Vector2 v in objectsToActiveAfterBossDefeated) {
+                    GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
+                    RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);
                 }
                 GameStatsMgr.BossDefeated = true;
                 gameObject.IsActive = false;

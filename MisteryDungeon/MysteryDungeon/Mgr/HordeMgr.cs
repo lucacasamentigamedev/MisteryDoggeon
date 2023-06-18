@@ -75,7 +75,7 @@ namespace MisteryDungeon.MysteryDungeon {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
                     RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
                 }
-                //attivo oggetti dopo che l'orda è stata sconfitta (memory card)
+                //attivo oggetti dopo che l'orda è stata sconfitta (memory card. hearth)
                 foreach (Vector2 v in objectsToActiveOnHordeDefeated) {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
                     RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);

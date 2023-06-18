@@ -201,6 +201,7 @@
     <Compile Include="MysteryDungeon\LoadingLogic.cs" />
     <Compile Include="MysteryDungeon\MenuLogic.cs" />
     <Compile Include="MysteryDungeon\Mgr\MemoryCardMgr.cs" />
+    <Compile Include="MysteryDungeon\RoomObjects\Hearth.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\MemoryCard.cs" />
     <Compile Include="MysteryDungeon\Scenes\GameOverScene.cs" />
     <Compile Include="MysteryDungeon\Scenes\MenuScene.cs" />
@@ -335,6 +336,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Objects\mushroom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Objects\hearth.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Objects\pot.png">

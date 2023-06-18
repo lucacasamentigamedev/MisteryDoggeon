@@ -42,6 +42,7 @@ namespace MisteryDungeon.MysteryDungeon {
             tiledObjectsFactories["BossController"] = TiledObjectFactoryMgr.CreateBoss;
             tiledObjectsFactories["PlayerController"] = TiledObjectFactoryMgr.CreatePlayer;
             tiledObjectsFactories["MemoryCard"] = TiledObjectFactoryMgr.CreateMemoryCard;
+            tiledObjectsFactories["Hearth"] = TiledObjectFactoryMgr.CreateHearth;
         }
 
         public static void CreateMap(int id) {

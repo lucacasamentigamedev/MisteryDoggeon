@@ -186,6 +186,10 @@ namespace MisteryDungeon.MysteryDungeon {
                     ClearPathFindingAndStopPlayer();
                     mc.PickedMemoryCard();
                     break;
+                case (int)GameObjectTag.Hearth:
+                    healthModule.ResetHealth();
+                    collisionInfo.Collider.gameObject.IsActive = false;
+                    break;
             }
         }
 
