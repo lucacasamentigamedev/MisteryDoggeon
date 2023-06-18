@@ -382,7 +382,7 @@
     <Content Include="Assets\Sounds\SFX\sequence_wrong.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Sounds\SFX\path_unreachable.wav">
+    <Content Include="Assets\Sounds\SFX\action_not_allowed.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Objects\spawn_point.png">

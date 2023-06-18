@@ -36,13 +36,14 @@ namespace MisteryDungeon {
             AudioMgr.AddClip("background8", "Assets/Sounds/Background/background8.ogg");
             AudioMgr.AddClip("background9", "Assets/Sounds/Background/background9.ogg");
             AudioMgr.AddClip("background10", "Assets/Sounds/Background/background10.ogg");
-            AudioMgr.AddClip("pathUnreachable", "Assets/Sounds/SFX/path_unreachable.wav");
+            AudioMgr.AddClip("actionNotAllowed", "Assets/Sounds/SFX/action_not_allowed.wav");
             AudioMgr.AddClip("roomLeft", "Assets/Sounds/SFX/room_left.ogg");
             AudioMgr.AddClip("hordeDefeated", "Assets/Sounds/SFX/mission_completed.ogg");
             AudioMgr.AddClip("playerTakesDamage", "Assets/Sounds/SFX/player_takes_damage.wav");
             AudioMgr.AddClip("playerDead", "Assets/Sounds/SFX/player_dead.wav");
             AudioMgr.AddClip("enemyTakesDamage", "Assets/Sounds/SFX/enemy_takes_damage.wav");
             AudioMgr.AddClip("enemyDead", "Assets/Sounds/SFX/enemy_dead.wav");
+            AudioMgr.AddClip("objectPicked", "Assets/Sounds/SFX/object_picked.wav");
         }
 
         public override void InitializeScene() {
@@ -65,7 +66,7 @@ namespace MisteryDungeon {
                 false,  //print puzzle logs
                 false,  //print object creations logs
                 false,  //print enemy horde logs
-                true    //print memory card logs
+                false    //print memory card logs
             );
         }
 
@@ -77,7 +78,8 @@ namespace MisteryDungeon {
             GameObject go = new GameObject("HordeMgr", Vector2.Zero);
             go.AddComponent<HordeMgr>(
                 new Vector2[] { new Vector2(2, 39) },
-                new Vector2[] { new Vector2(2, 38), new Vector2(2, 39) }
+                new Vector2[] { new Vector2(2, 38), new Vector2(2, 39) },
+                new Vector2[] { new Vector2(2, 65) }
             );
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
         }

@@ -99,7 +99,11 @@
   <object id="49" name="obstacle" class="Obstacle" gid="388" x="96" y="208" width="16" height="16"/>
   <object id="50" name="obstacle" class="Obstacle" gid="388" x="112" y="48" width="16" height="16"/>
   <object id="51" name="obstacle" class="Obstacle" gid="388" x="112" y="80" width="16" height="16"/>
-  <object id="53" name="memoryCard" class="MemoryCard" gid="219" x="16" y="208" width="16" height="16"/>
+  <object id="53" name="memoryCard" class="MemoryCard" gid="219" x="16" y="208" width="16" height="16">
+   <properties>
+    <property name="respawnTimer" value="5"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="5" name="Collisions" width="15" height="15" opacity="0.5">
   <data encoding="csv">

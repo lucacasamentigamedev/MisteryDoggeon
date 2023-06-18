@@ -28,7 +28,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void ChangeButtonState(bool pressedState) {
-            if (pressedState == Pressed) return;
+            //if (pressedState == Pressed) return;
             Pressed = pressedState;
             spriteRenderer.TextureOffset = pressedState ? new Vector2(buttonWidth, 0) : Vector2.Zero;
         }

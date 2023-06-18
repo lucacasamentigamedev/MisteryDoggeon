@@ -28,7 +28,7 @@ namespace MisteryDungeon.Scenes {
                 (Game.Win.OrthoWidth * 0.5f - Game.PixelsToUnit
                 (stdFont.CharacterWidth) * 10 * 1.1f, Game.Win.OrthoHeight * 0.5f));
             feedbackText.AddComponent<TextBox>(stdFont, 60, Vector2.One * 1.5f).
-                SetText("Press Enter to\nto return to menu\nor Esc to exit");
+                SetText("Press Enter to\nto return to main menu\nor Esc to exit");
             GameObject menuController = new GameObject("MenuController", Vector2.Zero);
             menuController.AddComponent<MenuLogic>("UI_Confirm", "MenuScene", "UI_Cancel", null, false);
         }

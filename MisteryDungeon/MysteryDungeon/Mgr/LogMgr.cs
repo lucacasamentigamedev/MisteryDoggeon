@@ -4,7 +4,7 @@ using System;
 namespace MisteryDungeon.MysteryDungeon {
     public class LogMgr : UserComponent {
 
-        private static bool debugPathfinding;
+        private bool debugPathfinding;
         public bool DebugPathfinding {
             get { return debugPathfinding; }
             set {
@@ -13,7 +13,7 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        private static bool debugPuzzle;
+        private bool debugPuzzle;
         public bool DebugPuzzle {
             get { return debugPuzzle; }
             set {
@@ -22,7 +22,7 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        private static bool debugGameObjectCreations;
+        private bool debugGameObjectCreations;
         public bool DebugGameObjectCreations {
             get { return debugGameObjectCreations; }
             set {
@@ -31,7 +31,7 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        private static bool debugEnemyHorde;
+        private bool debugEnemyHorde;
         public bool DebugEnemyHorde {
             get { return debugEnemyHorde; }
             set {
@@ -40,7 +40,7 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        private static bool debugMemoryCard;
+        private bool debugMemoryCard;
         public bool DebugMemoryCard {
             get { return debugMemoryCard; }
             set {

@@ -22,7 +22,7 @@ namespace Aiv.Fast2D.Component {
         SequenceCompleted,
         SequenceWrong,
         ArrowShot,
-        PathUnreachable,
+        ActionNotAllowed,
         PuzzleReady,
         ClockTick,
         RoomLeft,

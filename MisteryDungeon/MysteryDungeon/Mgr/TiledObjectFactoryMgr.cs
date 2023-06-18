@@ -320,9 +320,10 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
                 ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitHeight - (TiledMapMgr.TileUnitHeight / 2)
             );
+            float respawnTimer = float.Parse(getPropertyValueByName("respawnTimer", obj.Properties));
             GameObject go = new GameObject("Object_" + TiledMapMgr.RoomId + "_" + obj.Id, pos);
             go.Tag = (int)GameObjectTag.MemoryCard;
-            go.AddComponent<MemoryCard>(obj.Id, TiledMapMgr.RoomId);
+            go.AddComponent<MemoryCard>(obj.Id, TiledMapMgr.RoomId, respawnTimer);
             SpriteRenderer sr = SpriteRenderer.Factory(go, "memoryCard", Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((TiledMapMgr.TileUnitWidth / sr.Width), (TiledMapMgr.TileUnitHeight / sr.Height));

@@ -11,17 +11,19 @@ namespace MisteryDungeon.MysteryDungeon {
         private bool hordeActive;
         public static int EnemiesActive { get; set; }
         public static int SpawnPointsActive { get; set; }
-        private Vector2[] objectsToActiveOnHordeStart;
+        private Vector2[] gatesToActiveOnHordeStart;
         private Vector2[] objectsToDisActiveOnHordeDefeated;
+        private Vector2[] objectsToActiveOnHordeDefeated;
 
-        public HordeMgr(GameObject owner, Vector2[] objectsToActiveOnHordeStart,
-            Vector2[] objectsToDisActiveOnHordeDefeated) : base(owner) {
+        public HordeMgr(GameObject owner, Vector2[] gatesToActiveOnHordeStart,
+            Vector2[] objectsToDisActiveOnHordeDefeated, Vector2[] objectsToActiveOnHordeDefeated) : base(owner) {
             spawnPoints = new List<SpawnPoint>();
             hordeActive = false;
             EnemiesActive = 0;
             SpawnPointsActive = 0;
-            this.objectsToActiveOnHordeStart = objectsToActiveOnHordeStart;
+            this.gatesToActiveOnHordeStart = gatesToActiveOnHordeStart;
             this.objectsToDisActiveOnHordeDefeated = objectsToDisActiveOnHordeDefeated;
+            this.objectsToActiveOnHordeDefeated = objectsToActiveOnHordeDefeated;
         }
 
         public void AddSpawnPoint(SpawnPoint spawnPoint) {
@@ -65,25 +67,30 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private void CheckHordeDefeated() {
             if (EnemiesActive <= 0 && SpawnPointsActive <= 0) {
-                //orda sconfitta tolgo i gate
                 EventManager.CastEvent(EventList.HordeDefeated, EventArgsFactory.HordeDefeatedFactory());
                 EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Orda sconfitta"));
                 GameStatsMgr.HordeDefeated = true;
+                //disattivo oggetti dopo che l'orda è stata sconfitta (gates)
                 foreach (Vector2 v in objectsToDisActiveOnHordeDefeated){
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
                     RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
+                }
+                //attivo oggetti dopo che l'orda è stata sconfitta (memory card)
+                foreach (Vector2 v in objectsToActiveOnHordeDefeated) {
+                    GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
+                    RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);
                 }
             }
         }
 
         public void CheckHordeActivation() {
             if (GameStatsMgr.HordeDefeated || GameStatsMgr.ActiveWeapon == null || hordeActive) return;
-            //attivo gate
-            foreach (Vector2 v in objectsToActiveOnHordeStart) {
+            //attivo oggetti quando l'orda  parte (gates)
+            foreach (Vector2 v in gatesToActiveOnHordeStart) {
                 GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
                 RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true, true, MovementGrid.EGridTile.Wall);
             }
-            //attivo spawn point
+            //attivo l'orda (spawn point)
             foreach (SpawnPoint spawnPoint in spawnPoints) {
                 spawnPoint.gameObject.IsActive = true;
             }

@@ -58,9 +58,9 @@ namespace Aiv.Fast2D.Component {
             return new EventArgs();
         }
 
-        public static void PathUnreachableParser() { }
+        public static void ActionNotAllowedParser() { }
 
-        public static EventArgs PathUnreachableFactory() {
+        public static EventArgs ActionNotAllowedFactory() {
             return new EventArgs();
         }
 

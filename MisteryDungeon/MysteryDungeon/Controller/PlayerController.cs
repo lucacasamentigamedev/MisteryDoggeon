@@ -88,7 +88,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(MovementGridMgr.PrintPathfindingPath(path)));
                 if (path.Count <= 0) {
                     //click on wall or obstacle
-                    EventManager.CastEvent(EventList.PathUnreachable, EventArgsFactory.PathUnreachableFactory());
+                    EventManager.CastEvent(EventList.ActionNotAllowed, EventArgsFactory.ActionNotAllowedFactory());
                     StopMovement(Vector2.Zero);
                 } else {
                     isMoving = true;
@@ -125,7 +125,10 @@ namespace MisteryDungeon.MysteryDungeon {
             switch(collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Door:
                     Door door = collisionInfo.Collider.gameObject.GetComponent<Door>();
-                    if (door.LockedBy >= 0 && !GameStatsMgr.CollectedKeys.Contains(door.LockedBy)) return;
+                    if (door.LockedBy >= 0 && !GameStatsMgr.CollectedKeys.Contains(door.LockedBy)) {
+                        EventManager.CastEvent(EventList.ActionNotAllowed, EventArgsFactory.ActionNotAllowedFactory());
+                        return;
+                    };
                     GameStatsMgr.PreviousRoom = GameStatsMgr.ActualRoom;
                     GameStatsMgr.ActualRoom = door.RoomToGo;
                     EventManager.CastEvent(EventList.StartLoading, EventArgsFactory.StartLoadingFactory());
@@ -178,11 +181,10 @@ namespace MisteryDungeon.MysteryDungeon {
                     TakeDamage(healthModule.Health);
                     break;
                 case (int)GameObjectTag.MemoryCard:
+                    MemoryCard mc = collisionInfo.Collider.gameObject.GetComponent<MemoryCard>();
+                    if (!mc.Ready) break;
                     ClearPathFindingAndStopPlayer();
-                    EventManager.CastEvent(EventList.StartLoading, EventArgsFactory.StartLoadingFactory());
-                    EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.ObjectPickedFactory());
-                    EventManager.CastEvent(EventList.SaveGame, EventArgsFactory.SaveGameFactory());
-                    collisionInfo.Collider.gameObject.IsActive = false;
+                    mc.PickedMemoryCard();
                     break;
             }
         }

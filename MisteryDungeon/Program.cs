@@ -51,6 +51,12 @@ namespace MisteryDungeon.MysteryDungeon {
             Input.AddUserButton("UI_2", new ButtonMatch[] {
                 new KeyButtonMatch(KeyCode.Num2)
             });
+            Input.AddUserButton("UI_N", new ButtonMatch[] {
+                new KeyButtonMatch(KeyCode.N)
+            });
+            Input.AddUserButton("UI_L", new ButtonMatch[] {
+                new KeyButtonMatch(KeyCode.L)
+            });
             AudioMgr.AddVolume((int)AudioLayer.music, 0.7f); 
             AudioMgr.AddVolume((int)AudioLayer.sfx, 0.5f);
             Game.Init("Mystery Dungeon", 720, 720, new MenuScene(), 720, 10, 500);
