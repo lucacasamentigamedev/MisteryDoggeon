@@ -17,7 +17,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility {
                 WriteIndented = true
             };
             var jsonString = JsonSerializer.Serialize(obj, options);
-            File.WriteAllText(fileName, jsonString);
+            File.AppendAllText(fileName, jsonString);
         }
 
         public static void SaveJaggeredArray<T>(T array, string fileName) {
@@ -26,7 +26,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility {
             };
             options.Converters.Add(new TwoDimensionalIntArrayJsonConverter());
             string json = JsonSerializer.Serialize(array, options);
-            File.WriteAllText(fileName, json);
+            File.AppendAllText(fileName, json);
         }
     }
 }

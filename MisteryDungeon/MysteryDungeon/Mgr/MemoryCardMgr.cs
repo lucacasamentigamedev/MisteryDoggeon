@@ -12,10 +12,10 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
         private string weapon;
 
         public MemoryCardMgr(GameObject owner) : base(owner) {
-            stats = Path.Combine("Assets/Saves", GameConfigMgr.gameStatsFileName);
-            movGrid = Path.Combine("Assets/Saves", GameConfigMgr.movementGridFileName);
-            roomObj = Path.Combine("Assets/Saves", GameConfigMgr.roomObjectsFileName);
-            weapon = Path.Combine("Assets/Saves", GameConfigMgr.weaponFileName);
+            stats = Path.Combine("Saves", GameConfigMgr.gameStatsFileName);
+            movGrid = Path.Combine("Saves", GameConfigMgr.movementGridFileName);
+            roomObj = Path.Combine("Saves", GameConfigMgr.roomObjectsFileName);
+            weapon = Path.Combine("Saves", GameConfigMgr.weaponFileName);
         }
 
         public override void Start() {
