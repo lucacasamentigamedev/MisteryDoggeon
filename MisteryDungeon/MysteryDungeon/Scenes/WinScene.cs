@@ -1,10 +1,9 @@
 ﻿using Aiv.Fast2D.Component.UI;
 using Aiv.Fast2D.Component;
 using OpenTK;
-using MisteryDungeon.MysteryDungeon;
 
-namespace MisteryDungeon.Scenes {
-    public class GameOverScene : Scene {
+namespace MisteryDungeon.MysteryDungeon.Scenes {
+    internal class WinScene : Scene {
 
         protected override void LoadAssets() {
             FontMgr.AddFont("std_font", "Assets/Textures/text_sheet.png", 15, 32, 20, 20);
@@ -32,13 +31,13 @@ namespace MisteryDungeon.Scenes {
                 new Vector2(Game.Win.OrthoWidth * 0.5f -
                 Game.PixelsToUnit(stdFont.CharacterWidth) * 10, 1));
             titleText.AddComponent<TextBox>(stdFont, 15, Vector2.One * 2)
-                .SetText("Game Over...");
+                .SetText("Game Win!");
         }
         public void CreateFeedback() {
             Font stdFont = FontMgr.GetFont("stdFont");
             GameObject feedbackText = new GameObject("FeedbackText", new Vector2
                     (Game.Win.OrthoWidth * 0.5f - Game.PixelsToUnit
-                    (stdFont.CharacterWidth) * 9, Game.Win.OrthoHeight * 0.5f));
+                    (stdFont.CharacterWidth) * 10 * 1.1f, Game.Win.OrthoHeight * 0.5f));
             feedbackText.AddComponent<TextBox>(stdFont, 60, Vector2.One * 1.5f).
                 SetText("Press Enter\nto return to\nmain menu or\nEsc to exit");
             GameObject menuController = new GameObject("MenuController", Vector2.Zero);

@@ -6,7 +6,7 @@
         public static string roomObjectsFileName = "RoomObjects.json";
         public static string weaponFileName = "Weapon.json";
 
-        public static bool debugBoxColliderWireframe = true;
+        public static bool debugBoxColliderWireframe = false;
         private static int roomsNumber = 4;
         public static int RoomsNumber {
             get { return roomsNumber; }

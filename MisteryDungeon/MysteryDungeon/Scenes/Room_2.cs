@@ -53,11 +53,6 @@ namespace MisteryDungeon {
             CreateMemoryCardMgr();
             CreateHordeMgr();
             CreateMap();
-            /******************FIXME: cheat da togliere**************/
-            //RoomObjectsMgr.SetRoomObjectActiveness(2, 39, false, true);
-            //GameObject g = GameObject.Find("Object_2_39");
-            //if (g != null) g.IsActive = false;*/
-            /********************************/
         }
 
         public void CreateLogMgr() {
@@ -80,7 +75,7 @@ namespace MisteryDungeon {
             go.AddComponent<HordeMgr>(
                 new Vector2[] { new Vector2(2, 39) },
                 new Vector2[] { new Vector2(2, 38), new Vector2(2, 39) },
-                new Vector2[] { new Vector2(2, 66) }
+                new Vector2[] { new Vector2(2, 66), new Vector2(2, 65) }
             );
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
         }

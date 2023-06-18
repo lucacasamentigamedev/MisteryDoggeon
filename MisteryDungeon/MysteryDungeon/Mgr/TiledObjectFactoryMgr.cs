@@ -253,7 +253,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((TiledMapMgr.TileUnitWidth / sr.Width) * 2, (TiledMapMgr.TileUnitHeight / sr.Height) * 2);
             go.AddComponent<BossController>(readyTimer, speed, deathTimer,
-                new Vector2[] { new Vector2(3, 39) }, new Vector2[] { new Vector2(3, 85) });
+                new Vector2[] { new Vector2(3, 39) }, new Vector2[] {});
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Boss;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
@@ -263,6 +263,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             Weapon weapon = new Weapon(go, WeaponType.Blaster, (BulletType)bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY), TiledMapMgr.RoomId, obj.Id);
             sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
             go.AddComponent<HealthModule>(health, health, new Vector2(-0.5f, -0.75f));
+            go.AddComponent<WobbleEffect>(7).Enabled = false;
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
         }
 

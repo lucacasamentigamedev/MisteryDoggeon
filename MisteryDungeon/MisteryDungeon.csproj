@@ -212,6 +212,8 @@
     <Compile Include="MysteryDungeon\Scenes\NewLoadScene.cs" />
     <Compile Include="MysteryDungeon\Scenes\Room_3.cs" />
     <Compile Include="MysteryDungeon\Mgr\SFXMgr.cs" />
+    <Compile Include="MysteryDungeon\Scenes\WinScene.cs" />
+    <Compile Include="MysteryDungeon\Shader\WobbleEffectShader.cs" />
     <Compile Include="MysteryDungeon\SpawnPoint.cs" />
     <Compile Include="MysteryDungeon\FaceVelocity.cs" />
     <Compile Include="MysteryDungeon\Mgr\GameConfigMgr.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="MysteryDungeon\Mgr\TiledObjectFactoryMgr.cs" />
     <Compile Include="MysteryDungeon\Utility\JsonFileUtils.cs" />
     <Compile Include="MysteryDungeon\Utility\TwoDimensionalIntArrayJsonConverter.cs" />
+    <Compile Include="MysteryDungeon\WobbleEffect.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

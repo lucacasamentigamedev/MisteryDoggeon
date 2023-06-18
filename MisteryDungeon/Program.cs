@@ -1,5 +1,6 @@
 ﻿using Aiv.Fast2D;
 using Aiv.Fast2D.Component;
+using MisteryDungeon.MysteryDungeon.Scenes;
 using MisteryDungeon.Scenes;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -58,10 +59,8 @@ namespace MisteryDungeon.MysteryDungeon {
             Input.AddUserButton("UI_L", new ButtonMatch[] {
                 new KeyButtonMatch(KeyCode.L)
             });
-            //AudioMgr.AddVolume((int)AudioLayer.music, 0.7f); 
-            //AudioMgr.AddVolume((int)AudioLayer.sfx, 0.5f);
-            AudioMgr.AddVolume((int)AudioLayer.music, 0.1f); 
-            AudioMgr.AddVolume((int)AudioLayer.sfx, 0.1f);
+            AudioMgr.AddVolume((int)AudioLayer.music, 0.7f); 
+            AudioMgr.AddVolume((int)AudioLayer.sfx, 0.5f);
             Game.Init("Mystery Dungeon", 720, 720, new MenuScene(), 720, 10, 500);
         }
     }

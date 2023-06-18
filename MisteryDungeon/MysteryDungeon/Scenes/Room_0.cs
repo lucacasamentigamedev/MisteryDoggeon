@@ -54,14 +54,6 @@ namespace MisteryDungeon {
             CreateMemoryCardMgr();
             CreatePuzzleMgr();
             CreateMap();
-            /******************FIXME: cheat per andare dritto in stanza 2 con anche la chiave per il boss**************/
-            RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
-            GameObject g = GameObject.Find("Object_0_27");
-            if (g != null) g.IsActive = false;
-            g = GameObject.Find("Object_0_22");
-            if (g != null) g.IsActive = true;
-            GameStatsMgr.CollectedKeys.Add(25);
-            /*****************************************************/
         }
 
         public void CreateLogMgr() {

@@ -18,6 +18,7 @@ namespace MisteryDungeon.MysteryDungeon {
         private Transform targetTransform;
         private Rigidbody rigidBody;
         private ShootModule shootModule;
+        private WobbleEffect wobbleEffect;
 
         public BossController(GameObject owner, float readyTimer, float speed,
             float deathTimer, Vector2[] objectsToDisactiveAfterBossDefeated, Vector2[] objectsToActiveAfterBossDefeated) : base(owner) {
@@ -34,6 +35,7 @@ namespace MisteryDungeon.MysteryDungeon {
             animator = GetComponent<SheetAnimator>();
             shootModule = GetComponent<ShootModule>();
             rigidBody = GetComponent<Rigidbody>();
+            wobbleEffect = GetComponent<WobbleEffect>();
         }
 
         public override void Start() {
@@ -49,6 +51,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 animator.ChangeClip("death");
                 dead = true;
                 shootModule.Enabled = false;
+                wobbleEffect.Enabled = false;
             } else {
                 EventManager.CastEvent(EventList.LOG_Boss, EventArgsFactory.LOG_Factory("Boss colpito, vita rimanente " + hm.Health));
                 EventManager.CastEvent(EventList.EnemyTakesDamage, EventArgsFactory.EnemyTakesDamageFactory());
@@ -80,6 +83,7 @@ namespace MisteryDungeon.MysteryDungeon {
             };
             if (!active) {
                 shootModule.Enabled = true;
+                wobbleEffect.Enabled = true;
             };
             active = true;
             Vector2 direction = targetTransform.Position - transform.Position;
