@@ -20,7 +20,7 @@
 273,274,339,274,274,339,274,274,274,339,274,274,340,274,275
 </data>
  </layer>
- <objectgroup id="2" name="Objects" visible="0">
+ <objectgroup id="2" name="Objects">
   <object id="25" name="key" class="Key" gid="2" x="112" y="128" width="16" height="16">
    <properties>
     <property name="gateId" type="int" value="38"/>

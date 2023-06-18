@@ -1,7 +1,8 @@
 ﻿using Aiv.Fast2D.Component;
-using MisteryDungeon.MysteryDungeon.Utility;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using static MisteryDungeon.MysteryDungeon.Utility.JsonFileUtils;
 
 namespace MisteryDungeon.MysteryDungeon.Mgr {
     public class MemoryCardMgr : UserComponent {
@@ -31,11 +32,10 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
         }
 
         public void OnNewGame(EventArgs message) {
-            EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("New game (reset)"));
+            EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("New game"));
             GameStatsMgr.ResetGameStats();
             MovementGridMgr.ResetMovementsGrids();
             RoomObjectsMgr.ResetRoomObjects();
-            TiledMapMgr.ResetMaps();
             File.WriteAllText(stats, string.Empty);
             File.WriteAllText(movGrid, string.Empty);
             File.WriteAllText(roomObj, string.Empty);
@@ -44,22 +44,24 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
 
         public void OnSaveGame(EventArgs message) {
             EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("Save game"));
-            JsonFileUtils.PrettyWrite(GameStatsMgr.GetGameStats(), stats);
-            JsonFileUtils.SaveJaggeredArray(MovementGridMgr.Grids, movGrid);
-            JsonFileUtils.PrettyWrite(RoomObjectsMgr.RoomObjects, roomObj);
-            if(GameStatsMgr.ActiveWeapon != null) JsonFileUtils.PrettyWrite(GameStatsMgr.ActiveWeapon.GetSerializedWeapon(), weapon);
+            PrettyWrite(GameStatsMgr.GetGameStats(), stats);
+            WriteJaggeredArray(MovementGridMgr.Grids, movGrid);
+            PrettyWrite(RoomObjectsMgr.RoomObjects, roomObj);
+            if(GameStatsMgr.ActiveWeapon != null) PrettyWrite(GameStatsMgr.ActiveWeapon.GetSerializedWeapon(), weapon);
             EventManager.CastEvent(EventList.EndLoading, EventArgsFactory.EndLoadingFactory());
         }
 
         public void OnLoadGame(EventArgs message) {
-            EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("Load game"));
-            bool fileExists = false;
-            if(fileExists) {
-                //TODO: load di tutto 
-                //GameStatsMgr.LoadGameStats();
-                MovementGridMgr.LoadMovementsGrids();
-                RoomObjectsMgr.LoadRoomObjects();
-                TiledMapMgr.LoadMaps();
+            var file = new FileInfo(stats);
+            if (file.Length == 0) {
+                EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("Non ci sono salvataggi, faccio un nuovo gioco"));
+                OnNewGame(message);
+            } else {
+                EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("Load game"));
+                GameStatsMgr.LoadGameStats(ReadJson<GameStatsSerialized>(stats));
+                MovementGridMgr.LoadMovementsGrids(ReadJaggeredArray<List<MovementGridArrayElemSerialized>>(movGrid));
+                RoomObjectsMgr.LoadRoomObjects(ReadJson<Dictionary<int, bool>[]>(roomObj));
+                GameStatsMgr.LoadActiveWeapon(ReadJson<WeaponSerialized>(weapon));
             }
         }
     }

@@ -52,7 +52,7 @@ namespace MisteryDungeon {
         public void CreateLogMgr() {
             GameObject go = new GameObject("LogMgr", Vector2.Zero);
             go.AddComponent<LogMgr>(
-                true,   //print pathfinding logs
+                false,   //print pathfinding logs
                 false,   //print puzzle logs
                 false,   //print object creations logs
                 false,  //print enemy horde logs

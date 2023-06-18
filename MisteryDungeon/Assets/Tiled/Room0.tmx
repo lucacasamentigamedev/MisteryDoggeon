@@ -20,7 +20,7 @@
 273,274,339,274,274,340,274,274,274,338,274,274,340,274,275
 </data>
  </layer>
- <objectgroup id="2" name="Objects" visible="0">
+ <objectgroup id="2" name="Objects">
   <object id="22" name="weapon" class="Weapon" gid="2" x="112" y="128" width="16" height="16" visible="0">
    <properties>
     <property name="bulletType" type="int" value="0"/>
@@ -82,7 +82,7 @@
   <object id="43" name="obstacle" class="Obstacle" gid="388" x="160" y="224" width="16" height="16"/>
   <object id="44" name="player" class="PlayerController" gid="450" x="112" y="128" width="16" height="16">
    <properties>
-    <property name="fromRoom" type="int" value="-1"/>
+    <property name="fromRoom" type="int" value="0"/>
    </properties>
   </object>
   <object id="45" name="player" class="PlayerController" gid="450" x="192" y="128" width="16" height="16">

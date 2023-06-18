@@ -83,6 +83,15 @@ namespace MisteryDungeon.AivAlgo.Pathfinding {
             }
         }
 
+        public MovementGrid(int width, int height, int[,] collisionLayer) {
+            map = new EGridTile[width, height];
+            for (int x = 0; x < map.GetLength(0); ++x) {
+                for (int y = 0; y < map.GetLength(1); ++y) {
+                    map[x, y] = collisionLayer[x, y] == -1 ? EGridTile.Wall : EGridTile.Floor;
+                }
+            }
+        }
+
         public SearchTree.AStarSearchProgress<GridMovementState> FindPathProgressive(Vector2 from, Vector2 to) {
             return SearchTree.MakeAStarSerachProgress(
                 new GridMovementState { X = (int)(from.X), Y = (int)(from.Y), map = map },

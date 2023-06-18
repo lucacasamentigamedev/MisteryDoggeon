@@ -14,7 +14,9 @@ namespace MisteryDungeon.MysteryDungeon {
             get { return roomObjects; }
         }
 
-        static RoomObjectsMgr() {}
+        static RoomObjectsMgr() {
+            ResetRoomObjects();
+        }
 
         public static bool AddRoomObjectActiveness(int objectId, bool isActive) {
             int roomId = TiledMapMgr.RoomId;
@@ -57,6 +59,16 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        public static void LoadRoomObjects() { }
+        public static void SetRoomObjectsMap(Dictionary<int, bool> ro, int index) {
+            roomObjects[index] = ro;
+        }
+
+        public static void LoadRoomObjects(Dictionary<int, bool>[] roomObjects) {
+            for(int i = 0; i < roomObjects.Length; i++) {
+                if (roomObjects[i].Count <= 0) continue;
+                SetRoomObjectsMap(roomObjects[i], i);
+            }
+            Console.WriteLine();
+        }
     }
 }

@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Aiv.Fast2D.Component;
+using OpenTK;
+using System;
+using System.Collections.Generic;
 
 namespace MisteryDungeon.MysteryDungeon {
-    public struct GameStatsSerialize {
+    public struct GameStatsSerialized {
         public bool PuzzleResolved { get; set; }
         public bool PlayerCanShoot { get; set; }
         public List<int> CollectedKeys { get; set; }
@@ -11,7 +14,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public bool BossDefeated { get; set; }
         public float PlayerHealth { get; set; }
         public bool FirstDoorPassed { get; set; }
-        public GameStatsSerialize(bool PuzzleResolved, bool PlayerCanShoot,
+        public GameStatsSerialized(bool PuzzleResolved, bool PlayerCanShoot,
             List<int> CollectedKeys, int PreviousRoom, int ActualRoom, bool HordeDefeated,
             bool BossDefeated, float PlayerHealth, bool FirstDoorPassed) {
             this.PuzzleResolved = PuzzleResolved;
@@ -37,11 +40,7 @@ namespace MisteryDungeon.MysteryDungeon {
             set { collectedKeys = value; }
         }
         public static int PreviousRoom { get; set; }
-        private static int actualRoom = -1;
-        public static int ActualRoom {
-            get { return actualRoom;  }
-            set { actualRoom = value; }
-        }
+        public static int ActualRoom { get; set; }
         public static bool HordeDefeated { get; set; }
         public static bool BossDefeated { get; set; }
         public static float maxPlayerHealth = 20;
@@ -58,21 +57,36 @@ namespace MisteryDungeon.MysteryDungeon {
             ActiveWeapon = null;
             CollectedKeys.Clear();
             PreviousRoom = 0;
-            ActualRoom = -1;
+            ActualRoom = 0;
             HordeDefeated = false;
             BossDefeated = false;
-            playerHealth = maxPlayerHealth;
+            PlayerHealth = maxPlayerHealth;
             FirstDoorPassed = false;
         }
 
-        public static GameStatsSerialize GetGameStats() {
-            return new GameStatsSerialize(PuzzleResolved, PlayerCanShoot,
+        public static GameStatsSerialized GetGameStats() {
+            return new GameStatsSerialized(PuzzleResolved, PlayerCanShoot,
                 CollectedKeys, PreviousRoom, ActualRoom, HordeDefeated,
                 BossDefeated, PlayerHealth, FirstDoorPassed);
         }
 
-        public static void LoadGameStats(GameStatsSerialize gameStats) {
+        public static void LoadGameStats(GameStatsSerialized gameStats) {
+            PuzzleResolved = gameStats.PuzzleResolved;
+            PlayerCanShoot = gameStats.PlayerCanShoot;
+            CollectedKeys = gameStats.CollectedKeys;
+            PreviousRoom = gameStats.PreviousRoom;
+            ActualRoom = gameStats.ActualRoom;  
+            HordeDefeated = gameStats.HordeDefeated;
+            BossDefeated = gameStats.BossDefeated;
+            PlayerHealth = gameStats.PlayerHealth;
+            FirstDoorPassed = gameStats.FirstDoorPassed;
+            Console.WriteLine();
+        }
 
+        public static void LoadActiveWeapon(WeaponSerialized weapon) {
+            GameObject owner = GameObject.Find("Object_" + weapon.RoomId + "_" + weapon.Id);
+            ActiveWeapon = new Weapon(owner, (WeaponType)weapon.WeaponType, (BulletType)weapon.BulletType, weapon.ReloadTime,
+                new Vector2(weapon.OffsetShootX, weapon.OffsetShootY), weapon.RoomId, weapon.Id);
         }
     }
 }

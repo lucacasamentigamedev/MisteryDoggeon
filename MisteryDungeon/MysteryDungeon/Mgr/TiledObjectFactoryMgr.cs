@@ -179,14 +179,15 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             float reloadTime = float.Parse(getPropertyValueByName("reloadTime", obj.Properties));
             float offsetShootX = float.Parse(getPropertyValueByName("offsetShootX", obj.Properties));
             float offsetShootY = float.Parse(getPropertyValueByName("offsetShootY", obj.Properties));
-            go.AddComponent<Weapon>((WeaponType)weaponType, bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY));
+            go.AddComponent<Weapon>((WeaponType)weaponType, bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY), TiledMapMgr.RoomId, obj.Id);
             go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
         public static void CreatePlayer(Object obj) {
             int fromRoom = int.Parse(getPropertyValueByName("fromRoom", obj.Properties));
-            if (GameStatsMgr.ActualRoom != fromRoom) return;
+            
+            if (GameStatsMgr.PreviousRoom != fromRoom) return;
 
             Vector2 cellIndex = new Vector2(
                 (float)obj.X / TiledMapMgr.TilePixelWidth,
@@ -256,7 +257,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             CreateBossAnimations(go, sheet);
             ShootModule sm = go.AddComponent<ShootModule>("", true);
-            Weapon weapon = new Weapon(go, WeaponType.Blaster, (BulletType)bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY));
+            Weapon weapon = new Weapon(go, WeaponType.Blaster, (BulletType)bulletType, reloadTime, new Vector2(offsetShootX, offsetShootY), TiledMapMgr.RoomId, obj.Id);
             sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
             go.AddComponent<HealthModule>(health, health, new Vector2(-0.5f, -0.75f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));

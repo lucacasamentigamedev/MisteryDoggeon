@@ -20,7 +20,7 @@
 2147483923,274,339,274,274,340,274,274,274,338,274,274,340,274,275
 </data>
  </layer>
- <objectgroup id="2" name="Objects" visible="0">
+ <objectgroup id="2" name="Objects">
   <object id="36" name="door" class="Door" gid="2" x="224" y="128" width="16" height="16">
    <properties>
     <property name="lockedBy" type="int" value="-1"/>

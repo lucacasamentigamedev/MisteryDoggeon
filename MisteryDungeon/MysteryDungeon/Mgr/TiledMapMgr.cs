@@ -26,6 +26,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         static TiledMapMgr() {
             LoadTiledObjectFactories();
+            ResetMaps();
         }
 
         private static void LoadTiledObjectFactories() {
@@ -54,8 +55,6 @@ namespace MisteryDungeon.MysteryDungeon {
             CreateBackgroundMusic();
             CreatePauseUI();
             CreateLoadingUI();
-            GameStatsMgr.PreviousRoom = GameStatsMgr.ActualRoom;
-            GameStatsMgr.ActualRoom = RoomId;
         }
 
         private static void LoadTiledMap() {
@@ -201,7 +200,5 @@ namespace MisteryDungeon.MysteryDungeon {
                 maps[i] = null;
             }
         }
-
-        public static void LoadMaps() { }
     }
 }

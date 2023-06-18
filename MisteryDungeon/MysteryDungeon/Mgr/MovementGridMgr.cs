@@ -1,8 +1,10 @@
 ﻿using Aiv.Fast2D.Component;
 using MisteryDungeon.AivAlgo.Pathfinding;
 using OpenTK;
+using System;
 using System.Collections.Generic;
 using static MisteryDungeon.AivAlgo.Pathfinding.MovementGrid;
+using static MisteryDungeon.MysteryDungeon.Utility.JsonFileUtils;
 
 namespace MisteryDungeon.MysteryDungeon {
 
@@ -20,7 +22,9 @@ namespace MisteryDungeon.MysteryDungeon {
             get { return grids;}
             set { grids = value;}
         }
-        static MovementGridMgr() {}
+        static MovementGridMgr() {
+            ResetMovementsGrids();
+        }
 
         public static MovementGrid GetRoomGrid(int roomId) {
             return grids[roomId];
@@ -80,6 +84,21 @@ namespace MisteryDungeon.MysteryDungeon {
         public static MovementGridToSerialize GetMovementsGrids() {
             return new MovementGridToSerialize(Grids);
         }
-        public static void LoadMovementsGrids() { }
+        public static void LoadMovementsGrids(List<MovementGridArrayElemSerialized> movementsGrids) {
+            for(int i = 0; i < movementsGrids.Count; i++) {
+                if (movementsGrids[i] == null) continue;
+                var loadedGrid = movementsGrids[i].Map;
+                int MapRows = loadedGrid.Count;
+                int MapColumns = loadedGrid[0].Count;
+                int[,] loadedGridConverted = new int[MapRows, MapColumns];
+                for(int j= 0; j < MapRows; j++) {
+                    for(int k = 0; k < MapColumns; k++) {
+                        loadedGridConverted[k, j] = loadedGrid[j][k];
+                    }
+                }
+                SetRoomGrid(i, new MovementGrid(MapRows, MapColumns, loadedGridConverted));
+            }
+            Console.WriteLine();
+        }
     }
 }
