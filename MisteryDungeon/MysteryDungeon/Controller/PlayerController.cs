@@ -80,8 +80,8 @@ namespace MisteryDungeon.MysteryDungeon {
                 path.Clear();
                 foreach (var step in partial.Value.Steps) {
                     path.Add(new Vector2(
-                        ((Game.Win.OrthoWidth * step.X) / TiledMapMgr.MapRows) + (TiledMapMgr.TileUnitWidth / 2),
-                        ((Game.Win.OrthoHeight * step.Y) / TiledMapMgr.MapColumns) + (TiledMapMgr.TileUnitHeight / 2)
+                        step.X * TiledMapMgr.TileUnitWidth + TiledMapMgr.TileUnitWidth / 2,
+                        step.Y * TiledMapMgr.TileUnitHeight + TiledMapMgr.TileUnitHeight / 2
                     ));
                 }
                 searchProgress = null;
