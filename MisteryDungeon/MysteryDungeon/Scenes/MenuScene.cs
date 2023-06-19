@@ -15,7 +15,7 @@ namespace MisteryDungeon {
             base.InitializeScene();
             CreateBackground();
             CreateTitle();
-            CreateMenu();
+            CreateMenuText();
             CreateCommands();
             CreateMenuLogic();
         }
@@ -37,7 +37,7 @@ namespace MisteryDungeon {
                 .SetText("Mystery Dungeon");
         }
 
-        public static void CreateMenu() {
+        public static void CreateMenuText() {
             Font stdFont = FontMgr.GetFont("stdFont");
             GameObject feedbackText = new GameObject("FeedbackText", new Vector2
                     (Game.Win.OrthoWidth * 0.5f - Game.PixelsToUnit
@@ -57,7 +57,7 @@ namespace MisteryDungeon {
 
         public static void CreateMenuLogic() {
             GameObject menuController = new GameObject("MenuController", Vector2.Zero);
-            menuController.AddComponent<MenuLogic>("UI_Confirm", "NewLoadScene", "UI_Cancel", null, false);
+            menuController.AddComponent<MenuLogic>("UI_Confirm", "NewLoadScene", "UI_Cancel", null, false, "", "");
         }
     }
 }

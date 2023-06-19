@@ -14,9 +14,11 @@ namespace MisteryDungeon.MysteryDungeon {
         private Vector2[] gatesToActiveOnHordeStart;
         private Vector2[] objectsToDisActiveOnHordeDefeated;
         private Vector2[] objectsToActiveOnHordeDefeated;
+        private int hordeNumber;
 
         public HordeMgr(GameObject owner, Vector2[] gatesToActiveOnHordeStart,
-            Vector2[] objectsToDisActiveOnHordeDefeated, Vector2[] objectsToActiveOnHordeDefeated) : base(owner) {
+            Vector2[] objectsToDisActiveOnHordeDefeated,
+            Vector2[] objectsToActiveOnHordeDefeated, int hordeNumber) : base(owner) {
             spawnPoints = new List<SpawnPoint>();
             hordeActive = false;
             EnemiesActive = 0;
@@ -24,6 +26,7 @@ namespace MisteryDungeon.MysteryDungeon {
             this.gatesToActiveOnHordeStart = gatesToActiveOnHordeStart;
             this.objectsToDisActiveOnHordeDefeated = objectsToDisActiveOnHordeDefeated;
             this.objectsToActiveOnHordeDefeated = objectsToActiveOnHordeDefeated;
+            this.hordeNumber = hordeNumber;
         }
 
         public void AddSpawnPoint(SpawnPoint spawnPoint) {
@@ -67,9 +70,9 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private void CheckHordeDefeated() {
             if (EnemiesActive <= 0 && SpawnPointsActive <= 0) {
+                GameStatsMgr.HordesDefeated++;
                 EventManager.CastEvent(EventList.HordeDefeated, EventArgsFactory.HordeDefeatedFactory());
                 EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Orda sconfitta"));
-                GameStatsMgr.HordeDefeated = true;
                 //disattivo oggetti dopo che l'orda è stata sconfitta (gates)
                 foreach (Vector2 v in objectsToDisActiveOnHordeDefeated){
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
@@ -84,7 +87,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void CheckHordeActivation() {
-            if (GameStatsMgr.HordeDefeated || GameStatsMgr.ActiveWeapon == null || hordeActive) return;
+            if (GameStatsMgr.ActiveWeapon == null || hordeActive || hordeNumber == GameStatsMgr.HordesDefeated) return;
             //attivo oggetti quando l'orda  parte (gates)
             foreach (Vector2 v in gatesToActiveOnHordeStart) {
                 GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;

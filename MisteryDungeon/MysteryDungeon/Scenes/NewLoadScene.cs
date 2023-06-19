@@ -60,13 +60,13 @@ namespace MisteryDungeon {
             GameObject feedbackText = new GameObject("FeedbackText", new Vector2
                 (Game.Win.OrthoWidth * 0.5f - Game.PixelsToUnit
                 (stdFont.CharacterWidth) * 10 * 1.3f, Game.Win.OrthoHeight * 0.5f - 1));
-            feedbackText.AddComponent<TextBox>(stdFont, 60, Vector2.One * 1.5f).
-                SetText("Mode:\n\nPress N to\n new game\nPress L to\n load existing game");
+            feedbackText.AddComponent<TextBox>(stdFont, 100, Vector2.One * 1.5f).
+                SetText("Mode:\n\nPress N to\n new game\nPress L to\n load existing game\nPress Esc to exit");
         }
 
         public static void CreateMenuLogic() {
             GameObject menuController = new GameObject("MenuController", Vector2.Zero);
-            menuController.AddComponent<MenuLogic>("UI_N", "Room_0", "UI_L", "", true);
+            menuController.AddComponent<MenuLogic>("UI_N", "Room_0", "UI_L", "", true, "UI_Cancel", null);
         }
     }
 }

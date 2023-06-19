@@ -195,11 +195,12 @@
     <Compile Include="Engine\UserComponent.cs" />
     <Compile Include="EventSystem\EventArgsFactory.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
-    <Compile Include="MysteryDungeon\BackgroundMusicLogic.cs" />
+    <Compile Include="MysteryDungeon\Logic\BackgroundMusicLogic.cs" />
     <Compile Include="MysteryDungeon\Controller\BossController.cs" />
     <Compile Include="MysteryDungeon\Bullet.cs" />
-    <Compile Include="MysteryDungeon\LoadingLogic.cs" />
-    <Compile Include="MysteryDungeon\MenuLogic.cs" />
+    <Compile Include="MysteryDungeon\Logic\GameWinLogic.cs" />
+    <Compile Include="MysteryDungeon\Logic\LoadingLogic.cs" />
+    <Compile Include="MysteryDungeon\Logic\MenuLogic.cs" />
     <Compile Include="MysteryDungeon\Mgr\MemoryCardMgr.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Hearth.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\MemoryCard.cs" />
@@ -208,8 +209,9 @@
     <Compile Include="MysteryDungeon\Mgr\BulletMgr.cs" />
     <Compile Include="MysteryDungeon\Controller\LittleBlobController.cs" />
     <Compile Include="MysteryDungeon\HealthModule.cs" />
-    <Compile Include="MysteryDungeon\PauseLogic.cs" />
+    <Compile Include="MysteryDungeon\Logic\PauseLogic.cs" />
     <Compile Include="MysteryDungeon\Scenes\NewLoadScene.cs" />
+    <Compile Include="MysteryDungeon\Scenes\Room_4.cs" />
     <Compile Include="MysteryDungeon\Scenes\Room_3.cs" />
     <Compile Include="MysteryDungeon\Mgr\SFXMgr.cs" />
     <Compile Include="MysteryDungeon\Scenes\WinScene.cs" />
@@ -245,6 +247,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Assets\Tiled\Room0.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Tiled\Room4.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Tiled\Room3.tmx">
@@ -315,6 +320,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\corgi_background.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\gold_arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Objects\gold_bow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Objects\memory_card.png">
@@ -411,9 +422,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Spritesheets\player.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\Objects\red_button.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\default_bullet.png">

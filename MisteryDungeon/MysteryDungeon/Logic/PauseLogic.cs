@@ -8,7 +8,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         //WorkingVariable
         private string[] pauseObjectsName;
-        private bool inPause;
+        public bool InPause { get; set; }
         private string playAction;
 
         public PauseLogic(GameObject owner, string[] pauseObjectsName, string pauseAction) : base(owner) {
@@ -26,12 +26,12 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void Update() {
             if (Input.GetUserButtonDown(playAction)) {
-                inPause = !inPause;
+                InPause = !InPause;
                 for (int i = 0; i < pauseObjects.Length; i++) {
-                    pauseObjects[i].IsActive = inPause;
+                    pauseObjects[i].IsActive = InPause;
                 }
-                Game.TimeScale = inPause ? 0 : 1;
-                if (inPause) EventManager.CastEvent(EventList.GamePause, EventArgsFactory.GamePauseFactory());
+                Game.TimeScale = InPause ? 0 : 1;
+                if (InPause) EventManager.CastEvent(EventList.GamePause, EventArgsFactory.GamePauseFactory());
                 else EventManager.CastEvent(EventList.GamePlay, EventArgsFactory.GamePlayFactory());
             }
         }

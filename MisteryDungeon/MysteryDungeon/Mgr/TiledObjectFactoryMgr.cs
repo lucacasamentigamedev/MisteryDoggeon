@@ -102,6 +102,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             go.IsActive = RoomObjectsMgr.AddRoomObjectActiveness(obj.Id, obj.Visible);
+            RoomObjectsMgr.SetRoomObjectActiveness(TiledMapMgr.RoomId, obj.Id, true, true, AivAlgo.Pathfinding.MovementGrid.EGridTile.Floor);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
         }
 
@@ -111,10 +112,9 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
                 ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitHeight - (TiledMapMgr.TileUnitHeight / 2)
             );
-            int gateId = int.Parse(getPropertyValueByName("gateId", obj.Properties));
             GameObject go = new GameObject("Object_" + TiledMapMgr.RoomId + "_" + obj.Id, pos);
             go.Tag = (int)GameObjectTag.Key;
-            go.AddComponent<Key>(obj.Id, gateId);
+            go.AddComponent<Key>(obj.Id);
             SpriteRenderer sr = SpriteRenderer.Factory(go, "key", Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((TiledMapMgr.TileUnitWidth / sr.Width), (TiledMapMgr.TileUnitHeight / sr.Height));
@@ -127,7 +127,6 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
         }
 
         public static void CreateSpawnPoint(Object obj) {
-            if (GameStatsMgr.HordeDefeated) return;
             Vector2 pos = new Vector2(
                 ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitHeight - (TiledMapMgr.TileUnitHeight / 2)
@@ -159,10 +158,9 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
         }
 
         public static void CreateWeapon(Object obj) {
+            if (GameStatsMgr.collectedWeapons.Contains(obj.Id)) return;
             int weaponType = int.Parse(getPropertyValueByName("weaponType", obj.Properties));
             string weaponImage = getPropertyValueByName("weaponImage", obj.Properties);
-            if (weaponType == (int)WeaponType.Bow && GameStatsMgr.ActiveWeapon !=
-                null && (int)GameStatsMgr.ActiveWeapon.WeaponType == weaponType) return;
             Vector2 pos = new Vector2(
                 ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitHeight - (TiledMapMgr.TileUnitHeight / 2)
@@ -252,8 +250,11 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             SpriteRenderer sr = SpriteRenderer.Factory(go, "redBlob", Vector2.One * 0.5f, DrawLayer.Playground, sheet.FrameWidth, sheet.FrameHeight);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((TiledMapMgr.TileUnitWidth / sr.Width) * 2, (TiledMapMgr.TileUnitHeight / sr.Height) * 2);
-            go.AddComponent<BossController>(readyTimer, speed, deathTimer,
-                new Vector2[] { new Vector2(3, 39) }, new Vector2[] {});
+            go.AddComponent<BossController>(
+                readyTimer, speed, deathTimer,
+                new Vector2[] { new Vector2(3, 39) },
+                new Vector2[] { new Vector2(3, 86), new Vector2(3, 87), new Vector2(3, 84), new Vector2(3, 88) }
+            );
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Boss;
             go.AddComponent(ColliderFactory.CreateHalfUnscaledBoxFor(go));
@@ -346,7 +347,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             );
             GameObject go = new GameObject("Object_" + TiledMapMgr.RoomId + "_" + obj.Id, pos);
             go.Tag = (int)GameObjectTag.Hearth;
-            go.AddComponent<Hearth>(obj.Id);
+            go.AddComponent<Hearth>(obj.Id, TiledMapMgr.RoomId);
             SpriteRenderer sr = SpriteRenderer.Factory(go, "hearth", Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2((TiledMapMgr.TileUnitWidth / sr.Width), (TiledMapMgr.TileUnitHeight / sr.Height));

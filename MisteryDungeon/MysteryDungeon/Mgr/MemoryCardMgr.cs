@@ -61,7 +61,7 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
                 GameStatsMgr.LoadGameStats(ReadJson<GameStatsSerialized>(stats));
                 MovementGridMgr.LoadMovementsGrids(ReadJaggeredArray<List<MovementGridArrayElemSerialized>>(movGrid));
                 RoomObjectsMgr.LoadRoomObjects(ReadJson<Dictionary<int, bool>[]>(roomObj));
-                GameStatsMgr.LoadActiveWeapon(ReadJson<WeaponSerialized>(weapon));
+                if (new FileInfo(weapon).Length != 0) GameStatsMgr.LoadActiveWeapon(ReadJson<WeaponSerialized>(weapon));
             }
         }
     }

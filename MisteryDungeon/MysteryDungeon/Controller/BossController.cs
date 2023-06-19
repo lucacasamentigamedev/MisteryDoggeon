@@ -1,4 +1,5 @@
 ﻿using Aiv.Fast2D.Component;
+using MisteryDungeon.MysteryDungeon.Scenes;
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -60,22 +61,30 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void Update() {
             if (dead) {
-                currentDeathTimer -= Game.DeltaTime;
-                if (currentDeathTimer > 0) return;
-                EventManager.CastEvent(EventList.BossDefeated, EventArgsFactory.BossDefeatedFactory());
-                EventManager.CastEvent(EventList.LOG_Boss, EventArgsFactory.LOG_Factory("Boss sconfitto"));
-                foreach (Vector2 v in objectsToDisactiveAfterBossDefeated) {
-                    GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
-                    RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
-                }
-                foreach (Vector2 v in objectsToActiveAfterBossDefeated) {
-                    GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
-                    RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);
-                }
-                GameStatsMgr.BossDefeated = true;
-                gameObject.IsActive = false;
-                return;
+                PerformDeath();
+            } else {
+                PerformMovement();
             }
+        }
+
+        public void PerformDeath() {
+            currentDeathTimer -= Game.DeltaTime;
+            if (currentDeathTimer > 0) return;
+            GameStatsMgr.BossDefeated = true;
+            EventManager.CastEvent(EventList.BossDefeated, EventArgsFactory.BossDefeatedFactory());
+            EventManager.CastEvent(EventList.LOG_Boss, EventArgsFactory.LOG_Factory("Boss sconfitto"));
+            foreach (Vector2 v in objectsToDisactiveAfterBossDefeated) {
+                GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = false;
+                RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, false);
+            }
+            foreach (Vector2 v in objectsToActiveAfterBossDefeated) {
+                GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
+                RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);
+            }
+            gameObject.IsActive = false;
+        }
+
+        public void PerformMovement() {
             currentReadyTimer -= Game.DeltaTime;
             if (currentReadyTimer > 0) {
                 shootModule.Enabled = false;

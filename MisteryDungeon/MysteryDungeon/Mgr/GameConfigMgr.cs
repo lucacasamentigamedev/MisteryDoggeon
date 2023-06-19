@@ -7,9 +7,13 @@
         public static string weaponFileName = "Weapon.json";
 
         public static bool debugBoxColliderWireframe = false;
-        private static int roomsNumber = 4;
+        private static int roomsNumber = 5;
         public static int RoomsNumber {
             get { return roomsNumber; }
+        }
+        private static int hordesNumber = 2;
+        public static int HordesNumber {
+            get { return hordesNumber; }
         }
         private static int backgroundMusicNumber = 10;
         public static int BackgroundMusicNumber {

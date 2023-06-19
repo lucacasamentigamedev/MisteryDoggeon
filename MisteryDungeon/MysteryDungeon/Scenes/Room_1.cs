@@ -23,6 +23,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
             GfxMgr.AddTexture("blackScreen", "Assets/Textures/black_screen.png");
             GfxMgr.AddTexture("memoryCard", "Assets/Textures/Objects/memory_card.png");
+            GfxMgr.AddTexture("goldArrow", "Assets/Textures/gold_arrow.png");
             //Sounds
             AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
             AudioMgr.AddClip("objectPicked", "Assets/Sounds/SFX/object_picked.wav");

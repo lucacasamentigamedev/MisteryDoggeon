@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
+using MisteryDungeon.MysteryDungeon.Logic;
 using MisteryDungeon.MysteryDungeon.Mgr;
 using OpenTK;
 
@@ -23,6 +24,9 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("blackScreen", "Assets/Textures/black_screen.png");
             GfxMgr.AddTexture("memoryCard", "Assets/Textures/Objects/memory_card.png");
             GfxMgr.AddTexture("hearth", "Assets/Textures/Objects/hearth.png");
+            GfxMgr.AddTexture("goldBow", "Assets/Textures/Objects/gold_bow.png");
+            GfxMgr.AddTexture("goldArrow", "Assets/Textures/gold_arrow.png");
+            GfxMgr.AddTexture("key", "Assets/Textures/Objects/key.png");
             //Sounds
             AudioMgr.AddClip("arrowShot", "Assets/Sounds/SFX/arrow_shot.ogg");
             AudioMgr.AddClip("background1", "Assets/Sounds/Background/background1.ogg");
@@ -50,6 +54,7 @@ namespace MisteryDungeon {
             CreateLogMgr();
             CreateMemoryCardMgr();
             CreateMap();
+            CreateGameWinLogic();
         }
 
         public void CreateLogMgr() {
@@ -70,6 +75,11 @@ namespace MisteryDungeon {
 
         public void CreateMap() {
             TiledMapMgr.CreateMap(int.Parse(GetType().Name.Substring(GetType().Name.LastIndexOf('_') + 1)));
+        }
+
+        public void CreateGameWinLogic() {
+            GameObject go = new GameObject("GameWinLogic", Vector2.Zero);
+            go.AddComponent<GameWinLogic>();
         }
     }
 }

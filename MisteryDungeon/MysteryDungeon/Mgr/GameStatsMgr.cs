@@ -8,24 +8,26 @@ namespace MisteryDungeon.MysteryDungeon {
         public bool PuzzleResolved { get; set; }
         public bool PlayerCanShoot { get; set; }
         public List<int> CollectedKeys { get; set; }
+        public List<int> CollectedWeapons { get; set; }
         public int PreviousRoom { get; set; }
         public int ActualRoom { get; set; }
-        public bool HordeDefeated { get; set; }
+        public int HordesDefeated { get; set; }
         public bool BossDefeated { get; set; }
         public float PlayerHealth { get; set; }
         public bool FirstDoorPassed { get; set; }
         public GameStatsSerialized(bool PuzzleResolved, bool PlayerCanShoot,
-            List<int> CollectedKeys, int PreviousRoom, int ActualRoom, bool HordeDefeated,
+            List<int> CollectedKeys, List<int> CollectedWeapons, int PreviousRoom, int ActualRoom, int HordesDefeated,
             bool BossDefeated, float PlayerHealth, bool FirstDoorPassed) {
             this.PuzzleResolved = PuzzleResolved;
             this.PlayerCanShoot = PlayerCanShoot;
             this.CollectedKeys = CollectedKeys;
+            this.CollectedWeapons = CollectedWeapons;
             this.PreviousRoom = PreviousRoom;
             this.ActualRoom = ActualRoom;
-            this.HordeDefeated = HordeDefeated;
             this.BossDefeated = BossDefeated;
             this.PlayerHealth = PlayerHealth;
             this.FirstDoorPassed = FirstDoorPassed;
+            this.HordesDefeated = HordesDefeated;
         }
     }
 
@@ -34,14 +36,19 @@ namespace MisteryDungeon.MysteryDungeon {
         public static bool PuzzleResolved { get; set; }
         public static bool PlayerCanShoot { get; set; }
         public static Weapon ActiveWeapon { get; set; }
-        private static List<int> collectedKeys = new List<int>();
+        public static List<int> collectedWeapons { get; set; }
+        public static List<int> CollectedWeapons {
+            get { return collectedWeapons; }
+            set { collectedWeapons = value; }
+        }
+        private static List<int> collectedKeys;
         public static List<int> CollectedKeys {
             get { return collectedKeys; }
             set { collectedKeys = value; }
         }
         public static int PreviousRoom { get; set; }
         public static int ActualRoom { get; set; }
-        public static bool HordeDefeated { get; set; }
+        public static int HordesDefeated { get; set; }
         public static bool BossDefeated { get; set; }
         public static float maxPlayerHealth = 20;
         private static float playerHealth = 20;
@@ -51,35 +58,42 @@ namespace MisteryDungeon.MysteryDungeon {
         }
         public static bool FirstDoorPassed { get; set; }
 
+        static GameStatsMgr() {
+            CollectedKeys = new List<int>();
+            CollectedWeapons = new List<int>();
+        }
+
         public static void ResetGameStats() {
             PuzzleResolved = false;
             PlayerCanShoot = false;
             ActiveWeapon = null;
             CollectedKeys.Clear();
+            CollectedWeapons.Clear();
             PreviousRoom = 0;
             ActualRoom = 0;
-            HordeDefeated = false;
             BossDefeated = false;
             PlayerHealth = maxPlayerHealth;
             FirstDoorPassed = false;
+            HordesDefeated = 0;
         }
 
         public static GameStatsSerialized GetGameStats() {
             return new GameStatsSerialized(PuzzleResolved, PlayerCanShoot,
-                CollectedKeys, PreviousRoom, ActualRoom, HordeDefeated,
-                BossDefeated, PlayerHealth, FirstDoorPassed);
+            CollectedKeys, CollectedWeapons, PreviousRoom, ActualRoom, HordesDefeated,
+            BossDefeated, PlayerHealth, FirstDoorPassed);
         }
 
         public static void LoadGameStats(GameStatsSerialized gameStats) {
             PuzzleResolved = gameStats.PuzzleResolved;
             PlayerCanShoot = gameStats.PlayerCanShoot;
             CollectedKeys = gameStats.CollectedKeys;
+            CollectedWeapons = gameStats.CollectedWeapons;
             PreviousRoom = gameStats.PreviousRoom;
             ActualRoom = gameStats.ActualRoom;  
-            HordeDefeated = gameStats.HordeDefeated;
             BossDefeated = gameStats.BossDefeated;
             PlayerHealth = gameStats.PlayerHealth;
             FirstDoorPassed = gameStats.FirstDoorPassed;
+            HordesDefeated = gameStats.HordesDefeated;
             Console.WriteLine();
         }
 

@@ -3,8 +3,8 @@ using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
 
-    public enum BulletType { Arrow, Globe, Last }
-    public enum WeaponType { Bow, Blaster, Last }
+    public enum BulletType { Arrow, Globe, GoldArrow, Last }
+    public enum WeaponType { Bow, Blaster, GoldBow, Last }
 
     internal class BulletMgr : UserComponent {
 
@@ -29,6 +29,9 @@ namespace MisteryDungeon.MysteryDungeon {
                             break;
                         case (int)BulletType.Globe:
                             bulletsPool[i, j] = CreateGlobe(j);
+                            break;
+                        case (int)BulletType.GoldArrow:
+                            bulletsPool[i, j] = CreateGoldArrow(j);
                             break;
                     }
                 }
@@ -66,6 +69,24 @@ namespace MisteryDungeon.MysteryDungeon {
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width / 2, TiledMapMgr.TileUnitHeight / sr.Height / 2);
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
             return go.AddComponent<Bullet>(globeDamage, BulletType.Globe, globeSpeed);
+        }
+
+        private Bullet CreateGoldArrow(int index) {
+            GameObject go = new GameObject("Bullet_Arrow_" + index, Vector2.Zero, false);
+            go.Tag = (int)GameObjectTag.PlayerBullet;
+            SpriteRenderer sr = SpriteRenderer.Factory(go, "goldArrow", new Vector2(0.5f, 0.5f), DrawLayer.Playground);
+            go.AddComponent(sr);
+            Rigidbody rb = go.AddComponent<Rigidbody>();
+            rb.Type = RigidbodyType.PlayerBullet;
+            rb.AddCollisionType((uint)RigidbodyType.Enemy);
+            rb.AddCollisionType((uint)RigidbodyType.Obstacle);
+            rb.AddCollisionType((uint)RigidbodyType.SpawnPoint);
+            rb.AddCollisionType((uint)RigidbodyType.Wall);
+            rb.AddCollisionType((uint)RigidbodyType.Boss);
+            go.AddComponent(ColliderFactory.CreateUnscaledBoxFor(go));
+            if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
+            EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
+            return go.AddComponent<Bullet>(arrowDamage, BulletType.Arrow, arrowSpeed);
         }
 
         public Bullet GetBullet(BulletType bulletType) {

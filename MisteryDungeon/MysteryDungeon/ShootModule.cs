@@ -59,7 +59,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public bool Shoot(Vector2 startPosition, Vector2 velocity) {
             Bullet bullet = bulletMgr.GetBullet(bulletType);
             if (bullet == null) return false;
-            if(bulletType == BulletType.Arrow)
+            if(bulletType == BulletType.Arrow || bulletType == BulletType.GoldArrow)
                 EventManager.CastEvent(EventList.ArrowShot, EventArgsFactory.ArrowShotFactory());
             bullet.Shoot(startPosition, velocity);
             return true;

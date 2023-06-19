@@ -15,7 +15,8 @@ namespace MisteryDungeon.Scenes {
             base.InitializeScene();
             CreateBackground();
             CreateTitle();
-            CreateFeedback();
+            CreateText();
+            CreateMenuLogic();
         }
 
         public void CreateBackground() {
@@ -34,15 +35,18 @@ namespace MisteryDungeon.Scenes {
             titleText.AddComponent<TextBox>(stdFont, 15, Vector2.One * 2)
                 .SetText("Game Over...");
         }
-        public void CreateFeedback() {
+        public void CreateText() {
             Font stdFont = FontMgr.GetFont("stdFont");
             GameObject feedbackText = new GameObject("FeedbackText", new Vector2
                     (Game.Win.OrthoWidth * 0.5f - Game.PixelsToUnit
                     (stdFont.CharacterWidth) * 9, Game.Win.OrthoHeight * 0.5f));
             feedbackText.AddComponent<TextBox>(stdFont, 60, Vector2.One * 1.5f).
                 SetText("Press Enter\nto return to\nmain menu or\nEsc to exit");
+        }
+
+        public static void CreateMenuLogic() {
             GameObject menuController = new GameObject("MenuController", Vector2.Zero);
-            menuController.AddComponent<MenuLogic>("UI_Confirm", "MenuScene", "UI_Cancel", null, false);
+            menuController.AddComponent<MenuLogic>("UI_Confirm", "MenuScene", "UI_Cancel", null, false, "", "");
         }
     }
 }

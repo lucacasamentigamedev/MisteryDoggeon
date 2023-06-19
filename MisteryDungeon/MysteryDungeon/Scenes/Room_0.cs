@@ -19,6 +19,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("bow", "Assets/Textures/Objects/bow.png");
             GfxMgr.AddTexture("redGlobe", "Assets/Textures/red_globe.png");
             GfxMgr.AddTexture("arrow", "Assets/Textures/arrow.png");
+            GfxMgr.AddTexture("goldArrow", "Assets/Textures/gold_arrow.png");
             GfxMgr.AddTexture("healthBarBackground", "Assets/Textures/healthbar_background.png");
             GfxMgr.AddTexture("healthBarForeground", "Assets/Textures/healthbar_foreground.png");
             GfxMgr.AddTexture("MapTileset.png", "Assets/Tiled/MapTileset.png");
@@ -54,6 +55,17 @@ namespace MisteryDungeon {
             CreateMemoryCardMgr();
             CreatePuzzleMgr();
             CreateMap();
+
+
+
+
+            //cheat per andare dritti al boss
+            /*RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
+            GameObject.Find("Object_0_27").IsActive = false;
+            GameObject.Find("Object_0_22").IsActive = true;
+            GameStatsMgr.CollectedKeys.Add(25);
+            GameStatsMgr.HordesDefeated = 1;
+            RoomObjectsMgr.SetRoomObjectActiveness(2, 38, false);*/
         }
 
         public void CreateLogMgr() {

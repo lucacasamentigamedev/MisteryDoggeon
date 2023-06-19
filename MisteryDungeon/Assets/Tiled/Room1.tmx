@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="43">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="44">
  <tileset firstgid="1" source="MapTileset.tsx"/>
- <layer id="1" name="Background" width="15" height="15" visible="0">
+ <layer id="1" name="Background" width="15" height="15">
   <data encoding="csv">
-241,242,306,242,242,308,242,242,242,307,242,242,306,242,243,
+241,242,306,242,242,308,242,270,242,307,242,242,306,242,243,
 257,293,293,293,293,293,293,293,293,293,293,293,293,293,259,
 257,293,293,293,293,293,293,293,293,293,293,293,293,293,324,
 354,293,293,293,293,293,293,293,293,293,293,293,293,293,259,
@@ -20,13 +20,8 @@
 273,274,339,274,274,339,274,274,274,339,274,274,340,274,275
 </data>
  </layer>
- <objectgroup id="2" name="Objects">
-  <object id="25" name="key" class="Key" gid="2" x="112" y="128" width="16" height="16">
-   <properties>
-    <property name="gateId" type="int" value="38"/>
-    <property name="gateRoom" type="int" value="2"/>
-   </properties>
-  </object>
+ <objectgroup id="2" name="Objects" visible="0">
+  <object id="25" name="key" class="Key" gid="2" x="112" y="128" width="16" height="16"/>
   <object id="26" name="obstacle" class="Obstacle" gid="388" x="32" y="48" width="16" height="16"/>
   <object id="27" name="obstacle" class="Obstacle" gid="388" x="48" y="48" width="16" height="16"/>
   <object id="28" name="obstacle" class="Obstacle" gid="388" x="64" y="48" width="16" height="16"/>
@@ -57,10 +52,16 @@
     <property name="respawnTimer" value="5"/>
    </properties>
   </object>
+  <object id="43" name="door" class="Door" gid="2" x="112" y="16" width="16" height="16">
+   <properties>
+    <property name="lockedBy" type="int" value="88"/>
+    <property name="roomToGo" type="int" value="4"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="5" name="Collisions" width="15" height="15" opacity="0.5">
   <data encoding="csv">
-237,237,237,237,237,237,237,237,237,237,237,237,237,237,237,
+237,237,237,237,237,237,237,1,237,237,237,237,237,237,237,
 237,0,1,0,0,0,0,0,0,0,0,0,1,1,237,
 237,0,237,237,237,0,0,237,0,0,0,0,0,0,237,
 237,0,0,0,0,0,0,0,0,0,0,237,0,0,237,

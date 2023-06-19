@@ -9,14 +9,18 @@ namespace MisteryDungeon.MysteryDungeon {
         private string uiCancel;
         private string cancelScene;
         private bool memoryCard;
+        private string otherInput;
+        private string otherScene;
 
         public MenuLogic(GameObject owner, string uiConfirm, string confirmScene,
-            string uiCancel, string cancelScene, bool memoryCard) : base(owner) {
+            string uiCancel, string cancelScene, bool memoryCard, string otherInput = "", string otherScene = "") : base(owner) {
             this.uiConfirm = uiConfirm;
             this.confirmScene = confirmScene;
             this.uiCancel = uiCancel;
             this.cancelScene = cancelScene;
             this.memoryCard = memoryCard;
+            this.otherInput = otherInput;
+            this.otherScene = otherScene;
         }
 
         public override void Update() {
@@ -31,6 +35,9 @@ namespace MisteryDungeon.MysteryDungeon {
                 };
                 Type cancel = !string.IsNullOrEmpty(cancelScene) ? Type.GetType("MisteryDungeon." + cancelScene) : null;
                 Game.TriggerChangeScene(cancel != null ? Activator.CreateInstance(cancel) as Scene : null);
+            } else if (Input.GetUserButtonDown(otherInput)) {
+                Type scene = !string.IsNullOrEmpty(otherScene) ? Type.GetType("MisteryDungeon." + otherScene) : null;
+                Game.TriggerChangeScene(scene != null ? Activator.CreateInstance(scene) as Scene : null);
             }
         }
     }

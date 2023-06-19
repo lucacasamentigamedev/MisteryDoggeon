@@ -1,5 +1,6 @@
 ﻿using Aiv.Fast2D.Component;
 using MisteryDungeon.AivAlgo.Pathfinding;
+using MisteryDungeon.MysteryDungeon.RoomObjects;
 using MisteryDungeon.Scenes;
 using OpenTK;
 using System;
@@ -20,6 +21,7 @@ namespace MisteryDungeon.MysteryDungeon {
         private SheetAnimator animator;
         private HealthModule healthModule;
         private ShootModule shootModule;
+        private PauseLogic pauseLogic;
 
         //working var
         private float moveSpeed;
@@ -46,9 +48,11 @@ namespace MisteryDungeon.MysteryDungeon {
             animator = GetComponent<SheetAnimator>();
             healthModule = GetComponent<HealthModule>();
             shootModule = GetComponent<ShootModule>();
+            pauseLogic = GameObject.Find("PauseLogic").GetComponent<PauseLogic>();
         }
 
         public override void Update() {
+            if (pauseLogic.InPause) return;
             if (dead) {
                 currentDeathTimer -= Game.DeltaTime;
                 if (currentDeathTimer > 0) return;
@@ -146,6 +150,7 @@ namespace MisteryDungeon.MysteryDungeon {
                     EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.
                         ObjectPickedFactory());
                     Weapon weapon = collisionInfo.Collider.gameObject.GetComponent<Weapon>();
+                    GameStatsMgr.collectedWeapons.Add(weapon.Id);
                     GameStatsMgr.ActiveWeapon = weapon;
                     ShootModule sm = GetComponent<ShootModule>();
                     sm.Enabled = true;
@@ -187,8 +192,12 @@ namespace MisteryDungeon.MysteryDungeon {
                     mc.PickedMemoryCard();
                     break;
                 case (int)GameObjectTag.Hearth:
+                    Hearth hearth = collisionInfo.Collider.gameObject.GetComponent<Hearth>();
+                    EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.ObjectPickedFactory());
                     healthModule.ResetHealth();
-                    collisionInfo.Collider.gameObject.IsActive = false;
+                    hearth.gameObject.IsActive = false;
+                    GameStatsMgr.PlayerHealth = healthModule.Health;
+                    RoomObjectsMgr.SetRoomObjectActiveness(hearth.RoomId, hearth.ID, false, false);
                     break;
             }
         }
