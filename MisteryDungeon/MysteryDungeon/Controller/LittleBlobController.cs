@@ -1,4 +1,5 @@
-﻿using Aiv.Fast2D.Component;
+﻿using System;
+using Aiv.Fast2D.Component;
 using Aiv.Tiled;
 using OpenTK;
 
@@ -9,20 +10,18 @@ namespace MisteryDungeon.MysteryDungeon {
         public float Damage {
             get { return damage; }
         }
-        public float speed;
         public float currentDeathTimer;
         private bool dead;
         public bool Dead {
             get { return dead; }
         }
         private float deathTimer;
-
+        private float speed;
         private Rigidbody rigidbody;
         private Transform targetTransform;
         private SheetAnimator animator;
 
-        public LittleBlobController(GameObject owner, float speed, float damage, float deathTimer) : base(owner) {
-            this.speed = speed;
+        public LittleBlobController(GameObject owner, float damage, float deathTimer) : base(owner) {
             this.damage = damage;
             dead = false;
             this.deathTimer = deathTimer;
@@ -49,9 +48,10 @@ namespace MisteryDungeon.MysteryDungeon {
             rigidbody.Velocity = direction.Normalized() * speed;
         }
 
-        public void Spawn(Vector2 startPosition) {
+        public void Spawn(Vector2 startPosition, float speed) {
             transform.Position = startPosition;
             dead = false;
+            this.speed = speed;
             currentDeathTimer = deathTimer;
             gameObject.IsActive = true;
             animator.ChangeClip("walking");

@@ -137,13 +137,14 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             int enemiesNumber = int.Parse(getPropertyValueByName("enemiesNumber", obj.Properties));
             float spawnPointHealth = float.Parse(getPropertyValueByName("spawnPointHealth", obj.Properties));
             float enemyHealth = float.Parse(getPropertyValueByName("enemyHealth", obj.Properties));
-            float enemySpeed = float.Parse(getPropertyValueByName("enemySpeed", obj.Properties));
+            float enemyMinSpeed = float.Parse(getPropertyValueByName("enemyMinSpeed", obj.Properties));
+            float enemyMaxSpeed = float.Parse(getPropertyValueByName("enemyMaxSpeed", obj.Properties));
             float enemyDamage = float.Parse(getPropertyValueByName("enemyDamage", obj.Properties));
             float deathTimer = float.Parse(getPropertyValueByName("deathTimer", obj.Properties));
             GameObject go = new GameObject("Object_" + TiledMapMgr.RoomId + "_" + obj.Id, pos);
             go.Tag = (int)GameObjectTag.SpawnPoint;
             SpawnPoint sp = go.AddComponent<SpawnPoint>(enemiesNumber, enemyType,
-                spawnTimer, readyTimer, enemyHealth, enemySpeed, enemyDamage, deathTimer);
+                spawnTimer, readyTimer, enemyHealth, enemyMinSpeed, enemyMaxSpeed, enemyDamage, deathTimer);
             GameObject.Find("HordeMgr").GetComponent<HordeMgr>().AddSpawnPoint(sp);
             SpriteRenderer sr = SpriteRenderer.Factory(go, "spawnPoint", Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);

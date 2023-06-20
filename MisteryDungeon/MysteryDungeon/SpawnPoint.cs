@@ -1,5 +1,5 @@
-﻿using Aiv.Fast2D.Component;
-using MisteryDungeon.MysteryDungeon.Utility;
+﻿using System;
+using Aiv.Fast2D.Component;
 using OpenTK;
 
 namespace MisteryDungeon.MysteryDungeon {
@@ -13,18 +13,20 @@ namespace MisteryDungeon.MysteryDungeon {
         private float currentSpawnTimer;
         private float currentReadyTimer;
         private float enemyHealth;
-        private float enemySpeed;
+        private float enemyMinSpeed;
+        private float enemyMaxSpeed;
         private float enemyDamage;
         private float deathTimer;
 
         public SpawnPoint(GameObject owner, int poolSize, EnemyType enemyType, float spawnTimer,
-            float readyTimer, float enemyHealth, float enemySpeed, float enemyDamage, float deathTimer) : base(owner) {
+            float readyTimer, float enemyHealth, float enemyMinSpeed, float enemyMaxSpeed, float enemyDamage, float deathTimer) : base(owner) {
             currentReadyTimer = readyTimer;
             this.spawnTimer = spawnTimer;
             currentSpawnTimer = 0;
             enemiesPool = new LittleBlobController[poolSize];
             this.enemyHealth = enemyHealth;
-            this.enemySpeed = enemySpeed;
+            this.enemyMinSpeed = enemyMinSpeed;
+            this.enemyMaxSpeed = enemyMaxSpeed;
             this.enemyDamage = enemyDamage;
             this.deathTimer = deathTimer;
             for (int i = 0; i < enemiesPool.Length; i++) {
@@ -51,7 +53,7 @@ namespace MisteryDungeon.MysteryDungeon {
             go.transform.Scale = new Vector2((TiledMapMgr.TileUnitWidth / sr.Width), (TiledMapMgr.TileUnitHeight / sr.Height));
             go.AddComponent<HealthModule>(enemyHealth, enemyHealth, new Vector2(-0.5f, -0.4f));
             CreateBlobAnimations(go, sheet);
-            return go.AddComponent<LittleBlobController>(enemySpeed, enemyDamage, deathTimer);
+            return go.AddComponent<LittleBlobController>(enemyDamage, deathTimer);
         }
 
         private static void CreateBlobAnimations(GameObject go, Sheet sheet) {
@@ -81,7 +83,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if (currentSpawnTimer > 0) return;
             LittleBlobController enemy = GetEnemy();
             if (enemy != null) {
-                enemy.Spawn(transform.Position);
+                enemy.Spawn(transform.Position, RandomGenerator.GetRandomFloat(enemyMinSpeed, enemyMaxSpeed));
                 currentSpawnTimer = spawnTimer;
                 EventManager.CastEvent(EventList.EnemySpawned, EventArgsFactory.EnemySpawnedFactory());
                 EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Spaw blob nemico"));

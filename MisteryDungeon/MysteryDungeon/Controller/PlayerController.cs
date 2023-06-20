@@ -129,10 +129,7 @@ namespace MisteryDungeon.MysteryDungeon {
             switch(collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Door:
                     Door door = collisionInfo.Collider.gameObject.GetComponent<Door>();
-                    if (door.LockedBy >= 0 && !GameStatsMgr.CollectedKeys.Contains(door.LockedBy)) {
-                        EventManager.CastEvent(EventList.ActionNotAllowed, EventArgsFactory.ActionNotAllowedFactory());
-                        return;
-                    };
+                    if (door.LockedBy >= 0 && !GameStatsMgr.CollectedKeys.Contains(door.LockedBy)) return;
                     GameStatsMgr.PreviousRoom = GameStatsMgr.ActualRoom;
                     GameStatsMgr.ActualRoom = door.RoomToGo;
                     EventManager.CastEvent(EventList.StartLoading, EventArgsFactory.StartLoadingFactory());

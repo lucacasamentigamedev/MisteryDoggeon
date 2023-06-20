@@ -15,6 +15,7 @@ namespace MisteryDungeon.MysteryDungeon.Scenes {
             CreateBackground();
             CreateTitle();
             CreateMenuText();
+            CreateMenuController();
         }
 
         public void CreateBackground() {

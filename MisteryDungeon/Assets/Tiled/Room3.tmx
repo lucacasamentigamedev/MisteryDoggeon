@@ -80,7 +80,7 @@
     <property name="bulletType" type="int" value="2"/>
     <property name="offsetShootX" type="float" value="0.5"/>
     <property name="offsetShootY" type="float" value="0.5"/>
-    <property name="reloadTime" type="float" value="0.2"/>
+    <property name="reloadTime" type="float" value="0.1"/>
     <property name="weaponImage" value="goldBow"/>
     <property name="weaponType" type="int" value="2"/>
    </properties>
