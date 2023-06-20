@@ -99,7 +99,7 @@
     <property name="enemiesNumber" type="int" value="5"/>
     <property name="enemyDamage" type="float" value="5"/>
     <property name="enemyHealth" type="float" value="5"/>
-    <property name="enemyMaxSpeed" type="float" value="2.5"/>
+    <property name="enemyMaxSpeed" type="float" value="2"/>
     <property name="enemyMinSpeed" type="float" value="0.3"/>
     <property name="enemyType" type="int" value="0"/>
     <property name="readyTimer" type="float" value="1"/>
