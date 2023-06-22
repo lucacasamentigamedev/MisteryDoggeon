@@ -47,6 +47,12 @@ namespace MisteryDungeon {
             AudioMgr.AddClip("background8", "Assets/Sounds/Background/background8.ogg");
             AudioMgr.AddClip("background9", "Assets/Sounds/Background/background9.ogg");
             AudioMgr.AddClip("background10", "Assets/Sounds/Background/background10.ogg");
+            AudioMgr.AddClip("background11", "Assets/Sounds/Background/background11.ogg");
+            AudioMgr.AddClip("background12", "Assets/Sounds/Background/background12.ogg");
+            AudioMgr.AddClip("background13", "Assets/Sounds/Background/background13.ogg");
+            AudioMgr.AddClip("background14", "Assets/Sounds/Background/background14.ogg");
+            AudioMgr.AddClip("background15", "Assets/Sounds/Background/background15.ogg");
+            AudioMgr.AddClip("background16", "Assets/Sounds/Background/background16.ogg");
             AudioMgr.AddClip("actionNotAllowed", "Assets/Sounds/SFX/action_not_allowed.wav");
             AudioMgr.AddClip("clockTick", "Assets/Sounds/SFX/clock_tick.ogg");
             AudioMgr.AddClip("puzzleReady", "Assets/Sounds/SFX/woop.wav");

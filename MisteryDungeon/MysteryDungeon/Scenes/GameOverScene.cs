@@ -10,6 +10,7 @@ namespace MisteryDungeon.Scenes {
         protected override void LoadAssets() {
             FontMgr.AddFont("std_font", "Assets/Textures/text_sheet.png", 15, 32, 20, 20);
             GfxMgr.AddTexture("background", "Assets/Textures/corgi_background.jpg");
+            AudioMgr.AddClip("background", "Assets/Sounds/Background/background5.ogg");
         }
 
         public override void InitializeScene() {
@@ -19,6 +20,7 @@ namespace MisteryDungeon.Scenes {
             CreateStatistics();
             CreateMenuText();
             CreateMenuLogic();
+            CreateBackgroundMusic();
         }
 
         public void CreateBackground() {
@@ -68,6 +70,15 @@ namespace MisteryDungeon.Scenes {
         public static void CreateMenuLogic() {
             GameObject menuController = new GameObject("MenuController", Vector2.Zero);
             menuController.AddComponent<MenuLogic>("UI_Confirm", "MenuScene", "UI_Cancel", null, false, "", "");
+        }
+
+        private static void CreateBackgroundMusic() {
+            GameObject gameLogic = new GameObject("BackgroundMusic", Vector2.Zero);
+            AudioSourceComponent audioSource = gameLogic.AddComponent<AudioSourceComponent>();
+            gameLogic.AddComponent<BackgroundMusicLogic>();
+            audioSource.SetClip(AudioMgr.GetClip("background"));
+            audioSource.Loop = true;
+            audioSource.Play();
         }
     }
 }

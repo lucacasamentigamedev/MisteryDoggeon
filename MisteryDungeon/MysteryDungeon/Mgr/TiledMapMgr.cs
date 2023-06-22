@@ -154,7 +154,7 @@ namespace MisteryDungeon.MysteryDungeon {
             AudioSourceComponent audioSource = gameLogic.AddComponent<AudioSourceComponent>();
             gameLogic.AddComponent<BackgroundMusicLogic>();
             int backgroundClipId = BackgroundClipId;
-            while(backgroundClipId == BackgroundClipId) {
+            while (backgroundClipId == BackgroundClipId) {
                 backgroundClipId = RandomGenerator.GetRandomInt(1, GameConfigMgr.BackgroundMusicNumber + 1);
             }
             BackgroundClipId = backgroundClipId;

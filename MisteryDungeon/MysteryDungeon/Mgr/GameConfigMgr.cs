@@ -15,7 +15,7 @@
         public static int HordesNumber {
             get { return hordesNumber; }
         }
-        private static int backgroundMusicNumber = 10;
+        private static int backgroundMusicNumber = 16;
         public static int BackgroundMusicNumber {
             get { return backgroundMusicNumber; }
         }
