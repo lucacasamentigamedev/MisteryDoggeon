@@ -82,21 +82,21 @@ namespace MisteryDungeon.MysteryDungeon {
             partial = searchProgress.Step(30);
             if (partial.HasValue) {
                 path.Clear();
-                foreach (var step in partial.Value.Steps) {
-                    path.Add(new Vector2(
-                        step.X * TiledMapMgr.TileUnitWidth + TiledMapMgr.TileUnitWidth / 2,
-                        step.Y * TiledMapMgr.TileUnitHeight + TiledMapMgr.TileUnitHeight / 2
-                    ));
-                }
                 searchProgress = null;
-                EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(MovementGridMgr.PrintPathfindingPath(path)));
-                if (path.Count <= 0) {
+                if (partial.Value.Steps.Count <= 0) {
                     //click on wall or obstacle
                     EventManager.CastEvent(EventList.ActionNotAllowed, EventArgsFactory.ActionNotAllowedFactory());
                     StopMovement(Vector2.Zero);
                 } else {
+                    foreach (var step in partial.Value.Steps) {
+                        path.Add(new Vector2(
+                            step.X * TiledMapMgr.TileUnitWidth + TiledMapMgr.TileUnitWidth / 2,
+                            step.Y * TiledMapMgr.TileUnitHeight + TiledMapMgr.TileUnitHeight / 2
+                        ));
+                    }
+                    EventManager.CastEvent(EventList.LOG_Pathfinding, EventArgsFactory.LOG_Factory(MovementGridMgr.PrintPathfindingPath(path)));
                     isMoving = true;
-                };
+                }
             }
         }
 
