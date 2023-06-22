@@ -24,7 +24,6 @@ namespace MisteryDungeon.MysteryDungeon.Logic {
 
         public void OnEnemyDead(EventArgs message) {
             GameStats.EnemiesKilled++;
-            Console.WriteLine("Ricevuto evento, nemici sconfitti: " + GameStats.EnemiesKilled);
         }
 
         public void OnArrowShot(EventArgs message) {

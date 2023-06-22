@@ -48,7 +48,7 @@ namespace MisteryDungeon.Scenes {
                 SetText("Statistics:");
             temp = new GameObject("Statistics text", new Vector2
                     (Game.Win.OrthoWidth * 0.5f - Game.PixelsToUnit
-                    (stdFont.CharacterWidth) * 10 * 1.4f, Game.Win.OrthoHeight * 0.4f));
+                    (stdFont.CharacterWidth) * 10 * 1.5f, Game.Win.OrthoHeight * 0.4f));
             temp.AddComponent<TextBox>(stdFont, 100, Vector2.One * 1.5f).
                 SetText(
                     "Game Time: " + TimeSpan.FromSeconds(GameStats.ElapsedTime).ToString("hh':'mm':'ss") + "\n" +

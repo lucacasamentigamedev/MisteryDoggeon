@@ -108,6 +108,7 @@ namespace MisteryDungeon.MysteryDungeon {
             buttonToPress++;
             EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Premuto pulsante giusto " + buttonToPress + "/" + TotalButtons));
             if(buttonToPress == TotalButtons) {
+                UIController.DisactivePuzzleTimer();
                 EventManager.CastEvent(EventList.SequenceCompleted, EventArgsFactory.SequenceCompletedFactory());
                 EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Puzzle risolto"));
                 GameStats.PuzzleResolved = true;
