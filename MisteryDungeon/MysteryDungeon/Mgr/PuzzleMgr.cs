@@ -1,4 +1,6 @@
 ﻿using Aiv.Fast2D.Component;
+using Aiv.Fast2D.Component.UI;
+using MisteryDungeon.MysteryDungeon.Mgr;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,7 @@ namespace MisteryDungeon.MysteryDungeon {
         private Vector2[] objectsToActiveAfterPuzzleResolved;
         private Vector2[] objectsToDisactiveAfterPuzzleResolved;
         private List<PlatformButton> buttons;
+        private UIController UIController;
 
         public PuzzleMgr(GameObject owner, float puzzleTimer, float waitingResetPuzzleTimer,
             Vector2[] objectsToActiveAfterPuzzleResolved, Vector2[] objectsToDisactiveAfterPuzzleResolved) : base(owner) {
@@ -32,12 +35,16 @@ namespace MisteryDungeon.MysteryDungeon {
             TotalButtons = 0;
         }
 
+        public override void Awake() {
+            UIController = GameObject.Find("UIController").GetComponent<UIController>();
+        }
+
         public void AddPlatformButton(PlatformButton pb) {
             buttons.Add(pb);
         }
 
         public override void Update() {
-            if (GameStatsMgr.PuzzleResolved) return;
+            if (GameStats.PuzzleResolved) return;
             if (!puzzleReady) currentWaitingResetPuzzleTimer -= Game.DeltaTime;
             if (currentWaitingResetPuzzleTimer > 0) return;
             if (!puzzleReady) {
@@ -55,6 +62,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void ResetPuzzle() {
+            UIController.DisactivePuzzleTimer();
             EventManager.CastEvent(EventList.SequenceWrong, EventArgsFactory.SequenceWrongFactory());
             EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Reset puzzle"));
             puzzleActive = false;
@@ -80,11 +88,13 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void OnButtonPressed(EventArgs message) {
-            if (GameStatsMgr.PuzzleResolved || !puzzleReady) return;
+            if (GameStats.PuzzleResolved || !puzzleReady) return;
             EventArgsFactory.PlatformButtonPressedParser(message, out PlatformButton platformButton);
             if (platformButton.Pressed) return;
-            //test console.write
-            if (!puzzleActive) EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Attivo il puzzle"));
+            if (!puzzleActive) {
+                UIController.ActivatePuzzleTimer();
+                EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Attivo il puzzle"));
+            }
             puzzleActive = true;
             if (platformButton.SequenceId == lastButtonPressed) return;
             if (platformButton.SequenceId != buttonToPress) {
@@ -100,7 +110,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if(buttonToPress == TotalButtons) {
                 EventManager.CastEvent(EventList.SequenceCompleted, EventArgsFactory.SequenceCompletedFactory());
                 EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Puzzle risolto"));
-                GameStatsMgr.PuzzleResolved = true;
+                GameStats.PuzzleResolved = true;
                 foreach (Vector2 v in objectsToActiveAfterPuzzleResolved) {
                     GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;
                     RoomObjectsMgr.SetRoomObjectActiveness((int)v.X, (int)v.Y, true);
@@ -116,6 +126,7 @@ namespace MisteryDungeon.MysteryDungeon {
             lastRemainingSecs = actualRemainingSecs;
             EventManager.CastEvent(EventList.ClockTick, EventArgsFactory.ClockTickFactory());
             EventManager.CastEvent(EventList.LOG_Puzzle, EventArgsFactory.LOG_Factory("Secondi rimanenti = " + lastRemainingSecs));
+            UIController.SetPuzzleTimerCountdownText(actualRemainingSecs.ToString());
         }
     }
 }

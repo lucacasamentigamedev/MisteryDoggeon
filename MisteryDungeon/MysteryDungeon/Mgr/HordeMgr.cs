@@ -41,13 +41,13 @@ namespace MisteryDungeon.MysteryDungeon {
 
         public override void Start() {
             EventManager.AddListener(EventList.EnemySpawned, OnEnemySpawned);
-            EventManager.AddListener(EventList.EnemyDestroyed, OnEnemyDestroyed);
+            EventManager.AddListener(EventList.EnemyDespawn, OnEnemyDespawn);
             EventManager.AddListener(EventList.SpawnPointDestroyed, OnSpawnPointDestroyed);
         }
 
         public override void OnDestroy() {
             EventManager.RemoveListener(EventList.EnemySpawned, OnEnemySpawned);
-            EventManager.RemoveListener(EventList.EnemyDestroyed, OnEnemyDestroyed);
+            EventManager.RemoveListener(EventList.EnemyDespawn, OnEnemyDespawn);
             EventManager.RemoveListener(EventList.SpawnPointDestroyed, OnSpawnPointDestroyed);
         }
 
@@ -56,7 +56,7 @@ namespace MisteryDungeon.MysteryDungeon {
             EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Nemici attivi: " + EnemiesActive + " SpawnPoint attivi: " + SpawnPointsActive));
         }
 
-        private void OnEnemyDestroyed(EventArgs message) {
+        private void OnEnemyDespawn(EventArgs message) {
             EnemiesActive--;
             EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Nemici attivi: " + EnemiesActive + " SpawnPoint attivi: " + SpawnPointsActive));
             CheckHordeDefeated();
@@ -70,7 +70,7 @@ namespace MisteryDungeon.MysteryDungeon {
 
         private void CheckHordeDefeated() {
             if (EnemiesActive <= 0 && SpawnPointsActive <= 0) {
-                GameStatsMgr.HordesDefeated++;
+                GameStats.HordesDefeated++;
                 EventManager.CastEvent(EventList.HordeDefeated, EventArgsFactory.HordeDefeatedFactory());
                 EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Orda sconfitta"));
                 //disattivo oggetti dopo che l'orda è stata sconfitta (gates)
@@ -87,7 +87,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public void CheckHordeActivation() {
-            if (GameStatsMgr.ActiveWeapon == null || hordeActive || hordeNumber == GameStatsMgr.HordesDefeated) return;
+            if (GameStats.ActiveWeapon == null || hordeActive || hordeNumber == GameStats.HordesDefeated) return;
             //attivo oggetti quando l'orda  parte (gates)
             foreach (Vector2 v in gatesToActiveOnHordeStart) {
                 GameObject.Find("Object_" + v.X + "_" + v.Y).IsActive = true;

@@ -41,7 +41,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if (dead) {
                 currentDeathTimer -= Game.DeltaTime;
                 if (currentDeathTimer > 0) return;
-                DestroyEnemy();
+                Despawn();
                 return;
             }
             Vector2 direction = targetTransform.Position - transform.Position;
@@ -62,6 +62,7 @@ namespace MisteryDungeon.MysteryDungeon {
             if (dead) return;
             HealthModule hm = GetComponent<HealthModule>();
             if (hm.TakeDamage(damage)) {
+                Console.WriteLine("casto l'evento che un nemico è morto");
                 EventManager.CastEvent(EventList.EnemyDead, EventArgsFactory.EnemyDeadFactory());
                 rigidbody.Velocity = Vector2.Zero;
                 animator.ChangeClip("death");
@@ -72,8 +73,8 @@ namespace MisteryDungeon.MysteryDungeon {
             }
         }
 
-        public void DestroyEnemy() {
-            EventManager.CastEvent(EventList.EnemyDestroyed, EventArgsFactory.EnemyDestroyedFactory());
+        public void Despawn() {
+            EventManager.CastEvent(EventList.EnemyDespawn, EventArgsFactory.EnemyDespawnFactory());
             EventManager.CastEvent(EventList.LOG_EnemyHorde, EventArgsFactory.LOG_Factory("Enemy distrutto"));
             gameObject.IsActive = false;
         }

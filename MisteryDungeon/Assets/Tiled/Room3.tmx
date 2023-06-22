@@ -4,7 +4,7 @@
   <property name="respawnTimer" value="5"/>
  </properties>
  <tileset firstgid="1" source="MapTileset.tsx"/>
- <layer id="1" name="Background" width="15" height="15">
+ <layer id="1" name="Background" width="15" height="15" visible="0">
   <data encoding="csv">
 2147483891,242,305,242,242,308,242,242,242,307,242,242,305,242,243,
 2147483907,293,293,293,293,293,293,293,293,293,293,293,293,293,259,
@@ -23,7 +23,7 @@
 2147483923,274,339,274,274,340,274,274,274,338,274,274,340,274,275
 </data>
  </layer>
- <objectgroup id="2" name="Objects" visible="0">
+ <objectgroup id="2" name="Objects">
   <object id="36" name="door" class="Door" gid="2" x="224" y="128" width="16" height="16">
    <properties>
     <property name="lockedBy" type="int" value="-1"/>
@@ -87,7 +87,7 @@
   </object>
   <object id="88" name="key" class="Key" gid="2" x="128" y="144" width="16" height="16" visible="0"/>
  </objectgroup>
- <layer id="5" name="Collisions" width="15" height="15" visible="0" opacity="0.5">
+ <layer id="5" name="Collisions" width="15" height="15" opacity="0.5">
   <data encoding="csv">
 237,237,237,237,237,237,237,237,237,237,237,237,237,237,237,
 237,237,1,0,0,0,0,237,0,0,0,0,1,1,237,

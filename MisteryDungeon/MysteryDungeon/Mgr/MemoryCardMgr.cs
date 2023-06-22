@@ -1,7 +1,9 @@
 ﻿using Aiv.Fast2D.Component;
+using MisteryDungeon.MysteryDungeon.Logic;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using static MisteryDungeon.MysteryDungeon.Utility.JsonFileUtils;
 
 namespace MisteryDungeon.MysteryDungeon.Mgr {
@@ -12,11 +14,17 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
         private string roomObj;
         private string weapon;
 
+        private GameStatsMgr gsm;
+
         public MemoryCardMgr(GameObject owner) : base(owner) {
             stats = Path.Combine("Saves", GameConfigMgr.gameStatsFileName);
             movGrid = Path.Combine("Saves", GameConfigMgr.movementGridFileName);
             roomObj = Path.Combine("Saves", GameConfigMgr.roomObjectsFileName);
             weapon = Path.Combine("Saves", GameConfigMgr.weaponFileName);
+        }
+
+        public override void Awake() {
+            gsm = GameObject.Find("GameStatsMgr").GetComponent<GameStatsMgr>();
         }
 
         public override void Start() {
@@ -33,7 +41,7 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
 
         public void OnNewGame(EventArgs message) {
             EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("New game"));
-            GameStatsMgr.ResetGameStats();
+            gsm.ResetGameStats();
             MovementGridMgr.ResetMovementsGrids();
             RoomObjectsMgr.ResetRoomObjects();
             File.WriteAllText(stats, string.Empty);
@@ -44,10 +52,10 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
 
         public void OnSaveGame(EventArgs message) {
             EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("Save game"));
-            PrettyWrite(GameStatsMgr.GetGameStats(), stats);
+            PrettyWrite(gsm.GetGameStats(), stats);
             WriteJaggeredArray(MovementGridMgr.Grids, movGrid);
             PrettyWrite(RoomObjectsMgr.RoomObjects, roomObj);
-            if(GameStatsMgr.ActiveWeapon != null) PrettyWrite(GameStatsMgr.ActiveWeapon.GetSerializedWeapon(), weapon);
+            if(GameStats.ActiveWeapon != null) PrettyWrite(GameStats.ActiveWeapon.GetSerializedWeapon(), weapon);
             EventManager.CastEvent(EventList.EndLoading, EventArgsFactory.EndLoadingFactory());
         }
 
@@ -58,10 +66,10 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
                 OnNewGame(message);
             } else {
                 EventManager.CastEvent(EventList.LOG_MemoryCard, EventArgsFactory.LOG_Factory("Load game"));
-                GameStatsMgr.LoadGameStats(ReadJson<GameStatsSerialized>(stats));
+                gsm.LoadGameStats(ReadJson<GameStatsSerialized>(stats));
                 MovementGridMgr.LoadMovementsGrids(ReadJaggeredArray<List<MovementGridArrayElemSerialized>>(movGrid));
                 RoomObjectsMgr.LoadRoomObjects(ReadJson<Dictionary<int, bool>[]>(roomObj));
-                if (new FileInfo(weapon).Length != 0) GameStatsMgr.LoadActiveWeapon(ReadJson<WeaponSerialized>(weapon));
+                if (new FileInfo(weapon).Length != 0) gsm.LoadActiveWeapon(ReadJson<WeaponSerialized>(weapon));
             }
         }
     }

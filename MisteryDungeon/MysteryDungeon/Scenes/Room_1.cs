@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
+using MisteryDungeon.MysteryDungeon.Logic;
 using MisteryDungeon.MysteryDungeon.Mgr;
 using OpenTK;
 
@@ -12,6 +13,9 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("pot", "Assets/Textures/Objects/pot.png");
             GfxMgr.AddTexture("shell", "Assets/Textures/Objects/shell.png");
             GfxMgr.AddTexture("bones", "Assets/Textures/Objects/bones.png");
+            GfxMgr.AddTexture("bananas", "Assets/Textures/Objects/bananas.png");
+            GfxMgr.AddTexture("leaf", "Assets/Textures/Objects/leaf.png");
+            GfxMgr.AddTexture("feather", "Assets/Textures/Objects/feather.png");
             GfxMgr.AddTexture("door", "Assets/Textures/Objects/crate.png");
             GfxMgr.AddTexture("player", "Assets/Textures/Spritesheets/player.png");
             GfxMgr.AddTexture("loading", "Assets/Textures/loading.png");
@@ -25,7 +29,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("memoryCard", "Assets/Textures/Objects/memory_card.png");
             GfxMgr.AddTexture("goldArrow", "Assets/Textures/gold_arrow.png");
             //Sounds
-            AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
+            AudioMgr.AddClip("objectDestroyed", "Assets/Sounds/SFX/object_destroyed.wav");
             AudioMgr.AddClip("objectPicked", "Assets/Sounds/SFX/object_picked.wav");
             AudioMgr.AddClip("arrowShot", "Assets/Sounds/SFX/arrow_shot.ogg");
             AudioMgr.AddClip("background1", "Assets/Sounds/Background/background1.ogg");
@@ -45,9 +49,15 @@ namespace MisteryDungeon {
 
         public override void InitializeScene() {
             base.InitializeScene();
+            CreateGameStatsMgr();
             CreateLogMgr();
             CreateMemoryCardMgr();
             CreateMap();
+        }
+
+        private static void CreateGameStatsMgr() {
+            GameObject gameStatsMgr = new GameObject("GameStatsMgr", Vector2.Zero);
+            gameStatsMgr.AddComponent<GameStatsMgr>();
         }
 
         public void CreateLogMgr() {

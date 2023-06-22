@@ -129,12 +129,12 @@ namespace MisteryDungeon.MysteryDungeon {
             switch(collisionInfo.Collider.gameObject.Tag) {
                 case (int)GameObjectTag.Door:
                     Door door = collisionInfo.Collider.gameObject.GetComponent<Door>();
-                    if (door.LockedBy >= 0 && !GameStatsMgr.CollectedKeys.Contains(door.LockedBy)) return;
-                    GameStatsMgr.PreviousRoom = GameStatsMgr.ActualRoom;
-                    GameStatsMgr.ActualRoom = door.RoomToGo;
+                    if (door.LockedBy >= 0 && !GameStats.CollectedKeys.Contains(door.LockedBy)) return;
+                    GameStats.PreviousRoom = GameStats.ActualRoom;
+                    GameStats.ActualRoom = door.RoomToGo;
                     EventManager.CastEvent(EventList.StartLoading, EventArgsFactory.StartLoadingFactory());
                     EventManager.CastEvent(EventList.RoomLeft, EventArgsFactory.RoomLeftFactory());
-                    if (!GameStatsMgr.FirstDoorPassed) GameStatsMgr.FirstDoorPassed = true;
+                    if (!GameStats.FirstDoorPassed) GameStats.FirstDoorPassed = true;
                     int roomId = collisionInfo.Collider.gameObject.GetComponent<Door>().RoomToGo;
                     Scene nextScene = (Scene)Activator.CreateInstance("MisteryDungeon", "MisteryDungeon.Room_" + roomId).Unwrap();
                     Game.TriggerChangeScene(nextScene);
@@ -147,15 +147,15 @@ namespace MisteryDungeon.MysteryDungeon {
                     EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.
                         ObjectPickedFactory());
                     Weapon weapon = collisionInfo.Collider.gameObject.GetComponent<Weapon>();
-                    GameStatsMgr.collectedWeapons.Add(weapon.Id);
-                    GameStatsMgr.ActiveWeapon = weapon;
+                    GameStats.collectedWeapons.Add(weapon.Id);
+                    GameStats.ActiveWeapon = weapon;
                     ShootModule sm = GetComponent<ShootModule>();
                     sm.Enabled = true;
                     sm.SetWeapon( weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot );
-                    if(!GameStatsMgr.PlayerCanShoot) GameStatsMgr.PlayerCanShoot = true;
+                    if(!GameStats.PlayerCanShoot) GameStats.PlayerCanShoot = true;
                     switch(weapon.BulletType) {
                         case BulletType.Arrow:
-                            GameStatsMgr.ActiveWeapon = weapon;
+                            GameStats.ActiveWeapon = weapon;
                             break;
                     }
                     weapon.gameObject.IsActive = false;
@@ -163,7 +163,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 case (int)GameObjectTag.Key:
                     EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.ObjectPickedFactory());
                     Key key = collisionInfo.Collider.gameObject.GetComponent<Key>();
-                    GameStatsMgr.CollectedKeys.Add(key.ID);
+                    GameStats.CollectedKeys.Add(key.ID);
                     key.gameObject.IsActive = false;
                     break;
                 case (int)GameObjectTag.Enemy:
@@ -193,7 +193,7 @@ namespace MisteryDungeon.MysteryDungeon {
                     EventManager.CastEvent(EventList.ObjectPicked, EventArgsFactory.ObjectPickedFactory());
                     healthModule.ResetHealth();
                     hearth.gameObject.IsActive = false;
-                    GameStatsMgr.PlayerHealth = healthModule.Health;
+                    GameStats.PlayerHealth = healthModule.Health;
                     RoomObjectsMgr.SetRoomObjectActiveness(hearth.RoomId, hearth.ID, false, false);
                     break;
             }
@@ -217,7 +217,7 @@ namespace MisteryDungeon.MysteryDungeon {
                 shootModule.Enabled = false;
                 rigidbody.Velocity = Vector2.Zero;
             } else {
-                GameStatsMgr.PlayerHealth -= damage;
+                GameStats.PlayerHealth -= damage;
             }
         }
 

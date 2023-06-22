@@ -3,6 +3,7 @@ using Aiv.Fast2D.Component;
 using OpenTK;
 using MisteryDungeon.MysteryDungeon;
 using MisteryDungeon.MysteryDungeon.Mgr;
+using MisteryDungeon.MysteryDungeon.Logic;
 
 namespace MisteryDungeon {
     public class NewLoadScene : Scene {
@@ -14,12 +15,18 @@ namespace MisteryDungeon {
 
         public override void InitializeScene() {
             base.InitializeScene();
+            CreateGameStatsMgr();
             CreateLogMgr();
             CreateMemoryCardMgr();
             CreateBackground();
             CreateTitle();
             CreateMenu();
             CreateMenuLogic();
+        }
+
+        private static void CreateGameStatsMgr() {
+            GameObject gameStatsMgr = new GameObject("GameStatsMgr", Vector2.Zero);
+            gameStatsMgr.AddComponent<GameStatsMgr>();
         }
 
         public void CreateLogMgr() {
@@ -43,7 +50,7 @@ namespace MisteryDungeon {
             background.transform.Scale = new Vector2(1.1f, 1.1f);
             background.AddComponent(SpriteRenderer.Factory(background, "background", Vector2.Zero, DrawLayer.GUI));
             SpriteRenderer sr = background.GetComponent<SpriteRenderer>();
-            sr.Sprite.SetMultiplyTint(0.5f, 0.5f, 0.5f, 1f);
+            sr.Sprite.SetMultiplyTint(0.3f, 0.3f, 0.3f, 1f);
         }
 
         public static void CreateTitle() {

@@ -23,8 +23,8 @@ namespace MisteryDungeon.MysteryDungeon {
             spriteRenderer.Width = Game.PixelsToUnit(spriteRenderer.Texture.Width / 2);
             spriteRenderer.Height = Game.PixelsToUnit(spriteRenderer.Texture.Height);
             buttonWidth = Game.UnitToPixels(spriteRenderer.WidthUnscaled);
-            Pressed = GameStatsMgr.PuzzleResolved;
-            ChangeButtonState(GameStatsMgr.PuzzleResolved);
+            Pressed = GameStats.PuzzleResolved;
+            ChangeButtonState(GameStats.PuzzleResolved);
         }
 
         public void ChangeButtonState(bool pressedState) {

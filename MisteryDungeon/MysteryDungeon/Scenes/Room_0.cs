@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D.Component;
 using Aiv.Fast2D.Component.UI;
 using MisteryDungeon.MysteryDungeon;
+using MisteryDungeon.MysteryDungeon.Logic;
 using MisteryDungeon.MysteryDungeon.Mgr;
 using OpenTK;
 
@@ -12,6 +13,9 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("pot", "Assets/Textures/Objects/pot.png");
             GfxMgr.AddTexture("shell", "Assets/Textures/Objects/shell.png");
             GfxMgr.AddTexture("bones", "Assets/Textures/Objects/bones.png");
+            GfxMgr.AddTexture("bananas", "Assets/Textures/Objects/bananas.png");
+            GfxMgr.AddTexture("leaf", "Assets/Textures/Objects/leaf.png");
+            GfxMgr.AddTexture("feather", "Assets/Textures/Objects/feather.png");
             GfxMgr.AddTexture("door", "Assets/Textures/Objects/crate.png");
             GfxMgr.AddTexture("loading", "Assets/Textures/loading.png");
             GfxMgr.AddTexture("gate", "Assets/Textures/Objects/mushroom.png");
@@ -27,7 +31,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("blackScreen", "Assets/Textures/black_screen.png");
             GfxMgr.AddTexture("memoryCard", "Assets/Textures/Objects/memory_card.png");
             //Sounds
-            AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
+            AudioMgr.AddClip("objectDestroyed", "Assets/Sounds/SFX/object_destroyed.wav");
             AudioMgr.AddClip("objectPicked", "Assets/Sounds/SFX/object_picked.wav");
             AudioMgr.AddClip("sequenceRight", "Assets/Sounds/SFX/sequence_right.wav");
             AudioMgr.AddClip("sequenceWrong", "Assets/Sounds/SFX/sequence_wrong.wav");
@@ -51,21 +55,12 @@ namespace MisteryDungeon {
 
         public override void InitializeScene() {
             base.InitializeScene();
+            CreateGameStatsMgr();
             CreateLogMgr();
             CreateMemoryCardMgr();
             CreatePuzzleMgr();
+            CreateUI();
             CreateMap();
-
-
-
-
-            //cheat per andare dritti al boss
-            /*RoomObjectsMgr.SetRoomObjectActiveness(0, 27, false);
-            GameObject.Find("Object_0_27").IsActive = false;
-            GameObject.Find("Object_0_22").IsActive = true;
-            GameStatsMgr.CollectedKeys.Add(25);
-            GameStatsMgr.HordesDefeated = 1;
-            RoomObjectsMgr.SetRoomObjectActiveness(2, 38, false);*/
         }
 
         public void CreateLogMgr() {
@@ -77,6 +72,11 @@ namespace MisteryDungeon {
                 false,  //print enemy horde logs
                 false   //print memory card logs
             );
+        }
+
+        private static void CreateGameStatsMgr() {
+            GameObject gameStatsMgr = new GameObject("GameStatsMgr", Vector2.Zero);
+            gameStatsMgr.AddComponent<GameStatsMgr>();
         }
 
         private static void CreateMemoryCardMgr() {
@@ -97,6 +97,14 @@ namespace MisteryDungeon {
                 new Vector2[] { new Vector2(0, 27) } //gate, da disattivare
             );
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
+        }
+        public void CreateUI() {
+            Font stdFont = FontMgr.GetFont("stdFont");
+            GameObject temp = new GameObject("PuzzleTimer",
+                new Vector2(Game.Win.OrthoWidth * 0.5f, Game.Win.OrthoHeight * 0.1f));
+            temp.AddComponent<TextBox>(stdFont, 2, Vector2.One * 2);
+            temp = new GameObject("UIController", Vector2.Zero);
+            temp.AddComponent<UIController>();
         }
     }
 }

@@ -44,7 +44,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public override void Update() {
             currentReloadTime -= Game.DeltaTime;
             if (currentReloadTime <= 0) {
-                if(isEnemy || (!isEnemy && Input.GetUserButton(shootAction) && GameStatsMgr.PlayerCanShoot) ) {
+                if(isEnemy || (!isEnemy && Input.GetUserButton(shootAction) && GameStats.PlayerCanShoot) ) {
                     Vector2 direction = !isEnemy ?
                         Game.Win.MousePosition - transform.Position :
                         targetTransform.Position - transform.Position;

@@ -14,13 +14,8 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             );
             GameObject go = new GameObject("Object_" + TiledMapMgr.RoomId + "_" + obj.Id, pos);
             go.Tag = (int)GameObjectTag.Obstacle;
-            string spriteName = "";
-            int r = RandomGenerator.GetRandomInt(0, 4);
-            if (r == 0) spriteName = "skull";
-            else if (r == 1) spriteName = "pot";
-            else if (r == 2) spriteName = "shell";
-            else if (r == 3) spriteName = "bones";
-            if (r != 1) go.transform.Rotation = RandomGenerator.GetRandomInt(0, 361);
+            string spriteName = GetRandomObstacleTextureName();
+            if (spriteName != "pot") go.transform.Rotation = RandomGenerator.GetRandomInt(0, 361);
             SpriteRenderer sr = SpriteRenderer.Factory(go, spriteName, Vector2.One * 0.5f, DrawLayer.Middleground);
             go.AddComponent(sr);
             go.transform.Scale = new Vector2(TiledMapMgr.TileUnitWidth / sr.Width, TiledMapMgr.TileUnitHeight / sr.Height);
@@ -32,6 +27,19 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             go.AddComponent(c);
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + pos.ToString()));
+        }
+
+        private static string GetRandomObstacleTextureName() {
+            string spriteName = string.Empty;
+            int r = RandomGenerator.GetRandomInt(0, 7);
+            if (r == 0) spriteName = "skull";
+            else if (r == 1) spriteName = "pot";
+            else if (r == 2) spriteName = "shell";
+            else if (r == 3) spriteName = "bones";
+            else if (r == 4) spriteName = "leaf";
+            else if (r == 5) spriteName = "feather";
+            else if (r == 6) spriteName = "bananas";
+            return spriteName;
         }
 
         public static void CreateSpines(Object obj) {
@@ -107,7 +115,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
         }
 
         public static void CreateKey(Object obj) {
-            if (GameStatsMgr.CollectedKeys.Contains(obj.Id)) return;
+            if (GameStats.CollectedKeys.Contains(obj.Id)) return;
             Vector2 pos = new Vector2(
                 ((float)obj.X / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitWidth + (TiledMapMgr.TileUnitWidth / 2),
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) * TiledMapMgr.TileUnitHeight - (TiledMapMgr.TileUnitHeight / 2)
@@ -159,7 +167,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
         }
 
         public static void CreateWeapon(Object obj) {
-            if (GameStatsMgr.collectedWeapons.Contains(obj.Id)) return;
+            if (GameStats.collectedWeapons.Contains(obj.Id)) return;
             int weaponType = int.Parse(getPropertyValueByName("weaponType", obj.Properties));
             string weaponImage = getPropertyValueByName("weaponImage", obj.Properties);
             Vector2 pos = new Vector2(
@@ -187,7 +195,7 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
         public static void CreatePlayer(Object obj) {
             int fromRoom = int.Parse(getPropertyValueByName("fromRoom", obj.Properties));
             
-            if (GameStatsMgr.PreviousRoom != fromRoom) return;
+            if (GameStats.PreviousRoom != fromRoom) return;
 
             Vector2 cellIndex = new Vector2(
                 (float)obj.X / TiledMapMgr.TilePixelWidth,
@@ -218,17 +226,17 @@ namespace MisteryDungeon.MysteryDungeon.Utility.Tiled {
             if (GameConfigMgr.debugBoxColliderWireframe) go.GetComponent<BoxCollider>().DebugMode = true;
             CreatePlayerAnimations(go, sheet);
             ShootModule sm = go.AddComponent<ShootModule>("Shoot", false);
-            if (GameStatsMgr.PlayerCanShoot) {
-                sm.Enabled = GameStatsMgr.PlayerCanShoot;
-                Weapon weapon = GameStatsMgr.ActiveWeapon;
+            if (GameStats.PlayerCanShoot) {
+                sm.Enabled = GameStats.PlayerCanShoot;
+                Weapon weapon = GameStats.ActiveWeapon;
                 sm.SetWeapon(weapon.BulletType, weapon.ReloadTime, weapon.OffsetShoot);
             }
-            go.AddComponent<HealthModule>(GameStatsMgr.PlayerHealth, GameStatsMgr.maxPlayerHealth, new Vector2(-0.5f, -0.5f));
+            go.AddComponent<HealthModule>(GameStats.PlayerHealth, GameStats.MaxPlayerHealth, new Vector2(-0.5f, -0.5f));
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in cella " + cellIndex.ToString()));
         }
 
         public static void CreateBoss(Object obj) {
-            if (GameStatsMgr.BossDefeated) return;
+            if (GameStats.BossDefeated) return;
             Vector2 cellIndex = new Vector2(
                 (float)obj.X / TiledMapMgr.TilePixelWidth,
                 ((float)obj.Y / TiledMapMgr.TilePixelWidth) - 1

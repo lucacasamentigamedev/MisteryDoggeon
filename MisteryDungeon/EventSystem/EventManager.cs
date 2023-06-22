@@ -13,9 +13,10 @@ namespace Aiv.Fast2D.Component {
         LOG_MemoryCard,
         // Game events
         EnemySpawned,
-        EnemyDestroyed,
+        EnemyDespawn,
+        SpawnPointHitted,
         SpawnPointDestroyed,
-        ObjectBroke,
+        ObjectDestroyed,
         ObjectPicked,
         PlatformButtonPressed,
         SequenceRight,

@@ -1,105 +1,85 @@
 ﻿using Aiv.Fast2D.Component;
 using OpenTK;
 using System;
-using System.Collections.Generic;
 
-namespace MisteryDungeon.MysteryDungeon {
-    public struct GameStatsSerialized {
-        public bool PuzzleResolved { get; set; }
-        public bool PlayerCanShoot { get; set; }
-        public List<int> CollectedKeys { get; set; }
-        public List<int> CollectedWeapons { get; set; }
-        public int PreviousRoom { get; set; }
-        public int ActualRoom { get; set; }
-        public int HordesDefeated { get; set; }
-        public bool BossDefeated { get; set; }
-        public float PlayerHealth { get; set; }
-        public bool FirstDoorPassed { get; set; }
-        public GameStatsSerialized(bool PuzzleResolved, bool PlayerCanShoot,
-            List<int> CollectedKeys, List<int> CollectedWeapons, int PreviousRoom, int ActualRoom, int HordesDefeated,
-            bool BossDefeated, float PlayerHealth, bool FirstDoorPassed) {
-            this.PuzzleResolved = PuzzleResolved;
-            this.PlayerCanShoot = PlayerCanShoot;
-            this.CollectedKeys = CollectedKeys;
-            this.CollectedWeapons = CollectedWeapons;
-            this.PreviousRoom = PreviousRoom;
-            this.ActualRoom = ActualRoom;
-            this.BossDefeated = BossDefeated;
-            this.PlayerHealth = PlayerHealth;
-            this.FirstDoorPassed = FirstDoorPassed;
-            this.HordesDefeated = HordesDefeated;
-        }
-    }
+namespace MisteryDungeon.MysteryDungeon.Logic {
+    public class GameStatsMgr : UserComponent {
+        public GameStatsMgr(GameObject owner) : base(owner) {}
 
-    static class GameStatsMgr {
-
-        public static bool PuzzleResolved { get; set; }
-        public static bool PlayerCanShoot { get; set; }
-        public static Weapon ActiveWeapon { get; set; }
-        public static List<int> collectedWeapons { get; set; }
-        public static List<int> CollectedWeapons {
-            get { return collectedWeapons; }
-            set { collectedWeapons = value; }
-        }
-        private static List<int> collectedKeys;
-        public static List<int> CollectedKeys {
-            get { return collectedKeys; }
-            set { collectedKeys = value; }
-        }
-        public static int PreviousRoom { get; set; }
-        public static int ActualRoom { get; set; }
-        public static int HordesDefeated { get; set; }
-        public static bool BossDefeated { get; set; }
-        public static float maxPlayerHealth = 20;
-        private static float playerHealth = 20;
-        public static float PlayerHealth {
-            get { return playerHealth; }
-            set { playerHealth = value; }
-        }
-        public static bool FirstDoorPassed { get; set; }
-
-        static GameStatsMgr() {
-            CollectedKeys = new List<int>();
-            CollectedWeapons = new List<int>();
+        public override void Update() {
+            GameStats.ElapsedTime += Game.DeltaTime;
         }
 
-        public static void ResetGameStats() {
-            PuzzleResolved = false;
-            PlayerCanShoot = false;
-            ActiveWeapon = null;
-            CollectedKeys.Clear();
-            CollectedWeapons.Clear();
-            PreviousRoom = 0;
-            ActualRoom = 0;
-            BossDefeated = false;
-            PlayerHealth = maxPlayerHealth;
-            FirstDoorPassed = false;
-            HordesDefeated = 0;
+        public override void Start() {
+            EventManager.AddListener(EventList.EnemyDead, OnEnemyDead);
+            EventManager.AddListener(EventList.ArrowShot, OnArrowShot);
+            EventManager.AddListener(EventList.ObjectDestroyed, OnObjectDestroyed);
         }
 
-        public static GameStatsSerialized GetGameStats() {
-            return new GameStatsSerialized(PuzzleResolved, PlayerCanShoot,
-            CollectedKeys, CollectedWeapons, PreviousRoom, ActualRoom, HordesDefeated,
-            BossDefeated, PlayerHealth, FirstDoorPassed);
+        public override void OnDestroy() {
+            EventManager.RemoveListener(EventList.EnemyDead, OnEnemyDead);
+            EventManager.RemoveListener(EventList.ArrowShot, OnArrowShot);
+            EventManager.RemoveListener(EventList.ObjectDestroyed, OnObjectDestroyed);
         }
 
-        public static void LoadGameStats(GameStatsSerialized gameStats) {
-            PuzzleResolved = gameStats.PuzzleResolved;
-            PlayerCanShoot = gameStats.PlayerCanShoot;
-            CollectedKeys = gameStats.CollectedKeys;
-            CollectedWeapons = gameStats.CollectedWeapons;
-            PreviousRoom = gameStats.PreviousRoom;
-            ActualRoom = gameStats.ActualRoom;  
-            BossDefeated = gameStats.BossDefeated;
-            PlayerHealth = gameStats.PlayerHealth;
-            FirstDoorPassed = gameStats.FirstDoorPassed;
-            HordesDefeated = gameStats.HordesDefeated;
-            Console.WriteLine();
+        public void OnEnemyDead(EventArgs message) {
+            GameStats.EnemiesKilled++;
+            Console.WriteLine("Ricevuto evento, nemici sconfitti: " + GameStats.EnemiesKilled);
         }
 
-        public static void LoadActiveWeapon(WeaponSerialized weapon) {
+        public void OnArrowShot(EventArgs message) {
+            GameStats.ArrowsShot++;
+        }
+
+        public void OnObjectDestroyed(EventArgs message) {
+            GameStats.ObjectsDestroyed++;
+        }
+
+        public void ResetGameStats() {
+            GameStats.PuzzleResolved = false;
+            GameStats.PlayerCanShoot = false;
+            GameStats.ActiveWeapon = null;
+            GameStats.CollectedKeys.Clear();
+            GameStats.CollectedWeapons.Clear();
+            GameStats.PreviousRoom = 0;
+            GameStats.ActualRoom = 0;
+            GameStats.BossDefeated = false;
+            GameStats.PlayerHealth = GameStats.MaxPlayerHealth;
+            GameStats.FirstDoorPassed = false;
+            GameStats.HordesDefeated = 0;
+            GameStats.ElapsedTime = 0;
+            GameStats.EnemiesKilled = 0;
+            GameStats.ArrowsShot = 0;
+            GameStats.ObjectsDestroyed = 0;
+        }
+
+        public GameStatsSerialized GetGameStats() {
+            return new GameStatsSerialized(GameStats.PuzzleResolved, GameStats.PlayerCanShoot,
+            GameStats.CollectedKeys, GameStats.CollectedWeapons, GameStats.PreviousRoom, GameStats.ActualRoom, GameStats.HordesDefeated,
+            GameStats.BossDefeated, GameStats.PlayerHealth, GameStats.FirstDoorPassed, GameStats.ElapsedTime,
+            GameStats.EnemiesKilled, GameStats.ArrowsShot, GameStats.ObjectsDestroyed);
+        }
+
+        public void LoadGameStats(GameStatsSerialized gameStats) {
+            GameStats.PuzzleResolved = gameStats.PuzzleResolved;
+            GameStats.PlayerCanShoot = gameStats.PlayerCanShoot;
+            GameStats.CollectedKeys = gameStats.CollectedKeys;
+            GameStats.CollectedWeapons = gameStats.CollectedWeapons;
+            GameStats.PreviousRoom = gameStats.PreviousRoom;
+            GameStats.ActualRoom = gameStats.ActualRoom;
+            GameStats.BossDefeated = gameStats.BossDefeated;
+            GameStats.PlayerHealth = gameStats.PlayerHealth;
+            GameStats.FirstDoorPassed = gameStats.FirstDoorPassed;
+            GameStats.HordesDefeated = gameStats.HordesDefeated;
+            GameStats.ElapsedTime = gameStats.ElapsedTime;
+            GameStats.EnemiesKilled = gameStats.EnemiesKilled;
+            GameStats.ArrowsShot = gameStats.ArrowsShot;
+            GameStats.ObjectsDestroyed = gameStats.ObjectsDestroyed;
+        }
+
+        public void LoadActiveWeapon(WeaponSerialized weapon) {
             GameObject owner = GameObject.Find("Object_" + weapon.RoomId + "_" + weapon.Id);
-            ActiveWeapon = new Weapon(owner, (WeaponType)weapon.WeaponType, (BulletType)weapon.BulletType, weapon.ReloadTime,
+            GameStats.ActiveWeapon = new Weapon(owner, (WeaponType)weapon.WeaponType, (BulletType)weapon.BulletType, weapon.ReloadTime,
                 new Vector2(weapon.OffsetShootX, weapon.OffsetShootY), weapon.RoomId, weapon.Id);
         }
     }

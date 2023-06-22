@@ -2,6 +2,7 @@
 using Aiv.Fast2D.Component.UI;
 using Aiv.Tiled;
 using MisteryDungeon.AivAlgo.Pathfinding;
+using MisteryDungeon.MysteryDungeon.Logic;
 using MisteryDungeon.MysteryDungeon.Mgr;
 using MisteryDungeon.MysteryDungeon.Utility.Tiled;
 using OpenTK;

@@ -70,7 +70,7 @@ namespace MisteryDungeon.MysteryDungeon {
         public void PerformDeath() {
             currentDeathTimer -= Game.DeltaTime;
             if (currentDeathTimer > 0) return;
-            GameStatsMgr.BossDefeated = true;
+            GameStats.BossDefeated = true;
             EventManager.CastEvent(EventList.BossDefeated, EventArgsFactory.BossDefeatedFactory());
             EventManager.CastEvent(EventList.LOG_Boss, EventArgsFactory.LOG_Factory("Boss sconfitto"));
             foreach (Vector2 v in objectsToDisactiveAfterBossDefeated) {

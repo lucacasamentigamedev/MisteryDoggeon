@@ -16,7 +16,7 @@ namespace MisteryDungeon.MysteryDungeon.Logic {
         }
 
         public void OnCheckWinCondition(EventArgs message) {
-            if(GameStatsMgr.HordesDefeated == GameConfigMgr.HordesNumber && GameStatsMgr.BossDefeated) {
+            if(GameStats.HordesDefeated == GameConfigMgr.HordesNumber && GameStats.BossDefeated) {
                 Game.TriggerChangeScene(new WinScene());
             }
         }

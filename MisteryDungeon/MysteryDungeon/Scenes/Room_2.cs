@@ -27,7 +27,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("hearth", "Assets/Textures/Objects/hearth.png");
             GfxMgr.AddTexture("goldArrow", "Assets/Textures/gold_arrow.png");
             //Sounds
-            AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
+            AudioMgr.AddClip("objectDestroyed", "Assets/Sounds/SFX/object_destroyed.wav");
             AudioMgr.AddClip("arrowShot", "Assets/Sounds/SFX/arrow_shot.ogg");
             AudioMgr.AddClip("background1", "Assets/Sounds/Background/background1.ogg");
             AudioMgr.AddClip("background2", "Assets/Sounds/Background/background2.ogg");
@@ -51,16 +51,17 @@ namespace MisteryDungeon {
 
         public override void InitializeScene() {
             base.InitializeScene();
+            CreateGameStatsMgr();
             CreateLogMgr();
             CreateMemoryCardMgr();
             CreateHordeMgr();
             CreateMap();
             CreateGameWinLogic();
+        }
 
-
-            //cheat per andare dritti al boss
-            /*RoomObjectsMgr.SetRoomObjectActiveness(2, 38, false);
-            GameObject.Find("Object_2_38").IsActive = false;*/
+        private static void CreateGameStatsMgr() {
+            GameObject gameStatsMgr = new GameObject("GameStatsMgr", Vector2.Zero);
+            gameStatsMgr.AddComponent<GameStatsMgr>();
         }
 
         public void CreateLogMgr() {

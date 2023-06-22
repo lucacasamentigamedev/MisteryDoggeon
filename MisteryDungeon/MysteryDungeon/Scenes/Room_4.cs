@@ -25,7 +25,7 @@ namespace MisteryDungeon {
             GfxMgr.AddTexture("redGlobe", "Assets/Textures/red_globe.png");
             //Sounds
             AudioMgr.AddClip("arrowShot", "Assets/Sounds/SFX/arrow_shot.ogg");
-            AudioMgr.AddClip("objectBroke", "Assets/Sounds/SFX/object_broke.wav");
+            AudioMgr.AddClip("objectDestroyed", "Assets/Sounds/SFX/object_destroyed.wav");
             AudioMgr.AddClip("background1", "Assets/Sounds/Background/background1.ogg");
             AudioMgr.AddClip("background2", "Assets/Sounds/Background/background2.ogg");
             AudioMgr.AddClip("background3", "Assets/Sounds/Background/background3.ogg");
@@ -48,10 +48,16 @@ namespace MisteryDungeon {
 
         public override void InitializeScene() {
             base.InitializeScene();
+            CreateGameStatsMgr();
             CreateLogMgr();
             CreateHordeMgr();
             CreateMap();
             CreateGameWinLogic();
+        }
+
+        private static void CreateGameStatsMgr() {
+            GameObject gameStatsMgr = new GameObject("GameStatsMgr", Vector2.Zero);
+            gameStatsMgr.AddComponent<GameStatsMgr>();
         }
 
         public void CreateLogMgr() {
@@ -66,7 +72,7 @@ namespace MisteryDungeon {
         }
 
         public void CreateHordeMgr() {
-            if (GameStatsMgr.HordesDefeated == 2) return;
+            if (GameStats.HordesDefeated == 2) return;
             GameObject go = new GameObject("HordeMgr", Vector2.Zero);
             go.AddComponent<HordeMgr>(
                 new Vector2[] {},

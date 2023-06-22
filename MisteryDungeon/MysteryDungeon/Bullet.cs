@@ -58,13 +58,13 @@ namespace MisteryDungeon.MysteryDungeon {
                     enemy.TakeDamage(Damage);
                     break;
                 case (int)GameObjectTag.SpawnPoint:
-                    EventManager.CastEvent(EventList.ObjectBroke, EventArgsFactory.ObjectBrokeFactory());
+                    EventManager.CastEvent(EventList.SpawnPointHitted, EventArgsFactory.SpawnPointHittedFactory());
                     DestroyBullet();
                     SpawnPoint spawnPoint = collisionInfo.Collider.gameObject.GetComponent<SpawnPoint>();
                     spawnPoint.TakeDamage(Damage);
                     break;
                 case (int)GameObjectTag.Obstacle:
-                    EventManager.CastEvent(EventList.ObjectBroke, EventArgsFactory.ObjectBrokeFactory());
+                    EventManager.CastEvent(EventList.ObjectDestroyed, EventArgsFactory.ObjectDestroyedFactory());
                     DestroyBullet();
                     Obstacle obstacle = collisionInfo.Collider.gameObject.GetComponent<Obstacle>();
                     obstacle.gameObject.IsActive = false;

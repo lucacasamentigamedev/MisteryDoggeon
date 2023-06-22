@@ -31,7 +31,7 @@ namespace MisteryDungeon.MysteryDungeon {
             } else if (Input.GetUserButtonDown(uiCancel)) {
                 if (memoryCard) {
                     EventManager.CastEvent(EventList.LoadGame, EventArgsFactory.LoadGameFactory());
-                    cancelScene = "Room_" + GameStatsMgr.ActualRoom;
+                    cancelScene = "Room_" + GameStats.ActualRoom;
                 };
                 Type cancel = !string.IsNullOrEmpty(cancelScene) ? Type.GetType("MisteryDungeon." + cancelScene) : null;
                 Game.TriggerChangeScene(cancel != null ? Activator.CreateInstance(cancel) as Scene : null);

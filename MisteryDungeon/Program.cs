@@ -1,6 +1,5 @@
 ﻿using Aiv.Fast2D;
 using Aiv.Fast2D.Component;
-using MisteryDungeon.MysteryDungeon.Scenes;
 
 namespace MisteryDungeon.MysteryDungeon {
 

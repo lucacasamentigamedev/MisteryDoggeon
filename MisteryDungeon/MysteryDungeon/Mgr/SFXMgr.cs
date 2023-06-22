@@ -4,7 +4,7 @@ using System;
 namespace Aiv.Fast2D.Component {
 
     public enum SFXList {
-        ObjectBroke,
+        ObjectDestroyed,
         ObjectPicked,
         SequenceRight,
         SequenceWrong,
@@ -20,6 +20,7 @@ namespace Aiv.Fast2D.Component {
         EnemyDead,
         BossDefeated,
         HordeDefeated,
+        SpawnPointHitted,
         last
     }
 
@@ -31,7 +32,7 @@ namespace Aiv.Fast2D.Component {
 
         public SFXMgr(GameObject owner) : base(owner) {
             mySFX = new AudioClip[(int)SFXList.last];
-            mySFX[0] = AudioMgr.GetClip("objectBroke");
+            mySFX[0] = AudioMgr.GetClip("objectDestroyed");
             mySFX[1] = AudioMgr.GetClip("objectPicked");
             mySFX[2] = AudioMgr.GetClip("sequenceRight");
             mySFX[3] = AudioMgr.GetClip("sequenceWrong");
@@ -47,6 +48,7 @@ namespace Aiv.Fast2D.Component {
             mySFX[13] = AudioMgr.GetClip("enemyDead");
             mySFX[14] = AudioMgr.GetClip("bossDefeated");
             mySFX[15] = AudioMgr.GetClip("hordeDefeated");
+            mySFX[16] = AudioMgr.GetClip("objectDestroyed");
         }
 
         public override void Awake() {
@@ -54,7 +56,7 @@ namespace Aiv.Fast2D.Component {
         }
 
         public override void Start() {
-            EventManager.AddListener(EventList.ObjectBroke, OnObjectBroke);
+            EventManager.AddListener(EventList.ObjectDestroyed, OnObjectDestroyed);
             EventManager.AddListener(EventList.ObjectPicked, OnObjectPicked);
             EventManager.AddListener(EventList.SequenceRight, OnSequenceRight);
             EventManager.AddListener(EventList.SequenceCompleted, OnSequenceCompleted);
@@ -73,7 +75,7 @@ namespace Aiv.Fast2D.Component {
         }
 
         public override void OnDestroy() {
-            EventManager.RemoveListener(EventList.ObjectBroke, OnObjectBroke);
+            EventManager.RemoveListener(EventList.ObjectDestroyed, OnObjectDestroyed);
             EventManager.RemoveListener(EventList.ObjectPicked, OnObjectPicked);
             EventManager.RemoveListener(EventList.SequenceRight, OnSequenceRight);
             EventManager.RemoveListener(EventList.SequenceCompleted, OnSequenceCompleted);
@@ -91,8 +93,8 @@ namespace Aiv.Fast2D.Component {
             EventManager.RemoveListener(EventList.HordeDefeated, OnHordeDefeated);
         }
 
-        public void OnObjectBroke(EventArgs message) {
-            PlaySFX(SFXList.ObjectBroke);
+        public void OnObjectDestroyed(EventArgs message) {
+            PlaySFX(SFXList.ObjectDestroyed);
         }
 
         public void OnObjectPicked(EventArgs message) {

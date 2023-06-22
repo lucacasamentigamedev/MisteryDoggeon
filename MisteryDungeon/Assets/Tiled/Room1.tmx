@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="44">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="78">
  <tileset firstgid="1" source="MapTileset.tsx"/>
- <layer id="1" name="Background" width="15" height="15">
+ <layer id="1" name="Background" width="15" height="15" visible="0">
   <data encoding="csv">
 241,242,306,242,242,308,242,270,242,307,242,242,306,242,243,
 257,293,293,293,293,293,293,293,293,293,293,293,293,293,259,
@@ -20,14 +20,14 @@
 273,274,339,274,274,339,274,274,274,339,274,274,340,274,275
 </data>
  </layer>
- <objectgroup id="2" name="Objects" visible="0">
+ <objectgroup id="2" name="Objects">
   <object id="25" name="key" class="Key" gid="2" x="112" y="128" width="16" height="16"/>
   <object id="26" name="obstacle" class="Obstacle" gid="388" x="32" y="48" width="16" height="16"/>
   <object id="27" name="obstacle" class="Obstacle" gid="388" x="48" y="48" width="16" height="16"/>
-  <object id="28" name="obstacle" class="Obstacle" gid="388" x="64" y="48" width="16" height="16"/>
-  <object id="29" name="obstacle" class="Obstacle" gid="388" x="176" y="64" width="16" height="16"/>
+  <object id="28" name="obstacle" class="Obstacle" gid="388" x="112" y="80" width="16" height="16"/>
+  <object id="29" name="obstacle" class="Obstacle" gid="388" x="192" y="80" width="16" height="16"/>
   <object id="30" name="obstacle" class="Obstacle" gid="388" x="176" y="192" width="16" height="16"/>
-  <object id="31" name="obstacle" class="Obstacle" gid="388" x="63.3333" y="208" width="16" height="16"/>
+  <object id="31" name="obstacle" class="Obstacle" gid="388" x="64" y="208" width="16" height="16"/>
   <object id="32" name="obstacle" class="Obstacle" gid="388" x="32" y="192" width="16" height="16"/>
   <object id="33" name="obstacle" class="Obstacle" gid="388" x="144" y="176" width="16" height="16"/>
   <object id="34" name="player" class="PlayerController" gid="326" x="32" y="128" width="16" height="16">
@@ -58,23 +58,55 @@
     <property name="roomToGo" type="int" value="4"/>
    </properties>
   </object>
+  <object id="44" name="obstacle" class="Obstacle" gid="388" x="96" y="32" width="16" height="16"/>
+  <object id="45" name="obstacle" class="Obstacle" gid="388" x="112" y="32" width="16" height="16"/>
+  <object id="46" name="obstacle" class="Obstacle" gid="388" x="128" y="32" width="16" height="16"/>
+  <object id="47" name="obstacle" class="Obstacle" gid="388" x="64" y="128" width="16" height="16"/>
+  <object id="48" name="obstacle" class="Obstacle" gid="388" x="80" y="112" width="16" height="16"/>
+  <object id="49" name="obstacle" class="Obstacle" gid="388" x="64" y="144" width="16" height="16"/>
+  <object id="50" name="obstacle" class="Obstacle" gid="388" x="80" y="144" width="16" height="16"/>
+  <object id="51" name="obstacle" class="Obstacle" gid="388" x="96" y="160" width="16" height="16"/>
+  <object id="52" name="obstacle" class="Obstacle" gid="388" x="80" y="160" width="16" height="16"/>
+  <object id="53" name="obstacle" class="Obstacle" gid="388" x="112" y="96" width="16" height="16"/>
+  <object id="54" name="obstacle" class="Obstacle" gid="388" x="128" y="80" width="16" height="16"/>
+  <object id="55" name="obstacle" class="Obstacle" gid="388" x="128" y="96" width="16" height="16"/>
+  <object id="56" name="obstacle" class="Obstacle" gid="388" x="80" y="176" width="16" height="16"/>
+  <object id="57" name="obstacle" class="Obstacle" gid="388" x="96" y="208" width="16" height="16"/>
+  <object id="59" name="obstacle" class="Obstacle" gid="388" x="176" y="176" width="16" height="16"/>
+  <object id="60" name="obstacle" class="Obstacle" gid="388" x="192" y="208" width="16" height="16"/>
+  <object id="61" name="obstacle" class="Obstacle" gid="388" x="208" y="224" width="16" height="16"/>
+  <object id="62" name="obstacle" class="Obstacle" gid="388" x="208" y="128" width="16" height="16"/>
+  <object id="63" name="obstacle" class="Obstacle" gid="388" x="208" y="48" width="16" height="16"/>
+  <object id="64" name="obstacle" class="Obstacle" gid="388" x="208" y="32" width="16" height="16"/>
+  <object id="65" name="obstacle" class="Obstacle" gid="388" x="32" y="64" width="16" height="16"/>
+  <object id="66" name="obstacle" class="Obstacle" gid="388" x="64" y="48" width="16" height="16"/>
+  <object id="67" name="obstacle" class="Obstacle" gid="388" x="80" y="192" width="16" height="16"/>
+  <object id="68" name="obstacle" class="Obstacle" gid="388" x="64" y="96" width="16" height="16"/>
+  <object id="70" name="obstacle" class="Obstacle" gid="388" x="48" y="96" width="16" height="16"/>
+  <object id="71" name="obstacle" class="Obstacle" gid="388" x="32" y="208" width="16" height="16"/>
+  <object id="72" name="obstacle" class="Obstacle" gid="388" x="32" y="176" width="16" height="16"/>
+  <object id="73" name="obstacle" class="Obstacle" gid="388" x="176" y="80" width="16" height="16"/>
+  <object id="74" name="obstacle" class="Obstacle" gid="388" x="176" y="64" width="16" height="16"/>
+  <object id="75" name="obstacle" class="Obstacle" gid="388" x="144" y="160" width="16" height="16"/>
+  <object id="76" name="obstacle" class="Obstacle" gid="388" x="192" y="160" width="16" height="16"/>
+  <object id="77" name="obstacle" class="Obstacle" gid="388" x="48" y="64" width="16" height="16"/>
  </objectgroup>
  <layer id="5" name="Collisions" width="15" height="15" opacity="0.5">
   <data encoding="csv">
 237,237,237,237,237,237,237,1,237,237,237,237,237,237,237,
-237,0,1,0,0,0,0,0,0,0,0,0,1,1,237,
-237,0,237,237,237,0,0,237,0,0,0,0,0,0,237,
-237,0,0,0,0,0,0,0,0,0,0,237,0,0,237,
-237,0,0,0,0,0,0,0,0,0,0,0,0,0,237,
-237,0,0,1,1,1,237,1,1,1,1,0,0,0,237,
-237,1,0,0,0,0,0,0,0,0,0,237,0,0,237,
-1,1,1,0,0,0,0,0,0,0,0,237,0,0,237,
-237,0,0,0,0,0,0,0,0,0,0,0,0,0,237,
-237,0,0,0,0,0,0,0,0,0,0,0,0,0,237,
-237,0,1,0,0,0,0,0,0,237,0,0,0,0,237,
-237,0,237,0,0,0,237,0,0,0,0,237,0,0,237,
-237,0,0,0,237,0,0,0,0,0,0,0,1,0,237,
-237,0,0,0,0,0,0,0,0,237,1,1,1,0,237,
+237,0,1,0,0,0,237,237,237,0,0,0,1,237,237,
+237,0,237,237,237,0,0,237,0,0,0,0,0,237,237,
+237,0,237,237,0,0,0,0,0,0,0,237,0,0,237,
+237,0,0,0,0,0,0,237,237,0,0,237,237,0,237,
+237,0,0,237,237,1,237,237,237,1,1,0,0,0,237,
+237,1,0,0,0,237,0,0,0,0,0,237,0,0,237,
+1,1,1,0,237,0,0,0,0,0,0,237,0,237,237,
+237,0,0,0,237,237,0,0,0,0,0,0,0,0,237,
+237,0,0,0,0,237,237,0,0,237,0,0,237,0,237,
+237,0,237,0,0,237,0,0,0,237,0,237,0,0,237,
+237,0,237,0,0,237,237,0,0,0,0,237,0,0,237,
+237,0,237,0,237,0,237,0,0,0,0,0,237,0,237,
+237,0,0,0,0,0,0,0,0,237,1,1,1,237,237,
 237,237,237,237,237,237,237,237,237,237,237,237,237,237,237
 </data>
  </layer>

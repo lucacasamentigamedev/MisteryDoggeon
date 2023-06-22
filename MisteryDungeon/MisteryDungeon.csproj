@@ -198,10 +198,12 @@
     <Compile Include="MysteryDungeon\Logic\BackgroundMusicLogic.cs" />
     <Compile Include="MysteryDungeon\Controller\BossController.cs" />
     <Compile Include="MysteryDungeon\Bullet.cs" />
+    <Compile Include="MysteryDungeon\Mgr\GameStatsMgr.cs" />
     <Compile Include="MysteryDungeon\Logic\GameWinLogic.cs" />
     <Compile Include="MysteryDungeon\Logic\LoadingLogic.cs" />
     <Compile Include="MysteryDungeon\Logic\MenuLogic.cs" />
     <Compile Include="MysteryDungeon\Mgr\MemoryCardMgr.cs" />
+    <Compile Include="MysteryDungeon\Mgr\UIController.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Hearth.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\MemoryCard.cs" />
     <Compile Include="MysteryDungeon\Scenes\GameOverScene.cs" />
@@ -222,7 +224,7 @@
     <Compile Include="MysteryDungeon\RoomObjects\Key.cs" />
     <Compile Include="MysteryDungeon\Mgr\MovementGridMgr.cs" />
     <Compile Include="MysteryDungeon\Mgr\RoomObjectsMgr.cs" />
-    <Compile Include="MysteryDungeon\Mgr\GameStatsMgr.cs" />
+    <Compile Include="MysteryDungeon\GameStats.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\PlatformButton.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Door.cs" />
     <Compile Include="MysteryDungeon\RoomObjects\Gate.cs" />
@@ -328,6 +330,15 @@
     <Content Include="Assets\Textures\Objects\gold_bow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Textures\Objects\feather.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Objects\bananas.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Objects\leaf.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Textures\Objects\memory_card.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -385,7 +396,7 @@
     <Content Include="Assets\Sounds\SFX\woop.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Sounds\SFX\object_broke.wav">
+    <Content Include="Assets\Sounds\SFX\object_destroyed.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Sounds\SFX\object_picked.wav">

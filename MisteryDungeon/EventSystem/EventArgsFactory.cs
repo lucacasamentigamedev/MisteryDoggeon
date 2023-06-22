@@ -10,11 +10,11 @@ namespace Aiv.Fast2D.Component {
 
         public static void EnemySpawnedParser() { }
 
-        public static EventArgs EnemyDestroyedFactory() {
+        public static EventArgs EnemyDespawnFactory() {
             return new EventArgs();
         }
 
-        public static void EnemyDestroyedParser() { }
+        public static void EnemyDespawnParser() { }
 
         public static EventArgs SpawnPointDestroyedFactory() {
             return new EventArgs();
@@ -88,9 +88,9 @@ namespace Aiv.Fast2D.Component {
             return new EventArgs();
         }
 
-        public static void ObjectBrokeParser() { }
+        public static void ObjectDestroyedParser() { }
 
-        public static EventArgs ObjectBrokeFactory() {
+        public static EventArgs ObjectDestroyedFactory() {
             return new EventArgs();
         }
         
@@ -175,6 +175,12 @@ namespace Aiv.Fast2D.Component {
         public static void EndLoadingParser() { }
 
         public static EventArgs EndLoadingFactory() {
+            return new EventArgs();
+        }
+        
+        public static void SpawnPointHittedParser() { }
+
+        public static EventArgs SpawnPointHittedFactory() {
             return new EventArgs();
         }
     }
