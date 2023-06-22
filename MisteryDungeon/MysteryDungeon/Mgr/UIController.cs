@@ -16,7 +16,7 @@ namespace MisteryDungeon.MysteryDungeon.Mgr {
         }
 
         public void DisactivePuzzleTimer() {
-            puzzleTimer.Enabled = true;
+            puzzleTimer.Enabled = false;
         }
 
         public void SetPuzzleTimerCountdownText(string text) {

@@ -29,7 +29,6 @@ namespace MisteryDungeon.MysteryDungeon {
             buttons = new List<PlatformButton>();
             this.puzzleTimer = puzzleTimer;
             this.waitingResetPuzzleTimer = waitingResetPuzzleTimer;
-            ResetPuzzle();
             this.objectsToActiveAfterPuzzleResolved = objectsToActiveAfterPuzzleResolved;
             this.objectsToDisactiveAfterPuzzleResolved = objectsToDisactiveAfterPuzzleResolved;
             TotalButtons = 0;
@@ -80,6 +79,7 @@ namespace MisteryDungeon.MysteryDungeon {
         }
 
         public override void Start() {
+            ResetPuzzle();
             EventManager.AddListener(EventList.PlatformButtonPressed, OnButtonPressed);
         }
 

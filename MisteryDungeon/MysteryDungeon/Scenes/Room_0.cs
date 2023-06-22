@@ -98,10 +98,11 @@ namespace MisteryDungeon {
             );
             EventManager.CastEvent(EventList.LOG_GameObjectCreation, EventArgsFactory.LOG_Factory("Creato " + go.Name + " in posizione " + Vector2.Zero));
         }
+
         public void CreateUI() {
             Font stdFont = FontMgr.GetFont("stdFont");
             GameObject temp = new GameObject("PuzzleTimer",
-                new Vector2(Game.Win.OrthoWidth * 0.5f, Game.Win.OrthoHeight * 0.1f));
+                new Vector2(Game.Win.OrthoWidth * 0.475f, Game.Win.OrthoHeight * 0.01f));
             temp.AddComponent<TextBox>(stdFont, 2, Vector2.One * 2);
             temp = new GameObject("UIController", Vector2.Zero);
             temp.AddComponent<UIController>();
