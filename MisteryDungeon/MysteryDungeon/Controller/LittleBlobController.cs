@@ -62,7 +62,6 @@ namespace MisteryDungeon.MysteryDungeon {
             if (dead) return;
             HealthModule hm = GetComponent<HealthModule>();
             if (hm.TakeDamage(damage)) {
-                Console.WriteLine("casto l'evento che un nemico è morto");
                 EventManager.CastEvent(EventList.EnemyDead, EventArgsFactory.EnemyDeadFactory());
                 rigidbody.Velocity = Vector2.Zero;
                 animator.ChangeClip("death");
