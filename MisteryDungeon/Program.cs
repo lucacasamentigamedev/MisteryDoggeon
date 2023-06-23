@@ -59,7 +59,7 @@ namespace MisteryDungeon.MysteryDungeon {
             });
             AudioMgr.AddVolume((int)AudioLayer.music, 0.7f); 
             AudioMgr.AddVolume((int)AudioLayer.sfx, 0.5f);
-            Game.Init("Mystery Dungeon", 720, 720, new MenuScene(), 720, 10, 500);
+            Game.Init("Mystery Doggeon", 720, 720, new MenuScene(), 720, 10, 500);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace MisteryDungeon {
                 new Vector2(Game.Win.OrthoWidth * 0.5f -
                 Game.PixelsToUnit(stdFont.CharacterWidth) * 7 * 2, Game.Win.OrthoHeight * 0.25f));
             titleText.AddComponent<TextBox>(stdFont, 15, Vector2.One * 2)
-                .SetText("Mystery Dungeon");
+                .SetText("Mystery Doggeon");
         }
 
         public static void CreateMenuText() {

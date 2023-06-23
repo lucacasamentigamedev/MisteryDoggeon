@@ -59,7 +59,7 @@ namespace MisteryDungeon {
                 new Vector2(Game.Win.OrthoWidth * 0.5f -
                 Game.PixelsToUnit(stdFont.CharacterWidth) * 7 * 2, Game.Win.OrthoHeight * 0.25f));
             titleText.AddComponent<TextBox>(stdFont, 15, Vector2.One * 2)
-                .SetText("Mystery Dungeon");
+                .SetText("Mystery Doggeon");
         }
 
         private static void CreateMenu() {
@@ -68,7 +68,7 @@ namespace MisteryDungeon {
                 (Game.Win.OrthoWidth * 0.5f - Game.PixelsToUnit
                 (stdFont.CharacterWidth) * 10 * 1.3f, Game.Win.OrthoHeight * 0.5f - 1));
             feedbackText.AddComponent<TextBox>(stdFont, 100, Vector2.One * 1.5f).
-                SetText("Mode:\n\nPress N to\n new game\nPress L to\n load existing game\nPress Esc to exit");
+                SetText("Mode:\n\nPress N to\n start new game\nPress L to\n load existing game\nPress Esc to exit");
         }
 
         public static void CreateMenuLogic() {
